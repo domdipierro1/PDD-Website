@@ -53,3 +53,37 @@ h1,h2,h3,h4{margin:0;color:var(--ink);letter-spacing:-.025em;line-height:1.06}h1
 .flow-section textarea{min-height:132px}
 @media (min-width:680px){.form-inline{grid-template-columns:1fr 1fr}}
 @media (prefers-reduced-motion:reduce){.flow-section{transition:none}}
+
+/* Live address dropdown + custom calendar quote flow */
+.date-picker,
+.address-lookup{position:relative}
+.date-trigger{width:100%;min-height:52px;border:1px solid #cddbe8;border-radius:16px;background:#fff;color:var(--muted);padding:0 14px;display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;font-weight:760;cursor:pointer;box-shadow:0 8px 18px rgba(16,24,40,.035);transition:border-color .2s ease,box-shadow .2s ease,background .2s ease}
+.date-trigger:hover{border-color:rgba(7,84,173,.35);background:#fbfdff}
+.date-trigger:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(7,84,173,.10)}
+.date-trigger.has-value{color:var(--text);background:linear-gradient(180deg,#fff,#fbfdff)}
+.date-trigger-icon{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:10px;background:var(--soft);color:var(--blue);font-size:1.1rem;font-weight:900;flex:0 0 auto}
+.has-date-error .date-trigger{border-color:#d92d20;box-shadow:0 0 0 4px rgba(217,45,32,.10)}
+.has-date-error [data-flow-section="date"]:after{content:"Please choose a preferred date.";color:#b42318;font-size:.86rem;font-weight:760}
+.calendar-popover{position:absolute;z-index:30;top:calc(100% + 10px);left:0;right:0;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 24px 70px rgba(16,24,40,.18);padding:14px;overflow:hidden}
+.calendar-head{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;gap:10px;margin-bottom:10px}
+.calendar-head strong{text-align:center;color:var(--ink);font-size:1rem;font-weight:850}
+.calendar-nav{width:38px;height:38px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--blue);font-size:1.45rem;font-weight:800;line-height:1;cursor:pointer;transition:background .2s ease,border-color .2s ease}
+.calendar-nav:hover{background:var(--soft);border-color:rgba(7,84,173,.22)}
+.calendar-weekdays,.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.calendar-weekdays{margin-bottom:6px}
+.calendar-weekdays span{text-align:center;color:var(--muted);font-size:.72rem;font-weight:850;text-transform:uppercase;letter-spacing:.035em}
+.calendar-day{height:38px;border:0;border-radius:12px;background:#fff;color:var(--text);font-weight:780;cursor:pointer;transition:background .18s ease,color .18s ease,box-shadow .18s ease}
+.calendar-day:hover:not(:disabled){background:var(--cyan-soft);color:var(--blue-dark)}
+.calendar-day.is-muted{color:#98a2b3}
+.calendar-day.is-today{box-shadow:inset 0 0 0 2px rgba(24,188,208,.32)}
+.calendar-day.is-selected{background:linear-gradient(135deg,var(--blue),var(--blue-dark));color:#fff;box-shadow:0 9px 18px rgba(7,84,173,.20)}
+.calendar-day:disabled{color:#c6ced8;background:#f5f7fa;cursor:not-allowed}
+.address-lookup input{padding-right:42px}
+.address-results{position:absolute;z-index:28;top:calc(100% + 8px);left:0;right:0;max-height:278px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 20px 58px rgba(16,24,40,.17);padding:8px}
+.address-option{width:100%;border:0;border-radius:12px;background:#fff;color:var(--text);padding:11px 12px;text-align:left;font-weight:700;line-height:1.35;cursor:pointer}
+.address-option:hover,.address-option:focus{background:var(--soft);color:var(--blue-dark)}
+.address-status{margin-top:8px;color:var(--muted);font-size:.86rem;line-height:1.42}
+.optional-label{display:inline-flex;margin-left:6px;padding:2px 7px;border-radius:999px;background:var(--soft);color:var(--muted);font-size:.75rem;font-weight:850;vertical-align:middle}
+.flow-section textarea::placeholder{color:#667085;opacity:1}
+.scope-microcopy{background:#f7fbff;color:var(--text);border-color:var(--line)}
+@media(max-width:560px){.calendar-popover{position:fixed;left:14px;right:14px;top:auto;bottom:18px;max-height:78vh;overflow:auto}.calendar-day{height:42px}.address-results{max-height:240px}}

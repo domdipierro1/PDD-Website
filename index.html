@@ -110,6 +110,7 @@
         <input type="hidden" name="email" value="" />
         <input type="hidden" name="property_size" value="" />
         <input type="hidden" name="service_needed" value="" data-service-needed />
+        <input type="hidden" name="preferred_date" value="" data-date-field />
 
         <div class="flow-section is-active" data-flow-section="details">
           <div class="flow-step"><span>1</span> Your details</div>
@@ -137,40 +138,38 @@
               <label><input type="checkbox" value="Builders Clean" data-service-option /> Builders Clean</label>
             </div>
           </details>
-          <p class="form-note left">You can select more than one item.</p>
+          <p class="form-note left">Select one or more services. Add-ons can be included with end of tenancy or deep cleaning.</p>
         </div>
 
         <div class="flow-section is-waiting" data-flow-section="date">
           <div class="flow-step"><span>3</span> Preferred date</div>
-          <label class="form-label">When would you like the work done?
-            <input type="date" name="preferred_date" data-date-field required />
-          </label>
+          <label class="form-label">When would you like the work done?</label>
+          <div class="date-picker" data-date-picker>
+            <button class="date-trigger" type="button" data-date-trigger aria-haspopup="dialog" aria-expanded="false">
+              <span data-date-label>Select preferred date</span>
+              <span class="date-trigger-icon" aria-hidden="true">⌄</span>
+            </button>
+            <div class="calendar-popover" data-calendar hidden></div>
+          </div>
+          <p class="form-note left">Click anywhere in the date box to open the calendar.</p>
         </div>
 
         <div class="flow-section is-waiting" data-flow-section="address">
           <div class="flow-step"><span>4</span> Address / postcode</div>
-          <label class="form-label">Start typing your address or postcode
-            <input type="text" name="postcode_area" list="pdd-address-suggestions" autocomplete="street-address" placeholder="e.g. EN1 1AA or 12 Example Road, Enfield" data-address-field required />
-          </label>
-          <datalist id="pdd-address-suggestions">
-            <option value="Enfield" />
-            <option value="Southgate" />
-            <option value="Winchmore Hill" />
-            <option value="Palmers Green" />
-            <option value="Bounds Green" />
-            <option value="Wood Green" />
-            <option value="Edmonton" />
-            <option value="North London" />
-          </datalist>
-          <p class="form-note left">Type the full address if it does not appear.</p>
+          <label class="form-label" for="quote-address">Start typing your address or postcode</label>
+          <div class="address-lookup" data-address-lookup>
+            <input id="quote-address" type="text" name="postcode_area" autocomplete="off" placeholder="Start typing address or postcode" data-address-field data-address-input required aria-autocomplete="list" aria-expanded="false" />
+            <div class="address-results" data-address-results role="listbox" hidden></div>
+          </div>
+          <p class="address-status" data-address-status>Type a postcode or address and choose from the dropdown.</p>
         </div>
 
         <div class="flow-section is-waiting" data-flow-section="notes">
           <div class="flow-step"><span>5</span> Enquiry notes</div>
-          <label class="form-label">Anything we should know?
-            <textarea name="message" placeholder="Special requirements, access, parking, keys, heavy staining, mould, rubbish, pets or timing notes. Quote depends on size, condition, access and add-ons. Permanent staining, damage, heavy mould, unsafe access and rubbish removal are not included unless specifically agreed." required></textarea>
+          <label class="form-label">Anything else we should know? <span class="optional-label">Optional</span>
+            <textarea name="message" placeholder="Optional notes"></textarea>
           </label>
-          <p class="scope-microcopy">Scope note: final quote depends on size, condition, access and add-ons. Anything unusual should be mentioned before booking.</p>
+          <p class="scope-microcopy">Mention access, parking, keys, heavy staining, mould, rubbish, pets, timing issues or any special requirements.</p>
           <label class="consent">
             <input type="checkbox" name="contact_consent" value="Agreed" required />
             <span>I agree for PDD Cleaning Services to contact me about my quote request.</span>
