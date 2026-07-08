@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!results || !input) return;
       if (!items.length) {
         hideResults();
-        setStatus('No address match found yet. Keep typing or enter the full address manually.');
+        setStatus('Keep typing, or enter the full address manually if it does not appear.');
         return;
       }
       results.innerHTML = items.map(function (item, index) {
@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(function () {
           if (requestId !== activeRequest) return;
           hideResults();
-          setStatus('Address lookup is unavailable. You can still type the full address manually.');
+          setStatus('Keep typing, or enter the full address manually if it does not appear.');
         });
     }
 
@@ -292,12 +292,12 @@ document.addEventListener('DOMContentLoaded', function () {
         updateFlow();
         var query = input.value.trim();
         window.clearTimeout(debounceTimer);
-        if (query.length < 2) {
+        if (query.length < 1) {
           hideResults();
-          setStatus('Type a postcode or address and choose from the dropdown.');
+          setStatus('Start typing and choose the correct address if it appears. You can also type the full address manually.');
           return;
         }
-        debounceTimer = window.setTimeout(function () { fetchAddresses(query); }, 220);
+        debounceTimer = window.setTimeout(function () { fetchAddresses(query); }, 180);
       });
 
       input.addEventListener('blur', function () {

@@ -164,15 +164,16 @@
             <input id="quote-address" type="text" name="postcode_area" autocomplete="off" placeholder="Start typing address or postcode" data-address-field data-address-input required aria-autocomplete="list" aria-expanded="false" />
             <div class="address-results" data-address-results role="listbox" hidden></div>
           </div>
-          <p class="address-status" data-address-status>Type a postcode or address and choose from the dropdown.</p>
+          <p class="address-status" data-address-status>Start typing and choose the correct address if it appears. You can also type the full address manually.</p>
         </div>
 
         <div class="flow-section is-waiting" data-flow-section="notes">
           <div class="flow-step"><span>5</span> Enquiry notes</div>
-          <label class="form-label">Anything else we should know? <span class="optional-label">Optional</span>
-            <textarea name="message" placeholder="Optional notes"></textarea>
-          </label>
-          <p class="scope-microcopy">Mention access, parking, keys, heavy staining, mould, rubbish, pets, timing issues or any special requirements.</p>
+          <div class="notes-field">
+            <label class="form-label" for="quote-message">Anything else we should know?</label>
+            <p class="scope-microcopy">Access, parking, keys, heavy staining, mould, rubbish, pets, timing issues or any special requirements.</p>
+            <textarea id="quote-message" name="message"></textarea>
+          </div>
           <label class="consent">
             <input type="checkbox" name="contact_consent" value="Agreed" required />
             <span>I agree for PDD Cleaning Services to contact me about my quote request.</span>

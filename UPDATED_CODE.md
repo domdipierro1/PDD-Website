@@ -1,8 +1,7 @@
-# PDD Cleaning Services — live address + calendar quote form update
-
+# PDD Cleaning Services — address/status, notes and footer fix
+Updated files: `index.html`, `contact.html`, `styles.css`, `script.js`.
 
 ## index.html
-
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -167,15 +166,16 @@
             <input id="quote-address" type="text" name="postcode_area" autocomplete="off" placeholder="Start typing address or postcode" data-address-field data-address-input required aria-autocomplete="list" aria-expanded="false" />
             <div class="address-results" data-address-results role="listbox" hidden></div>
           </div>
-          <p class="address-status" data-address-status>Type a postcode or address and choose from the dropdown.</p>
+          <p class="address-status" data-address-status>Start typing and choose the correct address if it appears. You can also type the full address manually.</p>
         </div>
 
         <div class="flow-section is-waiting" data-flow-section="notes">
           <div class="flow-step"><span>5</span> Enquiry notes</div>
-          <label class="form-label">Anything else we should know? <span class="optional-label">Optional</span>
-            <textarea name="message" placeholder="Optional notes"></textarea>
-          </label>
-          <p class="scope-microcopy">Mention access, parking, keys, heavy staining, mould, rubbish, pets, timing issues or any special requirements.</p>
+          <div class="notes-field">
+            <label class="form-label" for="quote-message">Anything else we should know?</label>
+            <p class="scope-microcopy">Access, parking, keys, heavy staining, mould, rubbish, pets, timing issues or any special requirements.</p>
+            <textarea id="quote-message" name="message"></textarea>
+          </div>
           <label class="consent">
             <input type="checkbox" name="contact_consent" value="Agreed" required />
             <span>I agree for PDD Cleaning Services to contact me about my quote request.</span>
@@ -298,9 +298,7 @@
 
 ```
 
-
 ## contact.html
-
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -468,15 +466,16 @@
             <input id="quote-address" type="text" name="postcode_area" autocomplete="off" placeholder="Start typing address or postcode" data-address-field data-address-input required aria-autocomplete="list" aria-expanded="false" />
             <div class="address-results" data-address-results role="listbox" hidden></div>
           </div>
-          <p class="address-status" data-address-status>Type a postcode or address and choose from the dropdown.</p>
+          <p class="address-status" data-address-status>Start typing and choose the correct address if it appears. You can also type the full address manually.</p>
         </div>
 
         <div class="flow-section is-waiting" data-flow-section="notes">
           <div class="flow-step"><span>5</span> Enquiry notes</div>
-          <label class="form-label">Anything else we should know? <span class="optional-label">Optional</span>
-            <textarea name="message" placeholder="Optional notes"></textarea>
-          </label>
-          <p class="scope-microcopy">Mention access, parking, keys, heavy staining, mould, rubbish, pets, timing issues or any special requirements.</p>
+          <div class="notes-field">
+            <label class="form-label" for="quote-message">Anything else we should know?</label>
+            <p class="scope-microcopy">Access, parking, keys, heavy staining, mould, rubbish, pets, timing issues or any special requirements.</p>
+            <textarea id="quote-message" name="message"></textarea>
+          </div>
           <label class="consent">
             <input type="checkbox" name="contact_consent" value="Agreed" required />
             <span>I agree for PDD Cleaning Services to contact me about my quote request.</span>
@@ -532,9 +531,7 @@
 
 ```
 
-
 ## styles.css
-
 ```css
 /* ============================================
    PDD Cleaning Services — lead-focused static site
@@ -626,12 +623,24 @@ h1,h2,h3,h4{margin:0;color:var(--ink);letter-spacing:-.025em;line-height:1.06}h1
 .scope-microcopy{background:#f7fbff;color:var(--text);border-color:var(--line)}
 @media(max-width:560px){.calendar-popover{position:fixed;left:14px;right:14px;top:auto;bottom:18px;max-height:78vh;overflow:auto}.calendar-day{height:42px}.address-results{max-height:240px}}
 
+
+/* Final quote form refinements: address status, notes helper and footer spacing */
+.hero{overflow:visible;padding-bottom:clamp(74px,9vw,116px)}
+.hero-grid{align-items:start}
+.hero-form-card{position:relative;z-index:2;margin-bottom:clamp(22px,4vw,54px)}
+.quick-form{padding-bottom:10px}
+.flow-section[data-flow-section="notes"]{margin-bottom:18px}
+.notes-field{display:grid;gap:8px}
+.flow-section .scope-microcopy{padding:0;background:transparent;border:0;color:#98a2b3;font-size:.86rem;line-height:1.45;font-weight:500;margin:0 0 2px}
+.flow-section textarea[name="message"]{min-height:132px;background:#fff}
+.address-status{color:#667085}
+.site-footer{position:relative;z-index:0;clear:both;margin-top:0}
+@media(max-width:560px){.hero{padding-bottom:84px}.hero-form-card{margin-bottom:38px}.flow-section[data-flow-section="notes"]{margin-bottom:24px}}
+
 ```
 
-
 ## script.js
-
-```js
+```javascript
 // PDD Cleaning Services — static site interactions
 // Mobile menu, active navigation, reveal animations, progressive quote flow,
 // custom date picker and live address dropdown shell.
@@ -887,7 +896,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!results || !input) return;
       if (!items.length) {
         hideResults();
-        setStatus('No address match found yet. Keep typing or enter the full address manually.');
+        setStatus('Keep typing, or enter the full address manually if it does not appear.');
         return;
       }
       results.innerHTML = items.map(function (item, index) {
@@ -917,7 +926,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(function () {
           if (requestId !== activeRequest) return;
           hideResults();
-          setStatus('Address lookup is unavailable. You can still type the full address manually.');
+          setStatus('Keep typing, or enter the full address manually if it does not appear.');
         });
     }
 
@@ -926,12 +935,12 @@ document.addEventListener('DOMContentLoaded', function () {
         updateFlow();
         var query = input.value.trim();
         window.clearTimeout(debounceTimer);
-        if (query.length < 2) {
+        if (query.length < 1) {
           hideResults();
-          setStatus('Type a postcode or address and choose from the dropdown.');
+          setStatus('Start typing and choose the correct address if it appears. You can also type the full address manually.');
           return;
         }
-        debounceTimer = window.setTimeout(function () { fetchAddresses(query); }, 220);
+        debounceTimer = window.setTimeout(function () { fetchAddresses(query); }, 180);
       });
 
       input.addEventListener('blur', function () {
@@ -1019,886 +1028,5 @@ document.addEventListener('DOMContentLoaded', function () {
     updateFlow();
   });
 });
-
-```
-
-
-## services.html
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Services — PDD Cleaning Services</title>
-<meta name="description" content="Cleaning services and checklists across Enfield & North London including end of tenancy, deep cleaning, builders cleans, exterior windows and jet washing." />
-<meta property="og:title" content="Services — PDD Cleaning Services" />
-<meta property="og:description" content="Cleaning services and checklists across Enfield & North London including end of tenancy, deep cleaning, builders cleans, exterior windows and jet washing." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://pddcleaningservices.co.uk" />
-<meta property="og:image" content="https://pddcleaningservices.co.uk/logo.jpg" />
-<link rel="icon" href="favicon.ico" />
-<link rel="stylesheet" href="styles.css" />
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "CleaningService",
-  "name": "PDD Cleaning Services",
-  "legalName": "PDD Services Limited",
-  "url": "https://pddcleaningservices.co.uk",
-  "logo": "https://pddcleaningservices.co.uk/logo.jpg",
-  "telephone": "+447568273696",
-  "email": "info@pddcleaningservices.co.uk",
-  "areaServed": ["Enfield", "Southgate", "Winchmore Hill", "Bounds Green", "Palmers Green", "Wood Green", "Edmonton", "North London"],
-  "description": "Cleaning services across Enfield and North London.",
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Cleaning services",
-    "itemListElement": [
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "End of Tenancy Cleaning"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Deep Cleaning"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Oven Cleaning Add-on"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Interior Window Cleaning Add-on"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Exterior Window Cleaning"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Jet Washing"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Builders Clean"}}
-    ]
-  },
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Enfield",
-    "addressRegion": "London",
-    "addressCountry": "GB"
-  }
-}
-</script>
-</head>
-<body>
-<a class="skip-link" href="#main-content">Skip to content</a>
-<header class="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="index.html" aria-label="PDD Cleaning Services home">
-      <img src="logo.jpg" alt="PDD Cleaning Services logo" />
-    </a>
-    <nav class="nav" aria-label="Main navigation">
-      <a href="index.html">Home</a>
-      <a href="services.html">Services</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-    <div class="header-actions">
-      <a class="phone-link" href="tel:07568273696">07568 273696</a>
-      <a class="btn small" href="contact.html#quote-form">Get Quote</a>
-      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
-      </button>
-    </div>
-  </div>
-  <div class="container mobile-menu-shell" id="mobile-menu">
-    <div class="mobile-menu-inner">
-      <nav class="mobile-nav" aria-label="Mobile navigation">
-        <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-      <div class="mobile-cta-row">
-        <a class="btn secondary" href="tel:07568273696">Call</a>
-        <a class="btn" href="contact.html#quote-form">Get Quote</a>
-      </div>
-    </div>
-  </div>
-</header>
-<main id="main-content">
-
-<section class="page-hero">
-  <div class="container reveal">
-    <div class="eyebrow">Services & checklists</div>
-    <h1>See what is included before you book.</h1>
-    <p class="lead">Choose the service you need and check the likely scope. Every job is confirmed before booking, so there are no unclear expectations.</p>
-    <div class="hero-actions">
-      <a class="btn" href="contact.html#quote-form">Get a Free Quote</a>
-      <a class="btn secondary" href="tel:07568273696">Call / Message Us</a>
-    </div>
-  </div>
-</section>
-
-<section class="section-white section-tight">
-  <div class="container">
-    <div class="section-header center reveal"><h2>Pick a service</h2><p>Jump straight to the checklist.</p></div>
-    <div class="picker-grid">
-      <a class="picker-card reveal" href="#end-of-tenancy"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>End of Tenancy Cleaning</strong><p>Move-out clean with oven and interior window add-ons.</p></span></a>
-      <a class="picker-card reveal" href="#deep-cleaning"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>Deep Cleaning</strong><p>One-off deep clean with optional oven and interior windows.</p></span></a>
-      <a class="picker-card reveal" href="#builders-clean"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>Builders Clean</strong><p>After works, renovation or decorating dust.</p></span></a>
-      <a class="picker-card reveal" href="#exterior-windows"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>Exterior Window Cleaning</strong><p>Outside glass and frames where safely accessible.</p></span></a>
-      <a class="picker-card reveal" href="#jet-washing"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>Jet Washing</strong><p>Patios, driveways and hard outdoor surfaces.</p></span></a>
-      <a class="picker-card reveal" href="#add-ons"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>Oven & Interior Window Add-ons</strong><p>Add to end of tenancy or deep cleaning.</p></span></a>
-    </div>
-  </div>
-</section>
-
-<section class="section-soft section-tight">
-  <div class="container">
-    <article class="card service-detail reveal" id="end-of-tenancy">
-      <div class="detail-head">
-        <div class="eyebrow">Move-out cleaning</div>
-        <h2>End of Tenancy Cleaning</h2>
-        <p>For tenants, landlords, letting agents and property managers who need a property cleaned before inspection, handover or re-letting.</p>
-        <div class="detail-meta"><span class="meta-pill">Checklist-based</span><span class="meta-pill">48-hour re-clean guarantee</span><span class="meta-pill">Add oven / interior windows</span></div>
-        <a class="btn" href="contact.html#quote-form">Request quote</a>
-      </div>
-      <div class="checklist-wrap two">
-        <div class="checklist-box"><h3>Kitchen</h3><ul class="checklist"><li>Worktops, splashbacks and accessible surfaces cleaned</li><li>Cupboards and drawers cleaned where empty and accessible</li><li>Sink, taps, hob and extractor exterior cleaned</li><li>Appliance exteriors cleaned; fridge/freezer interior if empty and agreed</li><li>Floor vacuumed and mopped; skirting wiped where accessible</li></ul></div>
-        <div class="checklist-box"><h3>Bathrooms</h3><ul class="checklist"><li>Toilet, sink, bath, shower and taps cleaned</li><li>Shower screen, tiles and mirrors cleaned</li><li>Limescale treated where reasonably removable</li><li>Extractor, fixtures and accessible surfaces wiped</li><li>Floor vacuumed and mopped</li></ul></div>
-        <div class="checklist-box"><h3>Rooms & hallway</h3><ul class="checklist"><li>Accessible surfaces dusted and wiped</li><li>Doors, handles, switches and sockets wiped</li><li>Wardrobes and cupboards cleaned where empty</li><li>Skirting, radiators and window sills wiped where accessible</li><li>Floors vacuumed and mopped where suitable</li></ul></div>
-        <div class="checklist-box"><h3>Common move-out details</h3><ul class="checklist"><li>Cobwebs removed from accessible areas</li><li>Bins emptied where agreed</li><li>Before/after photos taken where appropriate</li><li>Final check against the agreed cleaning scope</li><li>Oven and interior windows added if selected</li></ul></div>
-      </div>
-      <div class="scope-note">Scope note: the quote depends on size, condition, access and add-ons. Permanent staining, damage, heavy mould, unsafe access and rubbish removal are not included unless specifically agreed.</div>
-    </article>
-
-    <article class="card service-detail reveal" id="deep-cleaning">
-      <div class="detail-head">
-        <div class="eyebrow">One-off home clean</div>
-        <h2>Deep Cleaning</h2>
-        <p>For homes that need a more detailed one-off clean than a standard regular clean.</p>
-        <div class="detail-meta"><span class="meta-pill">One-off reset</span><span class="meta-pill">Priority areas agreed</span><span class="meta-pill">Add oven / interior windows</span></div>
-        <a class="btn" href="contact.html#quote-form">Request quote</a>
-      </div>
-      <div class="checklist-wrap two">
-        <div class="checklist-box"><h3>Kitchen</h3><ul class="checklist"><li>Worktops, cupboard fronts and accessible surfaces cleaned</li><li>Sink, taps, hob and splashback cleaned</li><li>Appliance exteriors wiped</li><li>Floor vacuumed and mopped</li></ul></div>
-        <div class="checklist-box"><h3>Bathroom</h3><ul class="checklist"><li>Toilet, sink, bath and shower cleaned</li><li>Mirrors, taps and fittings polished</li><li>Tiles and screens cleaned where accessible</li><li>Floor vacuumed and mopped</li></ul></div>
-        <div class="checklist-box"><h3>Living areas & bedrooms</h3><ul class="checklist"><li>Surfaces dusted and wiped</li><li>Skirting, doors and handles wiped where accessible</li><li>Furniture exteriors dusted</li><li>Floors vacuumed and mopped where suitable</li></ul></div>
-        <div class="checklist-box"><h3>Optional priorities</h3><ul class="checklist"><li>Interior windows added if selected</li><li>Oven added if selected</li><li>Extra attention to agreed problem areas</li><li>Before/after photos where useful</li></ul></div>
-      </div>
-      <div class="scope-note">Scope note: deep cleans are quoted around the property and priorities. Heavy clutter, unsafe access and specialist stain removal may need a revised scope.</div>
-    </article>
-
-    <article class="card service-detail reveal" id="builders-clean">
-      <div class="detail-head">
-        <div class="eyebrow">After works</div>
-        <h2>Builders Clean</h2>
-        <p>For properties after decorating, refurbishment, maintenance works or small renovation projects.</p>
-        <div class="detail-meta"><span class="meta-pill">Post-work dust</span><span class="meta-pill">Surface clean</span><span class="meta-pill">Final freshen-up</span></div>
-        <a class="btn" href="contact.html#quote-form">Request quote</a>
-      </div>
-      <div class="checklist-wrap two">
-        <div class="checklist-box"><h3>Dust removal</h3><ul class="checklist"><li>Accessible surfaces dusted and wiped</li><li>Skirting, doors, switches and handles wiped</li><li>Window sills and ledges wiped where accessible</li><li>Floors vacuumed using suitable equipment</li></ul></div>
-        <div class="checklist-box"><h3>Rooms</h3><ul class="checklist"><li>Kitchen and bathroom surfaces cleaned</li><li>Fixtures and fittings wiped</li><li>Internal glass spot-cleaned where agreed</li><li>Final mop of suitable hard floors</li></ul></div>
-        <div class="checklist-box"><h3>Finish</h3><ul class="checklist"><li>Light paint/plaster marks removed where reasonably possible</li><li>Work areas checked against agreed scope</li><li>Before/after photos where appropriate</li><li>Ready-for-use freshen-up</li></ul></div>
-        <div class="checklist-box"><h3>Not usually included</h3><ul class="checklist"><li>Large rubble or waste removal unless quoted</li><li>Hazardous material or unsafe debris</li><li>Specialist high-level cleaning</li><li>Damage repair or paint correction</li></ul></div>
-      </div>
-      <div class="scope-note">Scope note: builders cleans vary heavily. Photos before quoting help confirm the right time, team and scope.</div>
-    </article>
-
-    <article class="card service-detail reveal" id="exterior-windows">
-      <div class="detail-head">
-        <div class="eyebrow">Outside glass</div>
-        <h2>Exterior Window Cleaning</h2>
-        <p>For exterior windows on suitable properties across Enfield and North London.</p>
-        <div class="detail-meta"><span class="meta-pill">External glass</span><span class="meta-pill">Frames/sills where accessible</span><span class="meta-pill">Safe access only</span></div>
-        <a class="btn" href="contact.html#quote-form">Request quote</a>
-      </div>
-      <div class="checklist-wrap two">
-        <div class="checklist-box"><h3>Included</h3><ul class="checklist"><li>External window glass cleaned</li><li>Frames and sills wiped where safe and accessible</li><li>Ground-floor and suitable upper windows confirmed before booking</li><li>Final visual check where practical</li></ul></div>
-        <div class="checklist-box"><h3>Before booking</h3><ul class="checklist"><li>Confirm property type and access</li><li>Confirm front/rear access and gates</li><li>Confirm parking or loading if needed</li><li>Send photos for unusual access</li></ul></div>
-      </div>
-      <div class="scope-note">Scope note: we only quote work that can be completed safely. High-level, restricted or specialist-access windows may require a different arrangement.</div>
-    </article>
-
-    <article class="card service-detail reveal" id="jet-washing">
-      <div class="detail-head">
-        <div class="eyebrow">Outdoor surfaces</div>
-        <h2>Jet Washing</h2>
-        <p>For patios, driveways, paths and hard outdoor surfaces that need a clean refresh.</p>
-        <div class="detail-meta"><span class="meta-pill">Patios</span><span class="meta-pill">Driveways</span><span class="meta-pill">Paths</span></div>
-        <a class="btn" href="contact.html#quote-form">Request quote</a>
-      </div>
-      <div class="checklist-wrap two">
-        <div class="checklist-box"><h3>Included</h3><ul class="checklist"><li>Loose debris cleared from the working area</li><li>Pressure clean of agreed hard surface</li><li>Edges and obvious build-up targeted where possible</li><li>Final rinse down of the cleaned area</li></ul></div>
-        <div class="checklist-box"><h3>Before booking</h3><ul class="checklist"><li>Confirm approximate size and surface type</li><li>Check outside water access</li><li>Confirm drainage and access</li><li>Photos requested for accurate quoting</li></ul></div>
-      </div>
-      <div class="scope-note">Scope note: results depend on surface age, staining, drainage and condition. Oil, paint, rust and deep staining may not fully lift.</div>
-    </article>
-
-    <article class="card service-detail reveal" id="add-ons">
-      <div class="detail-head">
-        <div class="eyebrow">Add-ons</div>
-        <h2>Oven & Interior Window Add-ons</h2>
-        <p>Add these to an end of tenancy clean or deep clean when the property needs a more complete finish.</p>
-        <div class="detail-meta"><span class="meta-pill">Oven cleaning</span><span class="meta-pill">Interior windows</span><span class="meta-pill">Quoted before booking</span></div>
-        <a class="btn" href="contact.html#quote-form">Request add-ons</a>
-      </div>
-      <div class="checklist-wrap two">
-        <div class="checklist-box"><h3>Oven cleaning</h3><ul class="checklist"><li>Oven door, glass and accessible interior cleaned</li><li>Racks and trays cleaned where removable</li><li>Hob and extractor exterior cleaned if agreed</li><li>Final wipe and check</li></ul></div>
-        <div class="checklist-box"><h3>Interior windows</h3><ul class="checklist"><li>Internal glass cleaned</li><li>Interior window sills wiped</li><li>Frames wiped where accessible</li><li>Obvious marks targeted where reasonably removable</li></ul></div>
-      </div>
-      <div class="scope-note">Scope note: add-ons should be requested before booking so the cleaner has enough time and the quote is clear.</div>
-    </article>
-  </div>
-</section>
-
-<section class="section-tight">
-  <div class="container">
-    <div class="cta-band reveal">
-      <h2>Ready to check availability?</h2>
-      <p>Send a short enquiry with the service, postcode, property size and preferred date.</p>
-      <div class="hero-actions"><a class="btn secondary" href="contact.html#quote-form">Get a Free Quote</a><a class="btn ghost" href="tel:07568273696">Call / Message Us</a></div>
-    </div>
-  </div>
-</section>
-
-</main>
-<footer class="site-footer">
-  <div class="container footer-grid">
-    <div class="footer-brand">
-      <img src="logo.jpg" alt="PDD Cleaning Services" />
-      <p>Cleaning services across Enfield & North London.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Services</h4>
-      <a href="services.html#end-of-tenancy">End of tenancy</a>
-      <a href="services.html#deep-cleaning">Deep cleaning</a>
-      <a href="services.html#builders-clean">Builders clean</a>
-      <a href="services.html#exterior-windows">Exterior windows</a>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <a href="tel:07568273696">07568 273696</a>
-      <a href="mailto:info@pddcleaningservices.co.uk">info@pddcleaningservices.co.uk</a>
-      <a href="[GOOGLE BUSINESS PROFILE LINK]">Google Business Profile</a>
-    </div>
-    <div class="footer-col">
-      <h4>Legal</h4>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Service</a>
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    PDD Cleaning Services is a trading name of PDD Services Limited, company number [COMPANY NUMBER], registered in England & Wales.
-  </div>
-</footer>
-<script src="script.js"></script>
-</body>
-</html>
-
-```
-
-
-## about.html
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>About — PDD Cleaning Services</title>
-<meta name="description" content="PDD Cleaning Services is a local cleaning service covering Enfield and North London." />
-<meta property="og:title" content="About — PDD Cleaning Services" />
-<meta property="og:description" content="PDD Cleaning Services is a local cleaning service covering Enfield and North London." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://pddcleaningservices.co.uk" />
-<meta property="og:image" content="https://pddcleaningservices.co.uk/logo.jpg" />
-<link rel="icon" href="favicon.ico" />
-<link rel="stylesheet" href="styles.css" />
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "CleaningService",
-  "name": "PDD Cleaning Services",
-  "legalName": "PDD Services Limited",
-  "url": "https://pddcleaningservices.co.uk",
-  "logo": "https://pddcleaningservices.co.uk/logo.jpg",
-  "telephone": "+447568273696",
-  "email": "info@pddcleaningservices.co.uk",
-  "areaServed": ["Enfield", "Southgate", "Winchmore Hill", "Bounds Green", "Palmers Green", "Wood Green", "Edmonton", "North London"],
-  "description": "Cleaning services across Enfield and North London.",
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Cleaning services",
-    "itemListElement": [
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "End of Tenancy Cleaning"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Deep Cleaning"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Oven Cleaning Add-on"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Interior Window Cleaning Add-on"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Exterior Window Cleaning"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Jet Washing"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Builders Clean"}}
-    ]
-  },
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Enfield",
-    "addressRegion": "London",
-    "addressCountry": "GB"
-  }
-}
-</script>
-</head>
-<body>
-<a class="skip-link" href="#main-content">Skip to content</a>
-<header class="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="index.html" aria-label="PDD Cleaning Services home">
-      <img src="logo.jpg" alt="PDD Cleaning Services logo" />
-    </a>
-    <nav class="nav" aria-label="Main navigation">
-      <a href="index.html">Home</a>
-      <a href="services.html">Services</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-    <div class="header-actions">
-      <a class="phone-link" href="tel:07568273696">07568 273696</a>
-      <a class="btn small" href="contact.html#quote-form">Get Quote</a>
-      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
-      </button>
-    </div>
-  </div>
-  <div class="container mobile-menu-shell" id="mobile-menu">
-    <div class="mobile-menu-inner">
-      <nav class="mobile-nav" aria-label="Mobile navigation">
-        <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-      <div class="mobile-cta-row">
-        <a class="btn secondary" href="tel:07568273696">Call</a>
-        <a class="btn" href="contact.html#quote-form">Get Quote</a>
-      </div>
-    </div>
-  </div>
-</header>
-<main id="main-content">
-
-<section class="page-hero">
-  <div class="container reveal">
-    <div class="eyebrow">About PDD Cleaning Services</div>
-    <h1>A local cleaning service with a clear booking process.</h1>
-    <p class="lead">PDD Cleaning Services covers Enfield and North London for move-out cleans, deep cleans and selected add-on services.</p>
-    <div class="hero-actions"><a class="btn" href="contact.html#quote-form">Get a Free Quote</a><a class="btn secondary" href="services.html">View Services</a></div>
-  </div>
-</section>
-
-<section class="section-white section-tight">
-  <div class="container grid grid-3">
-    <article class="card proof-card reveal"><h2 style="font-size:1.55rem;">Local service</h2><p>Focused on Enfield and nearby North London areas, not a faceless national booking site.</p></article>
-    <article class="card proof-card reveal"><h2 style="font-size:1.55rem;">Vetted cleaners</h2><p>Cleaners are reviewed before being assigned customer work.</p></article>
-    <article class="card proof-card reveal"><h2 style="font-size:1.55rem;">Checklist-based</h2><p>Jobs are quoted and completed around an agreed service checklist.</p></article>
-  </div>
-</section>
-
-<section class="section-soft section-tight">
-  <div class="container grid grid-2" style="align-items:start;">
-    <div class="reveal"><h2>How we keep it simple</h2><p class="lead">You send a short enquiry, we confirm the service and quote, then the clean is completed to the agreed scope. Before/after photos are used where appropriate, and agreed missed areas are covered by the 48-hour re-clean guarantee.</p></div>
-    <div class="card card-pad reveal"><h3>What we cover</h3><ul class="checklist" style="margin-top:14px;"><li>End of tenancy cleaning</li><li>Deep cleaning</li><li>Oven and interior window add-ons</li><li>Exterior window cleaning</li><li>Jet washing</li><li>Builders cleans</li></ul></div>
-  </div>
-</section>
-
-<section class="section-tight">
-  <div class="container">
-    <div class="cta-band reveal"><h2>Need a clean booked?</h2><p>Send your name, number and what you need. We’ll come back with the next step.</p><div class="hero-actions"><a class="btn secondary" href="contact.html#quote-form">Get a Free Quote</a><a class="btn ghost" href="tel:07568273696">Call / Message Us</a></div></div>
-  </div>
-</section>
-
-</main>
-<footer class="site-footer">
-  <div class="container footer-grid">
-    <div class="footer-brand">
-      <img src="logo.jpg" alt="PDD Cleaning Services" />
-      <p>Cleaning services across Enfield & North London.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Services</h4>
-      <a href="services.html#end-of-tenancy">End of tenancy</a>
-      <a href="services.html#deep-cleaning">Deep cleaning</a>
-      <a href="services.html#builders-clean">Builders clean</a>
-      <a href="services.html#exterior-windows">Exterior windows</a>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <a href="tel:07568273696">07568 273696</a>
-      <a href="mailto:info@pddcleaningservices.co.uk">info@pddcleaningservices.co.uk</a>
-      <a href="[GOOGLE BUSINESS PROFILE LINK]">Google Business Profile</a>
-    </div>
-    <div class="footer-col">
-      <h4>Legal</h4>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Service</a>
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    PDD Cleaning Services is a trading name of PDD Services Limited, company number [COMPANY NUMBER], registered in England & Wales.
-  </div>
-</footer>
-<script src="script.js"></script>
-</body>
-</html>
-
-```
-
-
-## privacy.html
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Privacy Policy — PDD Cleaning Services</title>
-<meta name="description" content="Privacy Policy for PDD Services Limited trading as PDD Cleaning Services." />
-<meta property="og:title" content="Privacy Policy — PDD Cleaning Services" />
-<meta property="og:description" content="Privacy Policy for PDD Services Limited trading as PDD Cleaning Services." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://pddcleaningservices.co.uk" />
-<meta property="og:image" content="https://pddcleaningservices.co.uk/logo.jpg" />
-<link rel="icon" href="favicon.ico" />
-<link rel="stylesheet" href="styles.css" />
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "CleaningService",
-  "name": "PDD Cleaning Services",
-  "legalName": "PDD Services Limited",
-  "url": "https://pddcleaningservices.co.uk",
-  "logo": "https://pddcleaningservices.co.uk/logo.jpg",
-  "telephone": "+447568273696",
-  "email": "info@pddcleaningservices.co.uk",
-  "areaServed": ["Enfield", "Southgate", "Winchmore Hill", "Bounds Green", "Palmers Green", "Wood Green", "Edmonton", "North London"],
-  "description": "Cleaning services across Enfield and North London.",
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Cleaning services",
-    "itemListElement": [
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "End of Tenancy Cleaning"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Deep Cleaning"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Oven Cleaning Add-on"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Interior Window Cleaning Add-on"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Exterior Window Cleaning"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Jet Washing"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Builders Clean"}}
-    ]
-  },
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Enfield",
-    "addressRegion": "London",
-    "addressCountry": "GB"
-  }
-}
-</script>
-</head>
-<body>
-<a class="skip-link" href="#main-content">Skip to content</a>
-<header class="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="index.html" aria-label="PDD Cleaning Services home">
-      <img src="logo.jpg" alt="PDD Cleaning Services logo" />
-    </a>
-    <nav class="nav" aria-label="Main navigation">
-      <a href="index.html">Home</a>
-      <a href="services.html">Services</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-    <div class="header-actions">
-      <a class="phone-link" href="tel:07568273696">07568 273696</a>
-      <a class="btn small" href="contact.html#quote-form">Get Quote</a>
-      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
-      </button>
-    </div>
-  </div>
-  <div class="container mobile-menu-shell" id="mobile-menu">
-    <div class="mobile-menu-inner">
-      <nav class="mobile-nav" aria-label="Mobile navigation">
-        <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-      <div class="mobile-cta-row">
-        <a class="btn secondary" href="tel:07568273696">Call</a>
-        <a class="btn" href="contact.html#quote-form">Get Quote</a>
-      </div>
-    </div>
-  </div>
-</header>
-<main id="main-content">
-
-<section class="page-hero"><div class="container reveal"><div class="eyebrow">Privacy Policy</div><h1>Privacy Policy</h1><p class="lead">How PDD Cleaning Services handles enquiry, booking and job information.</p></div></section>
-<section class="section-white section-tight"><div class="container legal-content"><article class="card legal-card reveal">
-<p><strong>Who we are:</strong> PDD Services Limited trading as PDD Cleaning Services. Contact: info@pddcleaningservices.co.uk / 07568 273696. Registered office: [REGISTERED OFFICE ADDRESS IF NEEDED].</p>
-<h2>What information we collect</h2><p>We may collect your name, phone number, email address, property address or postcode, service details, access notes, parking notes, property condition notes, photos where relevant, and payment or invoice details.</p>
-<h2>Why we collect it</h2><p>We use this information to provide quotes, arrange bookings, fulfil cleaning jobs, communicate with you, handle customer support, manage complaints, keep accounting records and meet legal obligations.</p>
-<h2>Who data may be shared with</h2><p>Where necessary, information may be shared with assigned cleaning contractors, payment or accounting providers, website/form providers, and legal or accounting advisers if needed. We only share what is reasonably required for the purpose.</p>
-<h2>Photos</h2><p>Before/after photos may be used for quality control, job completion records and complaint handling. Photos will only be used for marketing with appropriate permission.</p>
-<h2>How long data is kept</h2><p>Enquiry and booking records are kept only for as long as needed for business, legal, accounting and customer service purposes. Accounting records may need to be retained for statutory periods.</p>
-<h2>Your rights</h2><p>You may have rights to request access, correction, deletion, restriction or objection to certain processing of your personal information. Contact us using info@pddcleaningservices.co.uk.</p>
-<h2>ICO / data protection fee</h2><p>ICO registration or data protection fee details: [ICO/DATA PROTECTION FEE PLACEHOLDER IF NEEDED].</p>
-<h2>Updates</h2><p>This policy may be updated as the business, website or booking process develops.</p>
-</article></div></section>
-
-</main>
-<footer class="site-footer">
-  <div class="container footer-grid">
-    <div class="footer-brand">
-      <img src="logo.jpg" alt="PDD Cleaning Services" />
-      <p>Cleaning services across Enfield & North London.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Services</h4>
-      <a href="services.html#end-of-tenancy">End of tenancy</a>
-      <a href="services.html#deep-cleaning">Deep cleaning</a>
-      <a href="services.html#builders-clean">Builders clean</a>
-      <a href="services.html#exterior-windows">Exterior windows</a>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <a href="tel:07568273696">07568 273696</a>
-      <a href="mailto:info@pddcleaningservices.co.uk">info@pddcleaningservices.co.uk</a>
-      <a href="[GOOGLE BUSINESS PROFILE LINK]">Google Business Profile</a>
-    </div>
-    <div class="footer-col">
-      <h4>Legal</h4>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Service</a>
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    PDD Cleaning Services is a trading name of PDD Services Limited, company number [COMPANY NUMBER], registered in England & Wales.
-  </div>
-</footer>
-<script src="script.js"></script>
-</body>
-</html>
-
-```
-
-
-## terms.html
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Terms of Service — PDD Cleaning Services</title>
-<meta name="description" content="Booking terms for PDD Services Limited trading as PDD Cleaning Services." />
-<meta property="og:title" content="Terms of Service — PDD Cleaning Services" />
-<meta property="og:description" content="Booking terms for PDD Services Limited trading as PDD Cleaning Services." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://pddcleaningservices.co.uk" />
-<meta property="og:image" content="https://pddcleaningservices.co.uk/logo.jpg" />
-<link rel="icon" href="favicon.ico" />
-<link rel="stylesheet" href="styles.css" />
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "CleaningService",
-  "name": "PDD Cleaning Services",
-  "legalName": "PDD Services Limited",
-  "url": "https://pddcleaningservices.co.uk",
-  "logo": "https://pddcleaningservices.co.uk/logo.jpg",
-  "telephone": "+447568273696",
-  "email": "info@pddcleaningservices.co.uk",
-  "areaServed": ["Enfield", "Southgate", "Winchmore Hill", "Bounds Green", "Palmers Green", "Wood Green", "Edmonton", "North London"],
-  "description": "Cleaning services across Enfield and North London.",
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Cleaning services",
-    "itemListElement": [
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "End of Tenancy Cleaning"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Deep Cleaning"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Oven Cleaning Add-on"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Interior Window Cleaning Add-on"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Exterior Window Cleaning"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Jet Washing"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Builders Clean"}}
-    ]
-  },
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Enfield",
-    "addressRegion": "London",
-    "addressCountry": "GB"
-  }
-}
-</script>
-</head>
-<body>
-<a class="skip-link" href="#main-content">Skip to content</a>
-<header class="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="index.html" aria-label="PDD Cleaning Services home">
-      <img src="logo.jpg" alt="PDD Cleaning Services logo" />
-    </a>
-    <nav class="nav" aria-label="Main navigation">
-      <a href="index.html">Home</a>
-      <a href="services.html">Services</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-    <div class="header-actions">
-      <a class="phone-link" href="tel:07568273696">07568 273696</a>
-      <a class="btn small" href="contact.html#quote-form">Get Quote</a>
-      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
-      </button>
-    </div>
-  </div>
-  <div class="container mobile-menu-shell" id="mobile-menu">
-    <div class="mobile-menu-inner">
-      <nav class="mobile-nav" aria-label="Mobile navigation">
-        <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-      <div class="mobile-cta-row">
-        <a class="btn secondary" href="tel:07568273696">Call</a>
-        <a class="btn" href="contact.html#quote-form">Get Quote</a>
-      </div>
-    </div>
-  </div>
-</header>
-<main id="main-content">
-
-<section class="page-hero"><div class="container reveal"><div class="eyebrow">Terms of Service</div><h1>Terms of Service / Booking Terms</h1><p class="lead">Practical booking terms for PDD Cleaning Services customers.</p></div></section>
-<section class="section-white section-tight"><div class="container legal-content"><article class="card legal-card reveal">
-<p><strong>Company identity:</strong> PDD Cleaning Services is a trading name of PDD Services Limited, company number [COMPANY NUMBER], registered in England & Wales. Registered office: [REGISTERED OFFICE ADDRESS IF NEEDED].</p>
-<h2>Quote basis</h2><p>Quotes are based on the property size, condition, access, location, add-ons, urgency and availability as described by the customer. The final price may change if the property is materially different from what was described or if extra work is requested.</p>
-<h2>Access responsibility</h2><p>The customer is responsible for providing safe and timely access to the property at the agreed time, including keys, codes, concierge details or agent access where relevant.</p>
-<h2>Parking responsibility</h2><p>The customer should tell us about parking arrangements, restrictions, permits or loading issues before the booking. Parking charges, fines or access-related delays may affect the booking if not disclosed.</p>
-<h2>Utilities and safe access</h2><p>Electricity, hot water, lighting and safe access should be available unless agreed otherwise. We may be unable to complete some work if required utilities or safe access are not available.</p>
-<h2>Payment terms</h2><p>Payment terms: [PAYMENT TERMS PLACEHOLDER]. Accepted payment methods: [PAYMENT METHOD PLACEHOLDER].</p>
-<h2>Cancellation terms</h2><p>Cancellation terms and any late cancellation fees: [CANCELLATION TERMS PLACEHOLDER].</p>
-<h2>48-hour re-clean guarantee</h2><p>If an area within the agreed cleaning scope is missed, the customer must notify us within 48 hours with photos. The guarantee covers missed areas within the agreed scope only.</p><p>The guarantee does not cover wear and tear, pre-existing damage, permanent staining, mould damage, limescale damage, or areas outside the agreed scope.</p>
-<h2>Damage reporting</h2><p>Any damage claim must be reported within 48 hours of job completion with photos and relevant details so it can be reviewed.</p>
-<h2>Consumer cancellation and start-work consent</h2><p>Where a booking is made remotely, customers may have cancellation rights under UK consumer rules. If you ask us to begin work within the cancellation period, you may need to give express consent for the service to start before that period ends.</p>
-<h2>Liability and insurance</h2><p>Liability and insurance statement: [LIABILITY/INSURANCE STATEMENT PLACEHOLDER].</p>
-<h2>Contractor fulfilment</h2><p>Services may be completed by vetted cleaning contractors working on behalf of PDD Cleaning Services.</p>
-</article></div></section>
-
-</main>
-<footer class="site-footer">
-  <div class="container footer-grid">
-    <div class="footer-brand">
-      <img src="logo.jpg" alt="PDD Cleaning Services" />
-      <p>Cleaning services across Enfield & North London.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Services</h4>
-      <a href="services.html#end-of-tenancy">End of tenancy</a>
-      <a href="services.html#deep-cleaning">Deep cleaning</a>
-      <a href="services.html#builders-clean">Builders clean</a>
-      <a href="services.html#exterior-windows">Exterior windows</a>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <a href="tel:07568273696">07568 273696</a>
-      <a href="mailto:info@pddcleaningservices.co.uk">info@pddcleaningservices.co.uk</a>
-      <a href="[GOOGLE BUSINESS PROFILE LINK]">Google Business Profile</a>
-    </div>
-    <div class="footer-col">
-      <h4>Legal</h4>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Service</a>
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    PDD Cleaning Services is a trading name of PDD Services Limited, company number [COMPANY NUMBER], registered in England & Wales.
-  </div>
-</footer>
-<script src="script.js"></script>
-</body>
-</html>
-
-```
-
-
-## thank-you.html
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Thank You — PDD Cleaning Services</title>
-<meta name="description" content="Thank you for contacting PDD Cleaning Services." />
-<meta property="og:title" content="Thank You — PDD Cleaning Services" />
-<meta property="og:description" content="Thank you for contacting PDD Cleaning Services." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://pddcleaningservices.co.uk" />
-<meta property="og:image" content="https://pddcleaningservices.co.uk/logo.jpg" />
-<link rel="icon" href="favicon.ico" />
-<link rel="stylesheet" href="styles.css" />
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "CleaningService",
-  "name": "PDD Cleaning Services",
-  "legalName": "PDD Services Limited",
-  "url": "https://pddcleaningservices.co.uk",
-  "logo": "https://pddcleaningservices.co.uk/logo.jpg",
-  "telephone": "+447568273696",
-  "email": "info@pddcleaningservices.co.uk",
-  "areaServed": ["Enfield", "Southgate", "Winchmore Hill", "Bounds Green", "Palmers Green", "Wood Green", "Edmonton", "North London"],
-  "description": "Cleaning services across Enfield and North London.",
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Cleaning services",
-    "itemListElement": [
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "End of Tenancy Cleaning"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Deep Cleaning"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Oven Cleaning Add-on"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Interior Window Cleaning Add-on"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Exterior Window Cleaning"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Jet Washing"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Builders Clean"}}
-    ]
-  },
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Enfield",
-    "addressRegion": "London",
-    "addressCountry": "GB"
-  }
-}
-</script>
-</head>
-<body>
-<a class="skip-link" href="#main-content">Skip to content</a>
-<header class="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="index.html" aria-label="PDD Cleaning Services home">
-      <img src="logo.jpg" alt="PDD Cleaning Services logo" />
-    </a>
-    <nav class="nav" aria-label="Main navigation">
-      <a href="index.html">Home</a>
-      <a href="services.html">Services</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-    <div class="header-actions">
-      <a class="phone-link" href="tel:07568273696">07568 273696</a>
-      <a class="btn small" href="contact.html#quote-form">Get Quote</a>
-      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
-      </button>
-    </div>
-  </div>
-  <div class="container mobile-menu-shell" id="mobile-menu">
-    <div class="mobile-menu-inner">
-      <nav class="mobile-nav" aria-label="Mobile navigation">
-        <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-      <div class="mobile-cta-row">
-        <a class="btn secondary" href="tel:07568273696">Call</a>
-        <a class="btn" href="contact.html#quote-form">Get Quote</a>
-      </div>
-    </div>
-  </div>
-</header>
-<main id="main-content">
-
-<section class="page-hero">
-  <div class="container reveal">
-    <div class="eyebrow">Thank you</div>
-    <h1>Your quote request has been sent.</h1>
-    <p class="lead">We’ll review your message and come back as soon as possible. For urgent availability, call or message 07568 273696.</p>
-    <div class="hero-actions"><a class="btn" href="index.html">Back to Home</a><a class="btn secondary" href="tel:07568273696">Call 07568 273696</a></div>
-  </div>
-</section>
-<section class="section-white section-tight"><div class="container"><div class="card card-pad reveal"><h2 style="font-size:1.6rem;">What happens next?</h2><p class="lead" style="font-size:1rem;">We’ll confirm the service, area, property size, access and date before sending the next step.</p></div></div></section>
-
-</main>
-<footer class="site-footer">
-  <div class="container footer-grid">
-    <div class="footer-brand">
-      <img src="logo.jpg" alt="PDD Cleaning Services" />
-      <p>Cleaning services across Enfield & North London.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Services</h4>
-      <a href="services.html#end-of-tenancy">End of tenancy</a>
-      <a href="services.html#deep-cleaning">Deep cleaning</a>
-      <a href="services.html#builders-clean">Builders clean</a>
-      <a href="services.html#exterior-windows">Exterior windows</a>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <a href="tel:07568273696">07568 273696</a>
-      <a href="mailto:info@pddcleaningservices.co.uk">info@pddcleaningservices.co.uk</a>
-      <a href="[GOOGLE BUSINESS PROFILE LINK]">Google Business Profile</a>
-    </div>
-    <div class="footer-col">
-      <h4>Legal</h4>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Service</a>
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    PDD Cleaning Services is a trading name of PDD Services Limited, company number [COMPANY NUMBER], registered in England & Wales.
-  </div>
-</footer>
-<script src="script.js"></script>
-</body>
-</html>
-
-```
-
-
-## ADDRESS_LOOKUP_BACKEND_NOTE.md
-
-```md
-# Address lookup backend note
-
-The public website now contains the live address dropdown UI, but a real UK property-level address dropdown needs a secure backend address lookup endpoint.
-
-The website JavaScript calls:
-
-```text
-https://pdd-pink.vercel.app/api/address-autocomplete?query=USER_TYPED_TEXT
-```
-
-That endpoint should live inside the private PDD Operator Portal / CRM app, not inside the public HTML. Do not put address provider API keys in the website code.
-
-Expected JSON response can be any of these shapes:
-
-```json
-{ "addresses": ["12 Example Road, Enfield, EN1 1AA", "14 Example Road, Enfield, EN1 1AA"] }
-```
-
-or:
-
-```json
-{ "suggestions": [{ "label": "12 Example Road, Enfield, EN1 1AA", "value": "12 Example Road, Enfield, EN1 1AA" }] }
-```
-
-or a plain array:
-
-```json
-["12 Example Road, Enfield, EN1 1AA", "14 Example Road, Enfield, EN1 1AA"]
-```
-
-For a full postcode, the endpoint should return the matching address list for that postcode. For partial typing, it should return autocomplete suggestions.
-
-Make sure the endpoint allows requests from:
-
-```text
-https://pddcleaningservices.co.uk
-```
-
-Suggested provider options include getAddress.io, Ideal Postcodes or Loqate. Store the provider key as a Vercel environment variable in the portal app, not in the website files.
 
 ```
