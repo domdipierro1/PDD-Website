@@ -57,4 +57,57 @@ document.addEventListener('DOMContentLoaded', function () {
   } else {
     reveals.forEach(function (el) { el.classList.add('is-visible'); });
   }
+
+  // Progressive quote form: services → date → address → notes
+  document.body.classList.add('js-ready');
+  document.querySelectorAll('[data-progressive-quote-form]').forEach(function (form) {
+    var serviceInput = form.querySelector('[data-service-needed]');
+    var serviceSummary = form.querySelector('[data-service-summary]');
+    var serviceOptions = Array.prototype.slice.call(form.querySelectorAll('[data-service-option]'));
+    var dateSection = form.querySelector('[data-flow-section="date"]');
+    var addressSection = form.querySelector('[data-flow-section="address"]');
+    var notesSection = form.querySelector('[data-flow-section="notes"]');
+    var dateField = form.querySelector('[data-date-field]');
+    var addressField = form.querySelector('[data-address-field]');
+
+    function selectedServices() {
+      return serviceOptions.filter(function (option) { return option.checked; }).map(function (option) { return option.value; });
+    }
+
+    function setSection(section, show) {
+      if (!section) return;
+      section.classList.toggle('is-waiting', !show);
+      section.classList.toggle('is-active', show);
+    }
+
+    function updateFlow() {
+      var services = selectedServices();
+      if (serviceInput) serviceInput.value = services.join(', ');
+      if (serviceSummary) serviceSummary.textContent = services.length ? services.join(', ') : 'Select service(s) and add-ons';
+
+      var hasServices = services.length > 0;
+      var hasDate = dateField && dateField.value;
+      var hasAddress = addressField && addressField.value.trim().length > 2;
+
+      setSection(dateSection, hasServices);
+      setSection(addressSection, hasServices && hasDate);
+      setSection(notesSection, hasServices && hasDate && hasAddress);
+    }
+
+    serviceOptions.forEach(function (option) { option.addEventListener('change', updateFlow); });
+    if (dateField) dateField.addEventListener('change', updateFlow);
+    if (addressField) addressField.addEventListener('input', updateFlow);
+
+    form.addEventListener('submit', function (event) {
+      if (!selectedServices().length) {
+        event.preventDefault();
+        var dropdown = form.querySelector('[data-service-dropdown]');
+        if (dropdown) dropdown.open = true;
+        if (serviceSummary) serviceSummary.focus && serviceSummary.focus();
+      }
+    });
+
+    updateFlow();
+  });
+
 });

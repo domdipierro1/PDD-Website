@@ -102,31 +102,83 @@
       </div>
     </div>
     <aside class="hero-form-card reveal" id="quote-form" aria-label="Quick quote form">
-      <h2>Get a quote in seconds</h2>
-      <p class="form-sub">Name, number and a short message. We’ll ask for anything else after.</p>
-      <form class="quick-form" action="https://pdd-pink.vercel.app/api/website-enquiry" method="POST">
-  <input type="hidden" name="return_url" value="https://pddcleaningservices.co.uk/thank-you.html" />
-  <input type="text" name="company" style="display:none" tabindex="-1" autocomplete="off" />
-  <input type="hidden" name="email" value="" />
-  <input type="hidden" name="postcode_area" value="" />
-  <input type="hidden" name="service_needed" value="Website enquiry" />
-  <input type="hidden" name="property_size" value="" />
-  <label class="form-label">Name
-    <input type="text" name="name" autocomplete="name" required />
-  </label>
-  <label class="form-label">Phone
-    <input type="tel" name="phone" autocomplete="tel" required />
-  </label>
-  <label class="form-label">Enquiry
-    <textarea name="message" placeholder="Example: End of tenancy clean, 2-bed flat in Enfield, needed next week." required></textarea>
-  </label>
-  <label class="consent">
-    <input type="checkbox" name="contact_consent" value="Agreed" required />
-    <span>I agree for PDD Cleaning Services to contact me about my quote request.</span>
-  </label>
-  <button class="btn full" type="submit">Send Quote Request</button>
-  <p class="form-note">No prices published online. We confirm a clear quote before booking.</p>
-</form>
+      <h2>Start your quote</h2>
+      <p class="form-sub">Select what you need and send the basics. It only takes a minute.</p>
+      <form class="quick-form flow-form" action="https://pdd-pink.vercel.app/api/website-enquiry" method="POST" data-progressive-quote-form>
+        <input type="hidden" name="return_url" value="https://pddcleaningservices.co.uk/thank-you.html" />
+        <input type="text" name="company" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input type="hidden" name="email" value="" />
+        <input type="hidden" name="property_size" value="" />
+        <input type="hidden" name="service_needed" value="" data-service-needed />
+
+        <div class="flow-section is-active" data-flow-section="details">
+          <div class="flow-step"><span>1</span> Your details</div>
+          <div class="form-inline">
+            <label class="form-label">Name
+              <input type="text" name="name" autocomplete="name" required />
+            </label>
+            <label class="form-label">Phone number
+              <input type="tel" name="phone" autocomplete="tel" required />
+            </label>
+          </div>
+        </div>
+
+        <div class="flow-section is-active" data-flow-section="services">
+          <div class="flow-step"><span>2</span> What do you need?</div>
+          <details class="service-dropdown" data-service-dropdown>
+            <summary><span data-service-summary>Select service(s) and add-ons</span><strong>Choose</strong></summary>
+            <div class="service-options">
+              <label><input type="checkbox" value="End of Tenancy Cleaning" data-service-option /> End of Tenancy Cleaning</label>
+              <label><input type="checkbox" value="Deep Cleaning" data-service-option /> Deep Cleaning</label>
+              <label><input type="checkbox" value="Oven Cleaning Add-on" data-service-option /> Oven Cleaning Add-on</label>
+              <label><input type="checkbox" value="Interior Window Cleaning Add-on" data-service-option /> Interior Window Cleaning Add-on</label>
+              <label><input type="checkbox" value="Exterior Window Cleaning" data-service-option /> Exterior Window Cleaning</label>
+              <label><input type="checkbox" value="Jet Washing" data-service-option /> Jet Washing</label>
+              <label><input type="checkbox" value="Builders Clean" data-service-option /> Builders Clean</label>
+            </div>
+          </details>
+          <p class="form-note left">You can select more than one item.</p>
+        </div>
+
+        <div class="flow-section is-waiting" data-flow-section="date">
+          <div class="flow-step"><span>3</span> Preferred date</div>
+          <label class="form-label">When would you like the work done?
+            <input type="date" name="preferred_date" data-date-field required />
+          </label>
+        </div>
+
+        <div class="flow-section is-waiting" data-flow-section="address">
+          <div class="flow-step"><span>4</span> Address / postcode</div>
+          <label class="form-label">Start typing your address or postcode
+            <input type="text" name="postcode_area" list="pdd-address-suggestions" autocomplete="street-address" placeholder="e.g. EN1 1AA or 12 Example Road, Enfield" data-address-field required />
+          </label>
+          <datalist id="pdd-address-suggestions">
+            <option value="Enfield" />
+            <option value="Southgate" />
+            <option value="Winchmore Hill" />
+            <option value="Palmers Green" />
+            <option value="Bounds Green" />
+            <option value="Wood Green" />
+            <option value="Edmonton" />
+            <option value="North London" />
+          </datalist>
+          <p class="form-note left">Type the full address if it does not appear.</p>
+        </div>
+
+        <div class="flow-section is-waiting" data-flow-section="notes">
+          <div class="flow-step"><span>5</span> Enquiry notes</div>
+          <label class="form-label">Anything we should know?
+            <textarea name="message" placeholder="Special requirements, access, parking, keys, heavy staining, mould, rubbish, pets or timing notes. Quote depends on size, condition, access and add-ons. Permanent staining, damage, heavy mould, unsafe access and rubbish removal are not included unless specifically agreed." required></textarea>
+          </label>
+          <p class="scope-microcopy">Scope note: final quote depends on size, condition, access and add-ons. Anything unusual should be mentioned before booking.</p>
+          <label class="consent">
+            <input type="checkbox" name="contact_consent" value="Agreed" required />
+            <span>I agree for PDD Cleaning Services to contact me about my quote request.</span>
+          </label>
+          <button class="btn full" type="submit">Submit Enquiry</button>
+          <p class="form-note">We’ll confirm the scope and quote before any booking is agreed.</p>
+        </div>
+      </form>
     </aside>
   </div>
 </section>
