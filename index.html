@@ -105,6 +105,12 @@
       <h2>Get a quote in seconds</h2>
       <p class="form-sub">Name, number and a short message. We’ll ask for anything else after.</p>
       <form class="quick-form" action="https://pdd-pink.vercel.app/api/website-enquiry" method="POST">
+  <input type="hidden" name="return_url" value="https://pddcleaningservices.co.uk/thank-you.html" />
+  <input type="text" name="company" style="display:none" tabindex="-1" autocomplete="off" />
+  <input type="hidden" name="email" value="" />
+  <input type="hidden" name="postcode_area" value="" />
+  <input type="hidden" name="service_needed" value="Website enquiry" />
+  <input type="hidden" name="property_size" value="" />
   <label class="form-label">Name
     <input type="text" name="name" autocomplete="name" required />
   </label>
