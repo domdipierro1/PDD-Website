@@ -812,3 +812,19 @@ document.addEventListener('DOMContentLoaded', function () {
   window.addEventListener('scroll', keepHeaderVisibleOnMobile, { passive: true });
   window.addEventListener('resize', keepHeaderVisibleOnMobile);
 });
+
+
+/* Mobile quote heading visibility safety */
+document.addEventListener('DOMContentLoaded', function () {
+  function restoreQuoteHeadings() {
+    if (!window.matchMedia('(max-width: 760px)').matches) return;
+    document.querySelectorAll('.quote-heading').forEach(function (heading) {
+      heading.style.display = 'block';
+      heading.style.visibility = 'visible';
+      heading.style.opacity = '1';
+    });
+  }
+
+  restoreQuoteHeadings();
+  window.addEventListener('resize', restoreQuoteHeadings);
+});
