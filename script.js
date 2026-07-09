@@ -700,13 +700,6 @@ document.addEventListener('click', function () {
 }, true);
 
 
-/* Calendar next-month conflict fix */
-document.addEventListener('click', function (event) {
-  var calendarNext = event.target.closest('[data-cal-next]');
-  if (!calendarNext) return;
-  event.stopPropagation();
-}, true);
-
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('[data-calendar]').forEach(function (calendar) {
     var observer = new MutationObserver(function () {
@@ -717,5 +710,25 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
     observer.observe(calendar, { childList: true, subtree: true });
+  });
+});
+
+
+/* Calendar navigation working fix
+   Do not stop propagation here — the calendar's own popover handler must receive the click. */
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('[data-progressive-quote-form]').forEach(function (form) {
+    var calendar = form.querySelector('[data-calendar]');
+    if (!calendar) return;
+
+    calendar.addEventListener('click', function () {
+      setTimeout(function () {
+        calendar.querySelectorAll('.calendar-nav').forEach(function (nav) {
+          nav.disabled = false;
+          nav.removeAttribute('disabled');
+          nav.setAttribute('aria-disabled', 'false');
+        });
+      }, 0);
+    }, false);
   });
 });
