@@ -476,3 +476,163 @@ document.addEventListener('DOMContentLoaded', function () {
   document.addEventListener('click', paintQuoteButtons, true);
   window.addEventListener('pageshow', paintQuoteButtons);
 })();
+
+
+/* Multi-service quote flow patch */
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('[data-progressive-quote-form]').forEach(function (form) {
+    var steps = Array.prototype.slice.call(form.querySelectorAll('[data-step]'));
+    var currentIndex = Math.max(0, steps.findIndex(function (s) { return s.classList.contains('is-active'); }));
+    var hiddenService = form.querySelector('[data-service-needed]');
+    var progressLabel = form.querySelector('[data-step-label]');
+    var progressTitle = form.querySelector('[data-step-title]');
+    var progressBar = form.querySelector('[data-progress-bar]');
+    var serviceOptions = Array.prototype.slice.call(form.querySelectorAll('[data-service-option]'));
+    var addonOptions = Array.prototype.slice.call(form.querySelectorAll('[data-addon-option]'));
+
+    function selectedServices() {
+      return serviceOptions.filter(function (i) { return i.checked; }).map(function (i) { return i.value; });
+    }
+
+    function addonsAllowed() {
+      return serviceOptions.some(function (i) {
+        return i.checked && (i.value === 'End of tenancy cleaning' || i.value === 'Deep cleaning');
+      });
+    }
+
+    function syncServiceSummary() {
+      if (hiddenService) hiddenService.value = selectedServices().join(', ');
+      if (!addonsAllowed()) addonOptions.forEach(function (i) { i.checked = false; });
+    }
+
+    function visibleSteps() {
+      return steps.filter(function (step) {
+        return !(step.getAttribute('data-step-type') === 'addons' && !addonsAllowed());
+      });
+    }
+
+    function updateProgress() {
+      var visible = visibleSteps();
+      var active = steps[currentIndex] || steps[0];
+      var visibleIndex = visible.indexOf(active);
+      if (visibleIndex < 0) {
+        active = visible[0] || steps[0];
+        currentIndex = steps.indexOf(active);
+        visibleIndex = visible.indexOf(active);
+      }
+      var total = visible.length;
+      var number = visibleIndex + 1;
+      var title = active ? active.getAttribute('data-step-title') || '' : '';
+      if (progressLabel) progressLabel.textContent = 'Step ' + number + ' of ' + total;
+      if (progressTitle) progressTitle.textContent = title;
+      if (progressBar) progressBar.style.width = Math.max(12, (number / total) * 100) + '%';
+    }
+
+    function showStep(index) {
+      currentIndex = Math.max(0, Math.min(index, steps.length - 1));
+      var active = steps[currentIndex];
+      steps.forEach(function (step) { step.classList.toggle('is-active', step === active); });
+      syncServiceSummary();
+      updateProgress();
+    }
+
+    function setError(step, message) {
+      var error = step.querySelector('[data-step-error]');
+      if (error) error.textContent = message || '';
+    }
+
+    function validateStep(step) {
+      var type = step.getAttribute('data-step-type');
+      setError(step, '');
+
+      if (type === 'details') {
+        var name = form.querySelector('[name="name"]');
+        var phone = form.querySelector('[name="phone"]');
+        if (!name || !name.value.trim() || !phone || !phone.value.trim()) {
+          setError(step, 'Please enter your name and phone number.');
+          return false;
+        }
+      }
+
+      if (type === 'service') {
+        if (!selectedServices().length) {
+          setError(step, 'Please select at least one service.');
+          return false;
+        }
+      }
+
+      if (type === 'property') {
+        var checked = form.querySelector('[name="property_size_choice"]:checked');
+        var hiddenSize = form.querySelector('[data-property-size-field]');
+        var other = form.querySelector('[data-property-other]');
+        if (!checked) {
+          setError(step, 'Please choose the property size.');
+          return false;
+        }
+        if (checked.value === 'Other' && (!other || !other.value.trim())) {
+          setError(step, 'Please explain the property size.');
+          return false;
+        }
+        if (hiddenSize) hiddenSize.value = checked.value === 'Other' ? (other.value.trim() || 'Other') : checked.value;
+      }
+
+      if (type === 'date') {
+        var dateHidden = form.querySelector('[data-date-field]');
+        if (!dateHidden || !dateHidden.value.trim()) {
+          setError(step, 'Please choose a preferred date.');
+          return false;
+        }
+      }
+
+      if (type === 'address') {
+        var postcode = form.querySelector('[name="postcode_area"], [name="postcode"]');
+        var line1 = form.querySelector('[name="address_line_1"]');
+        if (!postcode || !postcode.value.trim() || !line1 || !line1.value.trim()) {
+          setError(step, 'Please enter postcode and address line 1.');
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    function go(delta) {
+      syncServiceSummary();
+      var visible = visibleSteps();
+      var active = steps[currentIndex];
+      var pos = visible.indexOf(active);
+      if (pos < 0) pos = 0;
+      var nextVisible = visible[Math.max(0, Math.min(visible.length - 1, pos + delta))];
+      showStep(steps.indexOf(nextVisible));
+    }
+
+    serviceOptions.forEach(function (input) {
+      input.addEventListener('change', function () {
+        syncServiceSummary();
+        updateProgress();
+      });
+    });
+
+    form.addEventListener('click', function (event) {
+      var next = event.target.closest('[data-next]');
+      var back = event.target.closest('[data-back]');
+      if (next) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        var active = steps[currentIndex];
+        if (validateStep(active)) go(1);
+      }
+      if (back) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        go(-1);
+      }
+    }, true);
+
+    form.addEventListener('submit', function () {
+      syncServiceSummary();
+    }, true);
+
+    showStep(currentIndex);
+  });
+});
