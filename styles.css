@@ -554,3 +554,281 @@ body{
     border-color: rgba(255,255,255,.18);
   }
 }
+
+/* -------------------------------------------------
+   Homepage viewport fit pass — less zoomed-in desktop hero
+   ------------------------------------------------- */
+@media (min-width: 900px) {
+  .site-header {
+    min-height: 0;
+  }
+
+  .header-inner {
+    min-height: 58px;
+    padding: 5px 0;
+  }
+
+  .brand img {
+    width: 88px;
+  }
+
+  .nav {
+    gap: 26px;
+    font-size: .9rem;
+  }
+
+  .phone-link {
+    font-size: .95rem;
+  }
+
+  .home-page .hero {
+    padding-top: 26px;
+    padding-bottom: 26px;
+  }
+
+  .home-page .hero-grid {
+    max-width: 980px;
+    grid-template-columns: minmax(360px, 450px) minmax(390px, 450px);
+    gap: 32px;
+    align-items: start;
+  }
+
+  .home-page .hero-copy,
+  .home-page .hero-form-card .quote-shell {
+    min-height: 420px !important;
+    border-radius: 38px;
+  }
+
+  .home-page .hero-copy {
+    padding: 30px 36px !important;
+    justify-content: center;
+  }
+
+  .home-page .hero-copy .eyebrow {
+    font-size: .76rem;
+    line-height: 1.25;
+    padding: 9px 13px;
+    margin-bottom: 22px;
+  }
+
+  .home-page .hero-copy h1 {
+    font-size: clamp(3rem, 4.35vw, 4rem);
+    line-height: .98;
+    max-width: 400px;
+  }
+
+  .home-page .hero-copy .lead {
+    margin-top: 14px;
+    font-size: .98rem;
+    line-height: 1.45;
+    max-width: 390px;
+  }
+
+  .home-page .hero-copy .hero-actions {
+    margin-top: 18px;
+    gap: 10px;
+  }
+
+  .home-page .hero-copy .btn {
+    min-height: 42px;
+    padding: 0 16px;
+    font-size: .85rem;
+  }
+
+  .home-page .hero-copy .trust-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 380px;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .home-page .hero-copy .trust-chip {
+    padding: 7px 9px;
+    font-size: .77rem;
+    box-shadow: none;
+  }
+
+  .home-page .hero-copy .trust-chip span {
+    width: 17px;
+    height: 17px;
+    font-size: .65rem;
+  }
+
+  .home-page .hero-form-card .quote-shell {
+    padding: 28px 34px 22px !important;
+  }
+
+  .home-page .quote-heading {
+    padding-bottom: 12px;
+  }
+
+  .home-page .quote-heading h2 {
+    font-size: 2rem;
+    margin-top: 8px;
+  }
+
+  .home-page .quote-heading p {
+    margin-top: 6px;
+    font-size: .92rem;
+  }
+
+  .home-page .hero-form-card .mini-kicker {
+    font-size: .74rem;
+    padding: 7px 12px;
+  }
+
+  .home-page .quote-form {
+    gap: 13px;
+  }
+
+  .home-page .quote-progress {
+    padding: 11px 13px;
+    border-radius: 17px;
+    gap: 8px;
+  }
+
+  .home-page .quote-progress-top {
+    font-size: .8rem;
+  }
+
+  .home-page .quote-progress-track {
+    height: 7px;
+  }
+
+  .home-page .quote-stage {
+    min-height: 238px;
+  }
+
+  .home-page .quote-stage:has(.flow-step-card.is-active[data-step-type="service"]) {
+    min-height: 315px;
+  }
+
+  .home-page .quote-stage:has(.flow-step-card.is-active[data-step-type="property"]) {
+    min-height: 340px;
+  }
+
+  .home-page .quote-stage:has(.flow-step-card.is-active[data-step-type="date"]) {
+    min-height: 285px;
+  }
+
+  .home-page .quote-stage:has(.flow-step-card.is-active[data-step-type="address"]) {
+    min-height: 390px;
+  }
+
+  .home-page .quote-stage:has(.flow-step-card.is-active[data-step-type="notes"]) {
+    min-height: 345px;
+  }
+
+  .home-page .flow-step-card {
+    gap: 13px;
+  }
+
+  .home-page .step-intro {
+    gap: 12px;
+  }
+
+  .home-page .step-intro > span {
+    width: 36px;
+    height: 36px;
+    border-radius: 13px;
+    font-size: 1rem;
+  }
+
+  .home-page .step-intro h3 {
+    font-size: 1.32rem;
+  }
+
+  .home-page .step-intro p {
+    margin-top: 4px;
+    font-size: .88rem;
+    line-height: 1.35;
+  }
+
+  .home-page .form-grid.two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .home-page .form-label {
+    gap: 6px;
+    font-size: .84rem;
+  }
+
+  .home-page input,
+  .home-page textarea,
+  .home-page select {
+    padding: 12px 13px;
+    border-radius: 14px;
+  }
+
+  .home-page textarea {
+    min-height: 112px;
+  }
+
+  .home-page .property-choice-grid,
+  .home-page .addon-choice-grid {
+    gap: 8px;
+  }
+
+  .home-page .property-choice-grid label,
+  .home-page .addon-choice-grid label,
+  .home-page .service-choice-grid label {
+    padding: 10px 11px;
+    border-radius: 13px;
+  }
+
+  .home-page .form-error {
+    min-height: 14px;
+    font-size: .78rem;
+  }
+
+  .home-page .field-help,
+  .home-page .privacy-line {
+    font-size: .78rem;
+  }
+
+  .home-page .form-actions .btn {
+    min-height: 42px;
+    font-size: .86rem;
+  }
+
+  .proof-strip {
+    padding: 12px 0;
+  }
+
+  .proof-grid div {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .home-page .hero-grid {
+    max-width: 1020px;
+  }
+}
+
+@media (min-width: 900px) and (max-height: 760px) {
+  .home-page .hero {
+    padding-top: 22px;
+    padding-bottom: 22px;
+  }
+
+  .home-page .hero-copy,
+  .home-page .hero-form-card .quote-shell {
+    min-height: 400px !important;
+  }
+
+  .home-page .hero-copy h1 {
+    font-size: clamp(2.85rem, 4vw, 3.65rem);
+  }
+
+  .home-page .quote-heading h2 {
+    font-size: 1.82rem;
+  }
+
+  .home-page .quote-stage {
+    min-height: 215px;
+  }
+}
