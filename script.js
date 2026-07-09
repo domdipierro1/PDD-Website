@@ -658,3 +658,43 @@ document.addEventListener('DOMContentLoaded', function () {
     nav.setAttribute('aria-disabled', 'false');
   });
 });
+
+
+/* Calendar full-card overlay class + future-safe navigation */
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('[data-progressive-quote-form]').forEach(function (form) {
+    var shell = form.closest('.quote-shell');
+    var calendar = form.querySelector('[data-calendar]');
+    if (!shell || !calendar) return;
+
+    var observer = new MutationObserver(function () {
+      var isOpen = !calendar.hasAttribute('hidden');
+      shell.classList.toggle('calendar-open', isOpen);
+      if (isOpen) {
+        form.querySelectorAll('.calendar-nav').forEach(function (nav) {
+          nav.disabled = false;
+          nav.removeAttribute('disabled');
+          nav.setAttribute('aria-disabled', 'false');
+        });
+      }
+    });
+
+    observer.observe(calendar, { attributes: true, attributeFilter: ['hidden'] });
+
+    calendar.addEventListener('click', function () {
+      setTimeout(function () {
+        if (calendar.hasAttribute('hidden')) shell.classList.remove('calendar-open');
+      }, 20);
+    });
+  });
+});
+
+document.addEventListener('click', function () {
+  setTimeout(function () {
+    document.querySelectorAll('.calendar-nav').forEach(function (nav) {
+      nav.disabled = false;
+      nav.removeAttribute('disabled');
+      nav.setAttribute('aria-disabled', 'false');
+    });
+  }, 0);
+}, true);
