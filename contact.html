@@ -111,24 +111,27 @@
         <input type="hidden" name="return_url" value="https://pddcleaningservices.co.uk/thank-you.html" />
         <input type="text" name="company" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <input type="hidden" name="email" value="" />
-        <input type="hidden" name="property_size" value="" />
+        <input type="hidden" name="property_size" value="" data-property-size-field />
         <input type="hidden" name="service_needed" value="" data-service-needed />
         <input type="hidden" name="preferred_date" value="" data-date-field />
 
-        <div class="flow-section is-active" data-flow-section="details">
-          <div class="flow-step"><span>1</span> Your details</div>
+        <div class="flow-section is-active" data-flow-section="details" data-flow-step-index="0">
+          <div class="flow-step"><span>1</span> Name &amp; number</div>
           <div class="form-inline">
             <label class="form-label">Name
-              <input type="text" name="name" autocomplete="name" required />
+              <input type="text" name="name" autocomplete="name" required data-flow-required />
             </label>
             <label class="form-label">Phone number
-              <input type="tel" name="phone" autocomplete="tel" required />
+              <input type="tel" name="phone" autocomplete="tel" required data-flow-required />
             </label>
+          </div>
+          <div class="flow-nav">
+            <button class="btn full" type="button" data-flow-next>Next</button>
           </div>
         </div>
 
-        <div class="flow-section is-active" data-flow-section="services">
-          <div class="flow-step"><span>2</span> What do you need?</div>
+        <div class="flow-section is-waiting" data-flow-section="services" data-flow-step-index="1">
+          <div class="flow-step"><span>2</span> Service</div>
           <details class="service-dropdown" data-service-dropdown>
             <summary><span data-service-summary>Select service(s) and add-ons</span><strong>Choose</strong></summary>
             <div class="service-options">
@@ -142,10 +145,37 @@
             </div>
           </details>
           <p class="form-note left">Select one or more services. Add-ons can be included with end of tenancy or deep cleaning.</p>
+          <div class="flow-nav two">
+            <button class="btn secondary full" type="button" data-flow-back>Back</button>
+            <button class="btn full" type="button" data-flow-next>Next</button>
+          </div>
         </div>
 
-        <div class="flow-section is-waiting" data-flow-section="date">
-          <div class="flow-step"><span>3</span> Preferred date</div>
+        <div class="flow-section is-waiting" data-flow-section="property" data-flow-step-index="2">
+          <div class="flow-step"><span>3</span> Property size</div>
+          <fieldset class="property-options" data-property-options>
+            <legend class="sr-only">Property size</legend>
+            <label><input type="radio" name="property_size_choice" value="Studio" data-property-option /> Studio</label>
+            <label><input type="radio" name="property_size_choice" value="1 Bed" data-property-option /> 1 Bed</label>
+            <label><input type="radio" name="property_size_choice" value="2 Bed" data-property-option /> 2 Bed</label>
+            <label><input type="radio" name="property_size_choice" value="3 Bed" data-property-option /> 3 Bed</label>
+            <label><input type="radio" name="property_size_choice" value="4 Bed" data-property-option /> 4 Bed</label>
+            <label><input type="radio" name="property_size_choice" value="5 Bed" data-property-option /> 5 Bed</label>
+            <label><input type="radio" name="property_size_choice" value="Other" data-property-option data-property-other-option /> Other</label>
+          </fieldset>
+          <div class="property-other-wrap" data-property-other-wrap hidden>
+            <label class="form-label">Tell us the property size
+              <input type="text" name="property_size_other" placeholder="e.g. 6 bed house, office, maisonette" data-property-other />
+            </label>
+          </div>
+          <div class="flow-nav two">
+            <button class="btn secondary full" type="button" data-flow-back>Back</button>
+            <button class="btn full" type="button" data-flow-next>Next</button>
+          </div>
+        </div>
+
+        <div class="flow-section is-waiting" data-flow-section="date" data-flow-step-index="3">
+          <div class="flow-step"><span>4</span> Preferred date</div>
           <label class="form-label">When would you like the work done?</label>
           <div class="date-picker" data-date-picker>
             <button class="date-trigger" type="button" data-date-trigger aria-haspopup="dialog" aria-expanded="false">
@@ -155,30 +185,49 @@
             <div class="calendar-popover" data-calendar hidden></div>
           </div>
           <p class="form-note left">Click anywhere in the date box to open the calendar.</p>
+          <div class="flow-nav two">
+            <button class="btn secondary full" type="button" data-flow-back>Back</button>
+            <button class="btn full" type="button" data-flow-next>Next</button>
+          </div>
         </div>
 
-        <div class="flow-section is-waiting" data-flow-section="address">
-          <div class="flow-step"><span>4</span> Address / postcode</div>
-          <label class="form-label" for="quote-address">Start typing your address or postcode</label>
+        <div class="flow-section is-waiting" data-flow-section="address" data-flow-step-index="4">
+          <div class="flow-step"><span>5</span> Address / postcode</div>
+          <label class="form-label" for="quote-postcode">Start typing your postcode</label>
           <div class="address-lookup" data-address-lookup>
-            <input id="quote-address" type="text" name="postcode_area" autocomplete="off" placeholder="Start typing address or postcode" data-address-field data-address-input required aria-autocomplete="list" aria-expanded="false" />
+            <input id="quote-postcode" type="text" name="postcode_area" autocomplete="off" placeholder="Start typing postcode" data-address-field data-address-input required aria-autocomplete="list" aria-expanded="false" />
             <div class="address-results" data-address-results role="listbox" hidden></div>
           </div>
-          <p class="address-status" data-address-status>Start typing and choose the correct address if it appears. You can also type the full address manually.</p>
+          <p class="address-status" data-address-status>Start typing and choose the correct postcode.</p>
+          <div class="address-lines" data-address-lines hidden>
+            <label class="form-label">Address line 1
+              <input type="text" name="address_line_1" autocomplete="address-line1" placeholder="House/flat number and street" data-address-line1 />
+            </label>
+            <label class="form-label">Address line 2
+              <input type="text" name="address_line_2" autocomplete="address-line2" placeholder="City, area, building name or extra details" data-address-line2 />
+            </label>
+          </div>
+          <div class="flow-nav two">
+            <button class="btn secondary full" type="button" data-flow-back>Back</button>
+            <button class="btn full" type="button" data-flow-next>Next</button>
+          </div>
         </div>
 
-        <div class="flow-section is-waiting" data-flow-section="notes">
-          <div class="flow-step"><span>5</span> Enquiry notes</div>
+        <div class="flow-section is-waiting" data-flow-section="notes" data-flow-step-index="5">
+          <div class="flow-step"><span>6</span> Anything else we should know?</div>
           <div class="notes-field">
             <label class="form-label" for="quote-message">Anything else we should know?</label>
             <p class="scope-microcopy">Access, parking, keys, heavy staining, mould, rubbish, pets, timing issues or any special requirements.</p>
             <textarea id="quote-message" name="message"></textarea>
           </div>
           <label class="consent">
-            <input type="checkbox" name="contact_consent" value="Agreed" required />
+            <input type="checkbox" name="contact_consent" value="Agreed" required data-consent />
             <span>I agree for PDD Cleaning Services to contact me about my quote request.</span>
           </label>
-          <button class="btn full" type="submit">Submit Enquiry</button>
+          <div class="flow-nav two">
+            <button class="btn secondary full" type="button" data-flow-back>Back</button>
+            <button class="btn full" type="submit">Submit Enquiry</button>
+          </div>
           <p class="form-note">We’ll confirm the scope and quote before any booking is agreed.</p>
         </div>
       </form>

@@ -226,19 +226,41 @@ document.addEventListener('DOMContentLoaded', function () {
     }).filter(Boolean).slice(0, 10);
   }
 
+  function escapeHtml(value) {
+    return String(value || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
   function setupAddressLookup(form, updateFlow) {
     var lookup = form.querySelector('[data-address-lookup]');
-    if (!lookup) return;
+    if (!lookup) return { hasSelectedPostcode: function () { return false; } };
 
     var input = lookup.querySelector('[data-address-input]');
     var results = lookup.querySelector('[data-address-results]');
     var status = form.querySelector('[data-address-status]');
+    var addressLines = form.querySelector('[data-address-lines]');
+    var line1 = form.querySelector('[data-address-line1]');
+    var line2 = form.querySelector('[data-address-line2]');
     var endpoint = form.getAttribute('data-address-endpoint') || 'https://pdd-pink.vercel.app/api/address-autocomplete';
     var activeRequest = 0;
     var debounceTimer = null;
+    var postcodeSelected = false;
 
     function setStatus(message) {
       if (status) status.textContent = message;
+    }
+
+    function setAddressLinesVisible(show) {
+      if (!addressLines) return;
+      addressLines.hidden = !show;
+      if (!show) {
+        if (line1) line1.value = '';
+        if (line2) line2.value = '';
+      }
     }
 
     function hideResults() {
@@ -253,21 +275,21 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!results || !input) return;
       if (!items.length) {
         hideResults();
-        setStatus('Keep typing, or enter the full address manually if it does not appear.');
+        setStatus('Keep typing, then choose the correct postcode from the dropdown.');
         return;
       }
       results.innerHTML = items.map(function (item, index) {
-        return '<button type="button" class="address-option" role="option" data-address-value="' + item.value.replace(/"/g, '&quot;') + '" data-address-index="' + index + '">' + item.label + '</button>';
+        return '<button type="button" class="address-option" role="option" data-address-value="' + escapeHtml(item.value) + '" data-address-index="' + index + '">' + escapeHtml(item.label) + '</button>';
       }).join('');
       results.hidden = false;
       input.setAttribute('aria-expanded', 'true');
-      setStatus('Choose the correct address from the dropdown.');
+      setStatus('Choose the correct postcode from the dropdown.');
     }
 
     function fetchAddresses(query) {
       activeRequest += 1;
       var requestId = activeRequest;
-      setStatus('Searching addresses…');
+      setStatus('Searching postcodes…');
       fetch(endpoint + '?query=' + encodeURIComponent(query), {
         method: 'GET',
         headers: { 'Accept': 'application/json' }
@@ -283,18 +305,20 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(function () {
           if (requestId !== activeRequest) return;
           hideResults();
-          setStatus('Keep typing, or enter the full address manually if it does not appear.');
+          setStatus('Keep typing, then choose the correct postcode from the dropdown.');
         });
     }
 
     if (input) {
       input.addEventListener('input', function () {
+        postcodeSelected = false;
+        setAddressLinesVisible(false);
         updateFlow();
         var query = input.value.trim();
         window.clearTimeout(debounceTimer);
         if (query.length < 1) {
           hideResults();
-          setStatus('Start typing and choose the correct address if it appears. You can also type the full address manually.');
+          setStatus('Start typing and choose the correct postcode.');
           return;
         }
         debounceTimer = window.setTimeout(function () { fetchAddresses(query); }, 180);
@@ -310,76 +334,181 @@ document.addEventListener('DOMContentLoaded', function () {
         var option = event.target.closest('[data-address-value]');
         if (!option || !input) return;
         input.value = option.getAttribute('data-address-value') || option.textContent;
+        postcodeSelected = true;
         hideResults();
-        setStatus('Address selected.');
+        setAddressLinesVisible(true);
+        setStatus('Postcode selected. Now add address line 1.');
+        if (line1) line1.focus();
         updateFlow();
       });
     }
+
+    [line1, line2].forEach(function (field) {
+      if (field) field.addEventListener('input', updateFlow);
+    });
+
+    return {
+      hasSelectedPostcode: function () {
+        return postcodeSelected;
+      }
+    };
   }
 
-  // Progressive quote form: details → services → date → address → notes
+  // Progressive quote form: details → service → property → date → address → notes.
   document.querySelectorAll('[data-progressive-quote-form]').forEach(function (form) {
+    var sections = Array.prototype.slice.call(form.querySelectorAll('[data-flow-section]'));
     var serviceInput = form.querySelector('[data-service-needed]');
     var serviceSummary = form.querySelector('[data-service-summary]');
     var serviceOptions = Array.prototype.slice.call(form.querySelectorAll('[data-service-option]'));
-    var dateSection = form.querySelector('[data-flow-section="date"]');
-    var addressSection = form.querySelector('[data-flow-section="address"]');
-    var notesSection = form.querySelector('[data-flow-section="notes"]');
+    var propertyInput = form.querySelector('[data-property-size-field]');
+    var propertyOptions = Array.prototype.slice.call(form.querySelectorAll('[data-property-option]'));
+    var propertyOtherOption = form.querySelector('[data-property-other-option]');
+    var propertyOtherWrap = form.querySelector('[data-property-other-wrap]');
+    var propertyOther = form.querySelector('[data-property-other]');
     var dateField = form.querySelector('[data-date-field]');
     var addressField = form.querySelector('[data-address-field]');
+    var addressLine1 = form.querySelector('[data-address-line1]');
+    var consent = form.querySelector('[data-consent]');
+    var currentStep = 0;
+    var addressLookupController;
 
     function selectedServices() {
       return serviceOptions.filter(function (option) { return option.checked; }).map(function (option) { return option.value; });
     }
 
-    function setSection(section, show) {
+    function selectedPropertyValue() {
+      var selected = propertyOptions.find(function (option) { return option.checked; });
+      if (!selected) return '';
+      if (selected.value === 'Other') {
+        var otherText = propertyOther ? propertyOther.value.trim() : '';
+        return otherText ? 'Other: ' + otherText : '';
+      }
+      return selected.value;
+    }
+
+    function setHiddenValues() {
+      var services = selectedServices();
+      var propertyValue = selectedPropertyValue();
+      if (serviceInput) serviceInput.value = services.join(', ');
+      if (serviceSummary) serviceSummary.textContent = services.length ? services.join(', ') : 'Select service(s) and add-ons';
+      if (propertyInput) propertyInput.value = propertyValue;
+    }
+
+    function stepName(index) {
+      var section = sections[index];
+      return section ? section.getAttribute('data-flow-section') : '';
+    }
+
+    function isStepComplete(index) {
+      var name = stepName(index);
+      if (name === 'details') {
+        var nameField = form.querySelector('input[name="name"]');
+        var phoneField = form.querySelector('input[name="phone"]');
+        return !!(nameField && nameField.value.trim().length > 1 && phoneField && phoneField.value.trim().length > 5);
+      }
+      if (name === 'services') {
+        return selectedServices().length > 0;
+      }
+      if (name === 'property') {
+        return selectedPropertyValue().length > 0;
+      }
+      if (name === 'date') {
+        return !!(dateField && dateField.value);
+      }
+      if (name === 'address') {
+        return !!(
+          addressField &&
+          addressField.value.trim().length > 4 &&
+          addressLookupController &&
+          addressLookupController.hasSelectedPostcode() &&
+          addressLine1 &&
+          addressLine1.value.trim().length > 2
+        );
+      }
+      if (name === 'notes') {
+        return true;
+      }
+      return false;
+    }
+
+    function focusFirstField(index) {
+      var section = sections[index];
       if (!section) return;
-      section.classList.toggle('is-waiting', !show);
-      section.classList.toggle('is-active', show);
+      var target = section.querySelector('input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]), button, textarea, select, summary');
+      if (target && typeof target.focus === 'function') target.focus();
+    }
+
+    function updatePropertyOtherVisibility() {
+      var show = !!(propertyOtherOption && propertyOtherOption.checked);
+      if (propertyOtherWrap) propertyOtherWrap.hidden = !show;
+      if (!show && propertyOther) propertyOther.value = '';
+    }
+
+    function updateButtons() {
+      sections.forEach(function (section, index) {
+        var next = section.querySelector('[data-flow-next]');
+        if (next) next.disabled = !isStepComplete(index);
+      });
+    }
+
+    function setCurrentStep(index) {
+      currentStep = Math.max(0, Math.min(index, sections.length - 1));
+      updateFlow();
     }
 
     function updateFlow() {
-      var services = selectedServices();
-      if (serviceInput) serviceInput.value = services.join(', ');
-      if (serviceSummary) serviceSummary.textContent = services.length ? services.join(', ') : 'Select service(s) and add-ons';
-
-      var hasServices = services.length > 0;
-      var hasDate = dateField && dateField.value;
-      var hasAddress = addressField && addressField.value.trim().length > 2;
-
-      setSection(dateSection, hasServices);
-      setSection(addressSection, hasServices && hasDate);
-      setSection(notesSection, hasServices && hasDate && hasAddress);
+      setHiddenValues();
+      updatePropertyOtherVisibility();
+      sections.forEach(function (section, index) {
+        var isCurrent = index === currentStep;
+        section.classList.toggle('is-active', isCurrent);
+        section.classList.toggle('is-waiting', !isCurrent);
+        section.setAttribute('aria-hidden', isCurrent ? 'false' : 'true');
+      });
+      updateButtons();
     }
 
     setupDatePicker(form, updateFlow);
-    setupAddressLookup(form, updateFlow);
+    addressLookupController = setupAddressLookup(form, updateFlow);
+
+    form.querySelectorAll('[data-flow-next]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        if (!isStepComplete(currentStep)) {
+          focusFirstField(currentStep);
+          updateFlow();
+          return;
+        }
+        var dropdown = form.querySelector('[data-service-dropdown]');
+        if (dropdown) dropdown.open = false;
+        setCurrentStep(currentStep + 1);
+      });
+    });
+
+    form.querySelectorAll('[data-flow-back]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        setCurrentStep(currentStep - 1);
+      });
+    });
 
     serviceOptions.forEach(function (option) { option.addEventListener('change', updateFlow); });
+    propertyOptions.forEach(function (option) { option.addEventListener('change', updateFlow); });
+    if (propertyOther) propertyOther.addEventListener('input', updateFlow);
     if (addressField) addressField.addEventListener('input', updateFlow);
+    if (consent) consent.addEventListener('change', updateFlow);
+    form.querySelectorAll('[data-flow-required]').forEach(function (field) {
+      field.addEventListener('input', updateFlow);
+    });
 
     form.addEventListener('submit', function (event) {
-      if (!selectedServices().length) {
-        event.preventDefault();
-        var dropdown = form.querySelector('[data-service-dropdown]');
-        if (dropdown) dropdown.open = true;
-        if (dropdown) dropdown.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
-        return;
+      setHiddenValues();
+      for (var i = 0; i < sections.length - 1; i += 1) {
+        if (!isStepComplete(i)) {
+          event.preventDefault();
+          setCurrentStep(i);
+          focusFirstField(i);
+          return;
+        }
       }
-
-      if (!dateField || !dateField.value) {
-        event.preventDefault();
-        form.classList.add('has-date-error');
-        setSection(dateSection, true);
-        var trigger = form.querySelector('[data-date-trigger]');
-        var popover = form.querySelector('[data-calendar]');
-        if (trigger) trigger.focus();
-        if (trigger) trigger.setAttribute('aria-expanded', 'true');
-        if (popover) popover.hidden = false;
-        return;
-      }
-
-      updateFlow();
     });
 
     updateFlow();

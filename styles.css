@@ -101,3 +101,19 @@ h1,h2,h3,h4{margin:0;color:var(--ink);letter-spacing:-.025em;line-height:1.06}h1
 .address-status{color:#667085}
 .site-footer{position:relative;z-index:0;clear:both;margin-top:0}
 @media(max-width:560px){.hero{padding-bottom:84px}.hero-form-card{margin-bottom:38px}.flow-section[data-flow-section="notes"]{margin-bottom:24px}}
+
+/* Quote form sequence update: one card per stage, property size, address line reveal */
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.flow-nav{display:grid;gap:10px;margin-top:4px}
+.flow-nav.two{grid-template-columns:1fr 1fr}
+.btn:disabled,.btn[disabled]{opacity:.48;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+.property-options{border:0;padding:0;margin:0;display:grid;grid-template-columns:1fr;gap:10px}
+.property-options label{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid #cddbe8;border-radius:14px;background:#fff;color:var(--text);font-weight:760;cursor:pointer;transition:border-color .2s ease,background .2s ease,box-shadow .2s ease}
+.property-options label:hover{border-color:rgba(7,84,173,.35);background:#fbfdff}
+.property-options input{width:auto;accent-color:var(--blue)}
+.property-options label:has(input:checked){border-color:rgba(7,84,173,.45);background:var(--soft);box-shadow:0 0 0 3px rgba(7,84,173,.08)}
+.property-other-wrap,.address-lines{display:grid;gap:12px;margin-top:2px}
+.address-lines[hidden],.property-other-wrap[hidden]{display:none!important}
+.address-lines{padding:12px;border:1px solid var(--line);border-radius:16px;background:#fbfdff}
+@media(min-width:560px){.property-options{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.flow-nav.two{grid-template-columns:1fr}.flow-nav.two .btn.secondary{order:2}}
