@@ -153,6 +153,38 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('keydown', function (event) { if (event.key === 'Escape') close(); });
   }
 
+  function getFieldValue(form, selectors) {
+    for (var i = 0; i < selectors.length; i += 1) {
+      var field = form.querySelector(selectors[i]);
+      if (field && typeof field.value === 'string' && field.value.trim()) return field.value.trim();
+    }
+    return '';
+  }
+
+  function syncCrmAddressField(form) {
+    if (!form) return '';
+    var addressField = form.querySelector('input[name="address"]') || form.querySelector('#selected-address') || form.querySelector('[data-selected-address]');
+    if (!addressField) {
+      addressField = document.createElement('input');
+      addressField.type = 'hidden';
+      addressField.name = 'address';
+      addressField.id = 'selected-address';
+      addressField.setAttribute('data-selected-address', '');
+      form.appendChild(addressField);
+    }
+    addressField.disabled = false;
+    addressField.name = 'address';
+
+    var line1 = getFieldValue(form, ['[name="address_line_1"]', '[data-address-line1]', '[name="property address"]', '[name="job address"]']);
+    var line2 = getFieldValue(form, ['[name="address_line_2"]', '[data-address-line2]']);
+    var city = getFieldValue(form, ['[name="city"]', '[data-city-input]', '[name="town"]']);
+    var postcode = getFieldValue(form, ['[name="postcode_area"]', '[name="postcode"]', '[data-postcode-input]']);
+
+    var fullAddress = [line1, line2, city, postcode].filter(function (part) { return !!part; }).join(', ');
+    addressField.value = fullAddress;
+    return fullAddress;
+  }
+
   function setupAddressLookup(form, updateFlow) {
     var wrapper = form.querySelector('[data-address-lookup]');
     if (!wrapper) return;
@@ -264,14 +296,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
     function buildFullAddress() {
-      var postcode = form.querySelector('[data-postcode-input]');
-      var line1 = form.querySelector('[data-address-line1]');
-      var line2 = form.querySelector('[data-address-line2]');
-      var parts = [];
-      if (line1 && line1.value.trim()) parts.push(line1.value.trim());
-      if (line2 && line2.value.trim()) parts.push(line2.value.trim());
-      if (postcode && postcode.value.trim()) parts.push(postcode.value.trim());
-      return parts.join(', ');
+      return syncCrmAddressField(form);
     }
     function updateHiddenFields() {
       syncAddonPrompt();
@@ -350,6 +375,7 @@ document.addEventListener('DOMContentLoaded', function () {
       button.addEventListener('click', function () { showStep(current - 1); });
     });
     form.addEventListener('submit', function (event) {
+      syncCrmAddressField(form);
       updateHiddenFields();
       for (var i = 0; i < steps.length; i += 1) {
         if (!validate(i, true)) {
@@ -358,6 +384,7 @@ document.addEventListener('DOMContentLoaded', function () {
           return;
         }
       }
+      syncCrmAddressField(form);
     });
 
     setupDatePicker(form, updateButtons);
@@ -365,6 +392,12 @@ document.addEventListener('DOMContentLoaded', function () {
     updateHiddenFields();
     showStep(0);
   }
+
+  document.addEventListener('submit', function (event) {
+    var form = event.target;
+    if (!form || !form.matches || !form.matches('form[action="https://pdd-pink.vercel.app/api/website-enquiry"]')) return;
+    syncCrmAddressField(form);
+  }, true);
 
   document.querySelectorAll('[data-progressive-quote-form]').forEach(setupQuoteForm);
 });
