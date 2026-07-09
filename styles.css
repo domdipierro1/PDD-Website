@@ -3077,3 +3077,124 @@ body{
     height: 28px !important;
   }
 }
+
+
+/* -------------------------------------------------
+   Calendar / Address / Thank-you final fixes
+   ------------------------------------------------- */
+
+/* Remove optional pill styling where Address line 2 text was removed */
+.address-lines .form-label span {
+  display: none !important;
+}
+
+/* Calendar overlay nav should remain clickable and independent from form next */
+.calendar-nav[data-cal-next],
+.calendar-nav[data-prev] {
+  pointer-events: auto !important;
+}
+
+/* Compact thank-you page */
+.thank-you-page .thank-you-compact {
+  min-height: calc(100svh - 80px);
+  display: flex;
+  align-items: center;
+  padding: clamp(28px, 5vw, 56px) 0;
+  background:
+    radial-gradient(circle at 88% 8%, rgba(24,188,208,.16), transparent 360px),
+    linear-gradient(180deg, #ffffff, #eef8ff);
+}
+
+.thank-you-card {
+  max-width: 860px;
+  padding: clamp(28px, 4vw, 42px);
+  border-radius: 34px;
+  background: #ffffff;
+  border: 1px solid rgba(7,84,173,.14);
+  border-top: 4px solid transparent;
+  background-image:
+    linear-gradient(#ffffff, #ffffff),
+    linear-gradient(90deg, var(--premium-cyan), var(--premium-blue));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: 0 24px 70px rgba(7,84,173,.12);
+}
+
+.thank-you-card .success-mark {
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+
+.thank-you-card h1 {
+  font-size: clamp(2.25rem, 5vw, 4.1rem);
+  max-width: 760px;
+}
+
+.thank-you-card .lead {
+  max-width: 620px;
+  margin-top: 14px;
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+}
+
+.thank-you-next {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.thank-you-next div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+}
+
+.thank-you-next strong {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--premium-blue), var(--premium-cyan));
+  color: #fff;
+  flex: 0 0 auto;
+}
+
+.thank-you-next span {
+  color: var(--ink);
+  font-weight: 850;
+  font-size: .88rem;
+}
+
+.thank-you-card .hero-actions {
+  margin-top: 24px;
+}
+
+@media (max-width: 760px) {
+  .thank-you-page .thank-you-compact {
+    align-items: flex-start;
+    min-height: auto;
+    padding: 24px 0 34px;
+  }
+
+  .thank-you-card {
+    padding: 22px;
+    border-radius: 26px;
+  }
+
+  .thank-you-card h1 {
+    font-size: clamp(2rem, 10vw, 2.75rem);
+  }
+
+  .thank-you-next {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}

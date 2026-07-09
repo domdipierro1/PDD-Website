@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var start = new Date(year, month, 1 - offset);
       var selected = hidden && hidden.value ? fromISODate(hidden.value) : null;
       var html = '';
-      html += '<div class="calendar-head"><button type="button" class="calendar-nav" data-prev aria-label="Previous month">‹</button><strong>' + monthName + '</strong><button type="button" class="calendar-nav" data-next aria-label="Next month">›</button></div>';
+      html += '<div class="calendar-head"><button type="button" class="calendar-nav" data-prev aria-label="Previous month">‹</button><strong>' + monthName + '</strong><button type="button" class="calendar-nav" data-cal-next aria-label="Next month">›</button></div>';
       html += '<div class="calendar-weekdays"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div><div class="calendar-grid">';
       for (var i = 0; i < 42; i += 1) {
         var day = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i);
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (trigger) trigger.addEventListener('click', function () { if (popover.hidden) open(); else close(); });
     if (popover) popover.addEventListener('click', function (event) {
       var prev = event.target.closest('[data-prev]');
-      var next = event.target.closest('[data-next]');
+      var next = event.target.closest('[data-cal-next]');
       var day = event.target.closest('[data-day]');
       if (prev) { state.view = new Date(state.view.getFullYear(), state.view.getMonth() - 1, 1); render(); return; }
       if (next) { state.view = new Date(state.view.getFullYear(), state.view.getMonth() + 1, 1); render(); return; }
@@ -614,8 +614,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     form.addEventListener('click', function (event) {
-      var next = event.target.closest('[data-next]');
-      var back = event.target.closest('[data-back]');
+      var next = event.target.closest('.form-actions [data-next]');
+      var back = event.target.closest('.form-actions [data-back]');
       if (next) {
         event.preventDefault();
         event.stopImmediatePropagation();
@@ -698,3 +698,24 @@ document.addEventListener('click', function () {
     });
   }, 0);
 }, true);
+
+
+/* Calendar next-month conflict fix */
+document.addEventListener('click', function (event) {
+  var calendarNext = event.target.closest('[data-cal-next]');
+  if (!calendarNext) return;
+  event.stopPropagation();
+}, true);
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('[data-calendar]').forEach(function (calendar) {
+    var observer = new MutationObserver(function () {
+      calendar.querySelectorAll('.calendar-nav').forEach(function (nav) {
+        nav.disabled = false;
+        nav.removeAttribute('disabled');
+        nav.setAttribute('aria-disabled', 'false');
+      });
+    });
+    observer.observe(calendar, { childList: true, subtree: true });
+  });
+});
