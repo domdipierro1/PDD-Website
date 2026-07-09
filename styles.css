@@ -3300,3 +3300,268 @@ body{
     gap: 10px;
   }
 }
+
+
+/* -------------------------------------------------
+   MOBILE ONLY: cleaner homepage + quote focus mode
+   Desktop layout intentionally untouched.
+   ------------------------------------------------- */
+
+@media (max-width: 760px) {
+  html {
+    scroll-padding-top: 0 !important;
+  }
+
+  body.home-page {
+    background:
+      radial-gradient(circle at 12% 4%, rgba(24,188,208,.13), transparent 240px),
+      radial-gradient(circle at 96% 20%, rgba(7,84,173,.10), transparent 260px),
+      #eef8ff !important;
+  }
+
+  /* Smaller mobile header so first screen shows useful content */
+  .site-header {
+    position: sticky !important;
+    top: 0 !important;
+    transform: none !important;
+  }
+
+  .header-inner {
+    min-height: 66px !important;
+    padding: 6px 0 !important;
+  }
+
+  .brand img {
+    width: 86px !important;
+  }
+
+  .menu-toggle {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 14px !important;
+  }
+
+  /* Homepage: make both hero tile and quote tile visible quickly */
+  .home-page .hero {
+    min-height: auto !important;
+    padding: 8px 0 16px !important;
+    overflow: visible !important;
+  }
+
+  .home-page .hero-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    width: min(100% - 22px, var(--max)) !important;
+  }
+
+  .home-page .hero-copy {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: 16px 16px 18px !important;
+    border-radius: 24px !important;
+    overflow: hidden !important;
+    display: block !important;
+  }
+
+  .home-page .hero-copy .eyebrow {
+    margin-bottom: 10px !important;
+    padding: 7px 10px !important;
+    font-size: .72rem !important;
+    line-height: 1.2 !important;
+    max-width: 100% !important;
+  }
+
+  .home-page .hero-copy h1 {
+    font-size: clamp(2rem, 9vw, 2.62rem) !important;
+    line-height: 1.02 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .home-page .hero-copy .lead {
+    margin-top: 10px !important;
+    font-size: .95rem !important;
+    line-height: 1.38 !important;
+    max-width: 95% !important;
+  }
+
+  .home-page .hero-copy .hero-actions,
+  .home-page .hero-copy .trust-row {
+    display: none !important;
+  }
+
+  .home-page .hero-form-card {
+    display: block !important;
+    min-width: 0 !important;
+  }
+
+  .home-page .hero-form-card .quote-shell {
+    height: auto !important;
+    min-height: 340px !important;
+    max-height: none !important;
+    padding: 14px 14px 16px !important;
+    border-radius: 24px !important;
+    overflow: hidden !important;
+  }
+
+  .home-page .quote-heading {
+    padding-bottom: 6px !important;
+  }
+
+  .home-page .quote-heading h2 {
+    font-size: clamp(1.45rem, 7vw, 1.9rem) !important;
+    line-height: 1.02 !important;
+  }
+
+  .home-page .quote-heading p {
+    font-size: .86rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .home-page .quote-progress {
+    padding: 8px 10px !important;
+  }
+
+  .home-page .quote-stage {
+    min-height: 190px !important;
+    padding-bottom: 48px !important;
+  }
+
+  .home-page .flow-step-card {
+    gap: 6px !important;
+  }
+
+  .home-page .form-grid.two,
+  .service-multi-grid,
+  .home-page .property-choice-grid,
+  .compact-addons .addon-choice-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .home-page .form-actions,
+  .quote-form .form-actions {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+
+  .quote-form .form-actions.single {
+    grid-template-columns: 1fr !important;
+  }
+
+  .quote-form .form-actions button[data-back] {
+    order: 0 !important;
+  }
+
+  /* Once customer starts the enquiry, lock the quote tile as the only mobile screen */
+  body.quote-focus-mode {
+    overflow: hidden !important;
+    height: 100svh !important;
+  }
+
+  body.quote-focus-mode .site-header,
+  body.quote-focus-mode .hero-copy,
+  body.quote-focus-mode .proof-strip,
+  body.quote-focus-mode main > section:not(.hero),
+  body.quote-focus-mode footer,
+  body.quote-focus-mode .mobile-sticky-cta {
+    display: none !important;
+  }
+
+  body.quote-focus-mode .hero {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 9999 !important;
+    padding: 10px !important;
+    margin: 0 !important;
+    min-height: 100svh !important;
+    height: 100svh !important;
+    overflow: hidden !important;
+    background:
+      radial-gradient(circle at 12% 4%, rgba(24,188,208,.13), transparent 240px),
+      radial-gradient(circle at 96% 20%, rgba(7,84,173,.12), transparent 260px),
+      #eef8ff !important;
+  }
+
+  body.quote-focus-mode .hero-grid {
+    width: 100% !important;
+    height: 100% !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+    padding: 0 !important;
+  }
+
+  body.quote-focus-mode .hero-form-card {
+    height: 100% !important;
+    display: flex !important;
+    align-items: stretch !important;
+  }
+
+  body.quote-focus-mode .hero-form-card .quote-shell,
+  body.quote-focus-mode .contact-form-wrap .quote-shell {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    border-radius: 22px !important;
+    padding: 14px 14px 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+
+  body.quote-focus-mode .quote-heading {
+    flex: 0 0 auto !important;
+    padding-bottom: 6px !important;
+  }
+
+  body.quote-focus-mode .quote-heading h2 {
+    font-size: clamp(1.45rem, 7vw, 1.9rem) !important;
+  }
+
+  body.quote-focus-mode .quote-form {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  body.quote-focus-mode .quote-stage {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding-bottom: 54px !important;
+    overflow: hidden !important;
+  }
+
+  body.quote-focus-mode .flow-step-card {
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  body.quote-focus-mode .form-actions {
+    position: absolute !important;
+    bottom: 0 !important;
+  }
+
+  body.quote-focus-mode .calendar-popover {
+    top: 10px !important;
+    bottom: 10px !important;
+    left: 10px !important;
+    right: 10px !important;
+  }
+
+  body.quote-focus-mode .calendar-day {
+    height: min(8.3vw, 34px) !important;
+  }
+
+  /* Make inputs easier on small phones in focus mode */
+  body.quote-focus-mode input,
+  body.quote-focus-mode select,
+  body.quote-focus-mode textarea {
+    font-size: 16px !important;
+  }
+}

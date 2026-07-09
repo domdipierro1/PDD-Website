@@ -753,3 +753,45 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+
+/* Mobile quote focus mode
+   On phones, once the customer starts the quote form, the quote card becomes the full screen. */
+document.addEventListener('DOMContentLoaded', function () {
+  var mobileQuery = window.matchMedia('(max-width: 760px)');
+  var forms = Array.prototype.slice.call(document.querySelectorAll('[data-progressive-quote-form]'));
+
+  function enterQuoteFocus(form) {
+    if (!mobileQuery.matches || !form) return;
+    document.body.classList.add('quote-focus-mode');
+    var shell = form.closest('.quote-shell');
+    if (shell) shell.scrollIntoView({ block: 'start' });
+  }
+
+  function exitQuoteFocus() {
+    document.body.classList.remove('quote-focus-mode');
+  }
+
+  forms.forEach(function (form) {
+    form.addEventListener('focusin', function () {
+      enterQuoteFocus(form);
+    });
+
+    form.addEventListener('click', function (event) {
+      if (
+        event.target.closest('input, textarea, select, button, label, .date-trigger, .calendar-day, .calendar-nav') ||
+        event.target.closest('[data-next], [data-back]')
+      ) {
+        enterQuoteFocus(form);
+      }
+    }, true);
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') exitQuoteFocus();
+  });
+
+  window.addEventListener('resize', function () {
+    if (!mobileQuery.matches) exitQuoteFocus();
+  });
+});
