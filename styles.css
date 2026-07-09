@@ -986,3 +986,243 @@ body{
     color: rgba(255,255,255,.78);
   }
 }
+
+
+/* -------------------------------------------------
+   Correction: use the light "Send the basics" card scheme
+   for Quick Quote, Popular Services and numbered cards
+   ------------------------------------------------- */
+
+.home-page .hero-form-card .quote-shell,
+.contact-page .contact-form-wrap .quote-shell {
+  background: #ffffff !important;
+  color: var(--ink) !important;
+  border: 1px solid rgba(7,84,173,.14) !important;
+  border-top: 4px solid transparent !important;
+  background-image:
+    linear-gradient(#ffffff, #ffffff),
+    linear-gradient(90deg, var(--premium-cyan), var(--premium-blue)) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
+  box-shadow: 0 22px 64px rgba(7,84,173,.10) !important;
+}
+
+.home-page .hero-form-card .quote-shell::before,
+.contact-page .contact-form-wrap .quote-shell::before {
+  display: none !important;
+}
+
+.home-page .hero-form-card .quote-heading h2,
+.home-page .hero-form-card .step-intro h3,
+.contact-page .contact-form-wrap .quote-heading h2,
+.contact-page .contact-form-wrap .step-intro h3 {
+  color: var(--ink) !important;
+}
+
+.home-page .hero-form-card .quote-heading p,
+.home-page .hero-form-card .step-intro p,
+.home-page .hero-form-card .field-help,
+.home-page .hero-form-card .privacy-line,
+.contact-page .contact-form-wrap .quote-heading p,
+.contact-page .contact-form-wrap .step-intro p,
+.contact-page .contact-form-wrap .field-help,
+.contact-page .contact-form-wrap .privacy-line {
+  color: var(--muted) !important;
+}
+
+.home-page .hero-form-card .mini-kicker,
+.contact-page .contact-form-wrap .mini-kicker {
+  background: rgba(24,188,208,.12) !important;
+  color: var(--premium-blue) !important;
+  box-shadow: inset 0 0 0 1px rgba(24,188,208,.18) !important;
+}
+
+.home-page .hero-form-card .quote-progress,
+.contact-page .contact-form-wrap .quote-progress {
+  background: linear-gradient(135deg, #eef8ff, #ffffff) !important;
+  border-color: rgba(7,84,173,.14) !important;
+}
+
+.home-page .hero-form-card .quote-progress-top,
+.contact-page .contact-form-wrap .quote-progress-top {
+  color: var(--muted) !important;
+}
+
+.home-page .hero-form-card .quote-progress-top strong,
+.contact-page .contact-form-wrap .quote-progress-top strong {
+  color: var(--premium-blue) !important;
+}
+
+.home-page .hero-form-card .quote-progress-track,
+.contact-page .contact-form-wrap .quote-progress-track {
+  background: #dcebf7 !important;
+}
+
+.home-page .hero-form-card .quote-progress-track span,
+.contact-page .contact-form-wrap .quote-progress-track span {
+  background: linear-gradient(90deg, var(--premium-blue), var(--premium-cyan)) !important;
+}
+
+.home-page .hero-form-card .form-label,
+.contact-page .contact-form-wrap .form-label {
+  color: var(--ink) !important;
+}
+
+.home-page .hero-form-card input,
+.home-page .hero-form-card textarea,
+.home-page .hero-form-card select,
+.contact-page .contact-form-wrap input,
+.contact-page .contact-form-wrap textarea,
+.contact-page .contact-form-wrap select {
+  background: #ffffff !important;
+  border-color: #cbdcec !important;
+  color: var(--text) !important;
+}
+
+.home-page .hero-form-card input:focus,
+.home-page .hero-form-card textarea:focus,
+.home-page .hero-form-card select:focus,
+.contact-page .contact-form-wrap input:focus,
+.contact-page .contact-form-wrap textarea:focus,
+.contact-page .contact-form-wrap select:focus {
+  border-color: var(--premium-blue) !important;
+  box-shadow: 0 0 0 4px rgba(7,84,173,.10) !important;
+}
+
+.home-page .hero-form-card .property-choice-grid label,
+.home-page .hero-form-card .service-choice-grid label,
+.home-page .hero-form-card .addon-choice-grid label,
+.contact-page .contact-form-wrap .property-choice-grid label,
+.contact-page .contact-form-wrap .service-choice-grid label,
+.contact-page .contact-form-wrap .addon-choice-grid label {
+  background: #ffffff !important;
+  color: var(--text) !important;
+  border-color: #cbdcec !important;
+}
+
+.home-page .hero-form-card .property-choice-grid label:has(input:checked),
+.home-page .hero-form-card .service-choice-grid label:has(input:checked),
+.home-page .hero-form-card .addon-choice-grid label:has(input:checked),
+.contact-page .contact-form-wrap .property-choice-grid label:has(input:checked),
+.contact-page .contact-form-wrap .service-choice-grid label:has(input:checked),
+.contact-page .contact-form-wrap .addon-choice-grid label:has(input:checked) {
+  background: var(--soft) !important;
+  border-color: rgba(7,84,173,.48) !important;
+}
+
+.home-page .hero-form-card .addon-prompt,
+.home-page .hero-form-card .address-lines,
+.contact-page .contact-form-wrap .addon-prompt,
+.contact-page .contact-form-wrap .address-lines {
+  background: #fbfdff !important;
+  border-color: var(--line) !important;
+}
+
+.home-page .hero-form-card .addon-prompt h4,
+.contact-page .contact-form-wrap .addon-prompt h4 {
+  color: var(--ink) !important;
+}
+
+.home-page .hero-form-card .form-actions .btn,
+.contact-page .contact-form-wrap .form-actions .btn {
+  background: linear-gradient(135deg, var(--premium-blue), var(--premium-blue-2)) !important;
+  border-color: var(--premium-blue) !important;
+  color: #ffffff !important;
+  box-shadow: 0 14px 32px rgba(7,84,173,.22) !important;
+}
+
+.home-page .hero-form-card .form-actions .btn.secondary,
+.contact-page .contact-form-wrap .form-actions .btn.secondary {
+  background: #ffffff !important;
+  border-color: rgba(7,84,173,.22) !important;
+  color: var(--premium-blue) !important;
+  box-shadow: none !important;
+}
+
+.home-page .hero-form-card .form-actions .btn:disabled,
+.contact-page .contact-form-wrap .form-actions .btn:disabled {
+  background: #8fafcf !important;
+  border-color: #8fafcf !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.home-page .service-tile,
+.home-page .step-card {
+  background: #ffffff !important;
+  color: var(--ink) !important;
+  border: 1px solid rgba(7,84,173,.12) !important;
+  border-top: 4px solid transparent !important;
+  background-image:
+    linear-gradient(#ffffff, #ffffff),
+    linear-gradient(90deg, var(--premium-cyan), var(--premium-blue)) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
+  box-shadow: 0 22px 58px rgba(7,84,173,.08) !important;
+}
+
+.home-page .service-tile::before,
+.home-page .step-card::before {
+  display: none !important;
+}
+
+.home-page .service-tile h3,
+.home-page .step-card h3 {
+  color: var(--ink) !important;
+}
+
+.home-page .service-tile p,
+.home-page .step-card p {
+  color: var(--muted) !important;
+}
+
+.home-page .service-tile .link-arrow {
+  color: var(--premium-blue) !important;
+}
+
+.home-page .tile-icon,
+.home-page .step-card > span,
+.home-page .step-intro > span,
+.home-page .service-number {
+  background: linear-gradient(135deg, var(--premium-blue), var(--premium-cyan)) !important;
+  color: #ffffff !important;
+  border: 0 !important;
+  box-shadow: 0 12px 28px rgba(7,84,173,.18) !important;
+}
+
+.home-page .service-tile:hover,
+.home-page .step-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(24,188,208,.34) !important;
+  box-shadow: 0 26px 70px rgba(7,84,173,.12) !important;
+}
+
+@media (max-width: 760px) {
+  .home-page .hero-form-card .quote-form .form-actions,
+  .contact-page .contact-form-wrap .quote-form .form-actions {
+    background: rgba(255,255,255,.97) !important;
+    border-color: var(--line) !important;
+  }
+
+  .home-page .service-tile,
+  .home-page .step-card {
+    background: #ffffff !important;
+    background-image:
+      linear-gradient(#ffffff, #ffffff),
+      linear-gradient(90deg, var(--premium-cyan), var(--premium-blue)) !important;
+  }
+
+  .home-page .service-tile h3,
+  .home-page .step-card h3 {
+    color: var(--ink) !important;
+  }
+
+  .home-page .service-tile p,
+  .home-page .step-card p {
+    color: var(--muted) !important;
+  }
+
+  .home-page .service-tile .link-arrow {
+    color: var(--premium-blue) !important;
+  }
+}
