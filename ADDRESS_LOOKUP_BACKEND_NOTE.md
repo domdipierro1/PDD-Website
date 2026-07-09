@@ -1,39 +1,13 @@
-# Address lookup backend note
+# Address Lookup Backend Note
 
-The public website now contains the live address dropdown UI, but a real UK property-level address dropdown needs a secure backend address lookup endpoint.
+The public website calls:
 
-The website JavaScript calls:
-
-```text
 https://pdd-pink.vercel.app/api/address-autocomplete?query=USER_TYPED_TEXT
-```
 
-That endpoint should live inside the private PDD Operator Portal / CRM app, not inside the public HTML. Do not put address provider API keys in the website code.
+The current backend uses Postcodes.io, so the frontend treats returned results as postcode suggestions only.
 
-Expected JSON response can be any of these shapes:
+Important:
 
-```json
-{ "addresses": ["12 Example Road, Enfield, EN1 1AA", "14 Example Road, Enfield, EN1 1AA"] }
-```
-
-or:
-
-```json
-{ "suggestions": [{ "label": "12 Example Road, Enfield, EN1 1AA", "value": "12 Example Road, Enfield, EN1 1AA" }] }
-```
-
-or a plain array:
-
-```json
-["12 Example Road, Enfield, EN1 1AA", "14 Example Road, Enfield, EN1 1AA"]
-```
-
-For a full postcode, the endpoint should return the matching address list for that postcode. For partial typing, it should return autocomplete suggestions.
-
-Make sure the endpoint allows requests from:
-
-```text
-https://pddcleaningservices.co.uk
-```
-
-Suggested provider options include getAddress.io, Ideal Postcodes or Loqate. Store the provider key as a Vercel environment variable in the portal app, not in the website files.
+- Do not add address provider API keys to the public website.
+- Keep provider keys as Vercel environment variables inside the private backend if a property-level lookup provider is added later.
+- Address line 1 is required on the public form because postcode suggestions alone are not enough for a cleaning job address.

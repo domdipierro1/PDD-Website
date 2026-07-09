@@ -1,25 +1,33 @@
-# PDD Cleaning Services — Quote Form Sequence Update
+# PDD Cleaning Services — Redesigned Website Notes
 
-This package keeps the existing public website design and only updates the progressive quote form behaviour.
+This package redesigns the public PDD Cleaning Services website while keeping the existing static structure:
 
-Changes made:
-- Quote form now runs as a single sequence card instead of revealing/pushing content down the page.
-- Steps are:
-  1. Name & number
-  2. Service
-  3. Property size
-  4. Preferred date
-  5. Address / postcode
-  6. Anything else we should know
-- Back buttons added for each later step.
-- Next buttons only activate once the current step is complete.
-- Property size added: Studio, 1 Bed, 2 Bed, 3 Bed, 4 Bed, 5 Bed, Other.
-- Other property size opens a text box.
-- Postcode lookup still calls the existing backend endpoint:
-  https://pdd-pink.vercel.app/api/address-autocomplete
-- After a postcode is selected, Address line 1 and Address line 2 appear.
-- Address line 1 must be filled before continuing.
-- Address line 2 is optional.
-- No API keys, Supabase keys, Telegram tokens, service role keys or private environment variables were added to the public website.
+- index.html
+- services.html
+- about.html
+- contact.html
+- thank-you.html
+- privacy.html
+- terms.html
+- styles.css
+- script.js
+- logo.jpg
 
-Upload this package to the public website Vercel project, not the pdd-pink Operator Portal project.
+## Live backend rules preserved
+
+- Quote form action: https://pdd-pink.vercel.app/api/website-enquiry
+- Hidden return_url: https://pddcleaningservices.co.uk/thank-you.html
+- Honeypot field name: company
+- Address autocomplete endpoint: https://pdd-pink.vercel.app/api/address-autocomplete
+- No private keys, API keys, tokens or environment variables are stored in the public website files.
+
+## Form sequence
+
+1. Name & number
+2. Service
+3. Property size
+4. Preferred date
+5. Postcode, Address line 1, optional Address line 2
+6. Anything else we should know
+
+The postcode autocomplete is still designed around postcode suggestions. Address line 1 remains required because the current backend does not provide full property-level address lookup.
