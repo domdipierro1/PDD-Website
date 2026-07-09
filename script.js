@@ -734,26 +734,22 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-/* Calendar month navigation stay-open fix */
-document.addEventListener('click', function (event) {
-  var nav = event.target.closest('.calendar-nav, [data-prev], [data-cal-next]');
-  if (!nav) return;
 
-  var calendar = nav.closest('[data-calendar]');
-  if (!calendar) return;
 
-  // Let the calendar's own handler update the month, but prevent outer close/minimise handlers.
-  event.stopPropagation();
+/* Calendar keep-open without blocking navigation */
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('[data-progressive-quote-form]').forEach(function (form) {
+    var shell = form.closest('.quote-shell');
+    var calendar = form.querySelector('[data-calendar]');
+    if (!shell || !calendar) return;
 
-  setTimeout(function () {
-    calendar.removeAttribute('hidden');
-    var shell = calendar.closest('.quote-shell');
-    if (shell) shell.classList.add('calendar-open');
-
-    calendar.querySelectorAll('.calendar-nav').forEach(function (button) {
-      button.disabled = false;
-      button.removeAttribute('disabled');
-      button.setAttribute('aria-disabled', 'false');
+    calendar.addEventListener('click', function (event) {
+      if (event.target.closest('.calendar-nav, [data-prev], [data-cal-next]')) {
+        setTimeout(function () {
+          calendar.removeAttribute('hidden');
+          shell.classList.add('calendar-open');
+        }, 0);
+      }
     });
-  }, 0);
-}, true);
+  });
+});
