@@ -224,6 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var progressBar = form.querySelector('[data-progress-bar]');
     var serviceHidden = form.querySelector('[data-service-needed]');
     var propertyHidden = form.querySelector('[data-property-size-field]');
+    var addressHidden = form.querySelector('[data-selected-address]') || form.querySelector('#selected-address');
     var mainService = form.querySelector('[data-main-service]');
     var addonPrompt = form.querySelector('[data-addon-prompt]');
 
@@ -262,11 +263,22 @@ document.addEventListener('DOMContentLoaded', function () {
         form.querySelectorAll('[data-addon-option]').forEach(function (input) { input.checked = false; });
       }
     }
+    function buildFullAddress() {
+      var postcode = form.querySelector('[data-postcode-input]');
+      var line1 = form.querySelector('[data-address-line1]');
+      var line2 = form.querySelector('[data-address-line2]');
+      var parts = [];
+      if (line1 && line1.value.trim()) parts.push(line1.value.trim());
+      if (line2 && line2.value.trim()) parts.push(line2.value.trim());
+      if (postcode && postcode.value.trim()) parts.push(postcode.value.trim());
+      return parts.join(', ');
+    }
     function updateHiddenFields() {
       syncAddonPrompt();
       var services = selectedServices();
       if (serviceHidden) serviceHidden.value = services.join(', ');
       if (propertyHidden) propertyHidden.value = selectedProperty();
+      if (addressHidden) addressHidden.value = buildFullAddress();
     }
     function setError(step, message) {
       var error = step.querySelector('[data-step-error]');
