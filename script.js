@@ -636,3 +636,25 @@ document.addEventListener('DOMContentLoaded', function () {
     showStep(currentIndex);
   });
 });
+
+
+/* Calendar future navigation unlock */
+document.addEventListener('click', function (event) {
+  var btn = event.target.closest('.calendar-nav');
+  if (!btn) return;
+  setTimeout(function () {
+    document.querySelectorAll('.calendar-nav').forEach(function (nav) {
+      nav.disabled = false;
+      nav.removeAttribute('disabled');
+      nav.setAttribute('aria-disabled', 'false');
+    });
+  }, 0);
+}, true);
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.calendar-nav').forEach(function (nav) {
+    nav.disabled = false;
+    nav.removeAttribute('disabled');
+    nav.setAttribute('aria-disabled', 'false');
+  });
+});
