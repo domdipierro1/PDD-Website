@@ -1243,3 +1243,15 @@ body{
 .service-detail-card .link-arrow {
   margin-top: 4px;
 }
+
+
+/* Checklist-specific service bullets */
+.service-detail-card .service-bullets {
+  margin: 14px 0 18px;
+  padding-left: 20px;
+  color: var(--muted);
+}
+.service-detail-card .service-bullets li {
+  margin: 7px 0;
+  line-height: 1.45;
+}
