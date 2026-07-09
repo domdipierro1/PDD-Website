@@ -224,9 +224,27 @@ document.addEventListener('DOMContentLoaded', function () {
     var progressBar = form.querySelector('[data-progress-bar]');
     var serviceHidden = form.querySelector('[data-service-needed]');
     var propertyHidden = form.querySelector('[data-property-size-field]');
+    var mainService = form.querySelector('[data-main-service]');
+    var addonPrompt = form.querySelector('[data-addon-prompt]');
 
+    function mainServiceValue() {
+      if (mainService) return mainService.value || '';
+      var checked = form.querySelector('[data-service-option]:checked');
+      return checked ? checked.value : '';
+    }
+    function canUseAddons() {
+      var value = mainServiceValue();
+      return value === 'End of tenancy cleaning' || value === 'Deep cleaning';
+    }
+    function selectedAddons() {
+      if (!canUseAddons()) return [];
+      return Array.prototype.slice.call(form.querySelectorAll('[data-addon-option]:checked')).map(function (input) { return input.value; });
+    }
     function selectedServices() {
-      return Array.prototype.slice.call(form.querySelectorAll('[data-service-option]:checked')).map(function (input) { return input.value; });
+      var main = mainServiceValue();
+      var all = main ? [main] : [];
+      selectedAddons().forEach(function (addon) { all.push(addon); });
+      return all;
     }
     function selectedProperty() {
       var checked = form.querySelector('[data-property-option]:checked');
@@ -237,8 +255,17 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       return checked.value;
     }
+    function syncAddonPrompt() {
+      var show = canUseAddons();
+      if (addonPrompt) addonPrompt.hidden = !show;
+      if (!show) {
+        form.querySelectorAll('[data-addon-option]').forEach(function (input) { input.checked = false; });
+      }
+    }
     function updateHiddenFields() {
-      if (serviceHidden) serviceHidden.value = selectedServices().join(', ');
+      syncAddonPrompt();
+      var services = selectedServices();
+      if (serviceHidden) serviceHidden.value = services.join(', ');
       if (propertyHidden) propertyHidden.value = selectedProperty();
     }
     function setError(step, message) {
@@ -254,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var missing = Array.prototype.slice.call(step.querySelectorAll('[data-required]')).some(function (input) { return !input.value.trim(); });
         ok = !missing; message = 'Please enter your name and phone number.';
       } else if (type === 'service') {
-        ok = selectedServices().length > 0; message = 'Please select at least one service.';
+        ok = !!mainServiceValue(); message = 'Please select the main service you need.';
       } else if (type === 'property') {
         var checked = form.querySelector('[data-property-option]:checked');
         ok = !!checked;
@@ -289,13 +316,14 @@ document.addEventListener('DOMContentLoaded', function () {
       updateButtons();
     }
     function updateButtons() {
+      syncAddonPrompt();
       steps.forEach(function (step, i) {
         step.querySelectorAll('[data-next]').forEach(function (button) { button.disabled = !validate(i, false); });
       });
     }
 
     form.addEventListener('input', function () { updateHiddenFields(); updateButtons(); });
-    form.addEventListener('change', function (event) {
+    form.addEventListener('change', function () {
       var otherWrap = form.querySelector('[data-property-other-wrap]');
       var otherInput = form.querySelector('[data-property-other]');
       var otherChecked = !!form.querySelector('[data-property-other-option]:checked');
@@ -322,6 +350,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     setupDatePicker(form, updateButtons);
     setupAddressLookup(form, updateButtons);
+    updateHiddenFields();
     showStep(0);
   }
 

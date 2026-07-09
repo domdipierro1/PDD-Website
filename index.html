@@ -4,9 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>PDD Cleaning Services — Cleaning Services in North London</title>
-<meta name="description" content="End of tenancy cleaning, deep cleaning, window cleaning, oven cleaning, jet washing and waste clearance in North London and surrounding areas." />
+<meta name="description" content="End of tenancy cleaning, deep cleaning, exterior window cleaning, jet washing, waste clearance and optional quote add-ons in North London and surrounding areas." />
 <meta property="og:title" content="PDD Cleaning Services — Cleaning Services in North London" />
-<meta property="og:description" content="End of tenancy cleaning, deep cleaning, window cleaning, oven cleaning, jet washing and waste clearance in North London and surrounding areas." />
+<meta property="og:description" content="End of tenancy cleaning, deep cleaning, exterior window cleaning, jet washing, waste clearance and optional quote add-ons in North London and surrounding areas." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://pddcleaningservices.co.uk" />
 <meta property="og:image" content="https://pddcleaningservices.co.uk/logo.jpg" />
@@ -46,20 +46,6 @@
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Interior window cleaning"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Oven cleaning"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
           "name": "Exterior window cleaning"
         }
       },
@@ -75,6 +61,13 @@
         "itemOffered": {
           "@type": "Service",
           "name": "Waste clearance"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Quote add-ons: oven cleaning and interior window cleaning"
         }
       }
     ]
@@ -170,16 +163,26 @@
       </section>
 
       <section class="flow-step-card" data-step data-step-title="Service" data-step-type="service">
-        <div class="step-intro"><span>2</span><div><h3>Service</h3><p>Select one or more services.</p></div></div>
-        <div class="service-choice-grid">
-          <label><input type="checkbox" value="End of tenancy cleaning" data-service-option /><span>End of tenancy cleaning</span></label>
-          <label><input type="checkbox" value="Deep cleaning" data-service-option /><span>Deep cleaning</span></label>
-          <label><input type="checkbox" value="Interior window cleaning" data-service-option /><span>Interior window cleaning</span></label>
-          <label><input type="checkbox" value="Oven cleaning" data-service-option /><span>Oven cleaning</span></label>
-          <label><input type="checkbox" value="Exterior window cleaning" data-service-option /><span>Exterior window cleaning</span></label>
-          <label><input type="checkbox" value="Jet washing" data-service-option /><span>Jet washing</span></label>
-          <label><input type="checkbox" value="Waste clearance" data-service-option /><span>Waste clearance</span></label>
+        <div class="step-intro"><span>2</span><div><h3>Service</h3><p>Choose the main service you need.</p></div></div>
+        <label class="form-label service-select-label">Main service
+          <select name="service_choice" data-main-service>
+            <option value="">Select a service</option>
+            <option value="End of tenancy cleaning">End of tenancy cleaning</option>
+            <option value="Deep cleaning">Deep cleaning</option>
+            <option value="Exterior window cleaning">Exterior window cleaning</option>
+            <option value="Jet washing">Jet washing</option>
+            <option value="Waste clearance">Waste clearance</option>
+          </select>
+        </label>
+        <div class="addon-prompt" data-addon-prompt hidden>
+          <h4>Would you like to add these services into your quote?</h4>
+          <p>These are optional. Leave them blank and press Next to skip.</p>
+          <div class="addon-choice-grid">
+            <label><input type="checkbox" name="quote_addons[]" value="Oven cleaning" data-addon-option /><span>Oven cleaning</span></label>
+            <label><input type="checkbox" name="quote_addons[]" value="Interior window cleaning" data-addon-option /><span>Interior window cleaning</span></label>
+          </div>
         </div>
+        <p class="field-help">Oven cleaning and interior window cleaning are quoted as add-ons for end of tenancy and deep cleaning.</p>
         <p class="form-error" data-step-error></p>
         <div class="form-actions"><button class="btn secondary" type="button" data-back>Back</button><button class="btn" type="button" data-next>Next</button></div>
       </section>
@@ -259,7 +262,7 @@
       <p>Keep the choice simple. Pick what you need, then we’ll confirm the details.</p>
     </div>
     <div class="service-card-grid">
-      <article class="service-tile reveal"><div class="tile-icon">1</div><h3>End of tenancy cleaning</h3><p>Move-out cleans for tenants, landlords and property handovers.</p><a class="link-arrow" href="contact.html#quote-form">Get quote</a></article><article class="service-tile reveal"><div class="tile-icon">2</div><h3>Deep cleaning</h3><p>A thorough one-off clean for homes that need a proper reset.</p><a class="link-arrow" href="contact.html#quote-form">Get quote</a></article><article class="service-tile reveal"><div class="tile-icon">3</div><h3>Interior window cleaning</h3><p>Internal glass, sills and frames included where agreed.</p><a class="link-arrow" href="contact.html#quote-form">Get quote</a></article><article class="service-tile reveal"><div class="tile-icon">4</div><h3>Oven cleaning</h3><p>Single, double and range ovens quoted clearly before booking.</p><a class="link-arrow" href="contact.html#quote-form">Get quote</a></article><article class="service-tile reveal"><div class="tile-icon">5</div><h3>Exterior window cleaning</h3><p>External windows for suitable homes and properties.</p><a class="link-arrow" href="contact.html#quote-form">Get quote</a></article><article class="service-tile reveal"><div class="tile-icon">6</div><h3>Jet washing</h3><p>Patios, driveways and outdoor surfaces cleaned by quote.</p><a class="link-arrow" href="contact.html#quote-form">Get quote</a></article><article class="service-tile reveal"><div class="tile-icon">7</div><h3>Waste clearance</h3><p>Move-out rubbish and small clearances quoted by volume.</p><a class="link-arrow" href="contact.html#quote-form">Get quote</a></article>
+      <article class="service-tile reveal"><div class="tile-icon">1</div><h3>End of tenancy cleaning</h3><p>Move-out cleans for tenants, landlords and property handovers.</p><a class="link-arrow" href="contact.html#quote-form">Get quote</a></article><article class="service-tile reveal"><div class="tile-icon">2</div><h3>Deep cleaning</h3><p>A thorough one-off clean for homes that need a proper reset.</p><a class="link-arrow" href="contact.html#quote-form">Get quote</a></article><article class="service-tile reveal"><div class="tile-icon">3</div><h3>Exterior window cleaning</h3><p>External windows for suitable homes and properties.</p><a class="link-arrow" href="contact.html#quote-form">Get quote</a></article><article class="service-tile reveal"><div class="tile-icon">4</div><h3>Jet washing</h3><p>Patios, driveways and outdoor surfaces cleaned by quote.</p><a class="link-arrow" href="contact.html#quote-form">Get quote</a></article><article class="service-tile reveal"><div class="tile-icon">5</div><h3>Waste clearance</h3><p>Move-out rubbish and small clearances quoted by volume.</p><a class="link-arrow" href="contact.html#quote-form">Get quote</a></article><article class="service-tile reveal addon-tile"><div class="tile-icon">+</div><h3>Quote add-ons</h3><p>Oven cleaning and interior window cleaning can be added to end of tenancy or deep cleaning quotes.</p><a class="link-arrow" href="services.html#add-ons">View add-ons</a></article>
     </div>
   </div>
 </section>
@@ -319,7 +322,7 @@
     </div>
     <div class="footer-col">
       <h4>Services</h4>
-      <a href="services.html#end-of-tenancy">End of tenancy cleaning</a><a href="services.html#deep-cleaning">Deep cleaning</a><a href="services.html#interior-window-cleaning">Interior window cleaning</a><a href="services.html#oven-cleaning">Oven cleaning</a><a href="services.html#exterior-window-cleaning">Exterior window cleaning</a>
+      <a href="services.html#end-of-tenancy">End of tenancy cleaning</a><a href="services.html#deep-cleaning">Deep cleaning</a><a href="services.html#exterior-window-cleaning">Exterior window cleaning</a><a href="services.html#jet-washing">Jet washing</a><a href="services.html#waste-clearance">Waste clearance</a><a href="services.html#add-ons">Quote add-ons</a>
     </div>
     <div class="footer-col">
       <h4>Contact</h4>
