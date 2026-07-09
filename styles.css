@@ -1389,3 +1389,501 @@ body{
     -webkit-text-fill-color: #ffffff !important;
   }
 }
+
+
+/* -------------------------------------------------
+   Stable compact quote form rebuild
+   Restores the enquiry form to a compact white card.
+   Keeps Next / Back anchored inside the tile bottom.
+   ------------------------------------------------- */
+
+.home-page .hero-form-card,
+.contact-page .contact-form-wrap {
+  min-width: 0;
+}
+
+.home-page .hero-form-card .quote-shell,
+.contact-page .contact-form-wrap .quote-shell {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: #ffffff !important;
+  color: var(--ink) !important;
+  border: 1px solid rgba(7,84,173,.14) !important;
+  border-top: 4px solid transparent !important;
+  background-image:
+    linear-gradient(#ffffff, #ffffff),
+    linear-gradient(90deg, var(--premium-cyan), var(--premium-blue)) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
+  box-shadow: 0 22px 64px rgba(7,84,173,.10) !important;
+  overflow: hidden !important;
+}
+
+.home-page .hero-form-card .quote-shell::before,
+.contact-page .contact-form-wrap .quote-shell::before {
+  display: none !important;
+}
+
+.home-page .quote-form,
+.contact-page .quote-form {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  gap: 12px !important;
+}
+
+.home-page .quote-heading,
+.contact-page .quote-heading {
+  flex: 0 0 auto !important;
+  padding-bottom: 8px !important;
+}
+
+.home-page .quote-heading h2,
+.contact-page .quote-heading h2,
+.home-page .step-intro h3,
+.contact-page .step-intro h3 {
+  color: var(--ink) !important;
+}
+
+.home-page .quote-heading p,
+.contact-page .quote-heading p,
+.home-page .step-intro p,
+.contact-page .step-intro p,
+.home-page .field-help,
+.contact-page .field-help,
+.home-page .privacy-line,
+.contact-page .privacy-line {
+  color: var(--muted) !important;
+}
+
+.home-page .mini-kicker,
+.contact-page .mini-kicker {
+  background: rgba(24,188,208,.12) !important;
+  color: var(--premium-blue) !important;
+  box-shadow: inset 0 0 0 1px rgba(24,188,208,.18) !important;
+}
+
+.home-page .quote-progress,
+.contact-page .quote-progress {
+  flex: 0 0 auto !important;
+  background: linear-gradient(135deg, #eef8ff, #ffffff) !important;
+  border: 1px solid rgba(7,84,173,.14) !important;
+  padding: 10px 12px !important;
+  border-radius: 16px !important;
+  gap: 7px !important;
+}
+
+.home-page .quote-progress-top,
+.contact-page .quote-progress-top {
+  color: var(--muted) !important;
+}
+
+.home-page .quote-progress-top strong,
+.contact-page .quote-progress-top strong {
+  color: var(--premium-blue) !important;
+}
+
+.home-page .quote-progress-track,
+.contact-page .quote-progress-track {
+  background: #dcebf7 !important;
+  height: 7px !important;
+}
+
+.home-page .quote-progress-track span,
+.contact-page .quote-progress-track span {
+  background: linear-gradient(90deg, var(--premium-blue), var(--premium-cyan)) !important;
+}
+
+.home-page .quote-stage,
+.contact-page .quote-stage {
+  position: relative !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+  overflow: hidden !important;
+}
+
+.home-page .flow-step-card,
+.contact-page .flow-step-card {
+  position: absolute !important;
+  inset: 0 !important;
+  display: none !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  gap: 10px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+.home-page .flow-step-card.is-active,
+.contact-page .flow-step-card.is-active {
+  display: flex !important;
+}
+
+.home-page .step-intro,
+.contact-page .step-intro {
+  flex: 0 0 auto !important;
+  gap: 10px !important;
+}
+
+.home-page .step-intro > span,
+.contact-page .step-intro > span {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 13px !important;
+  flex: 0 0 36px !important;
+  background: linear-gradient(135deg, var(--premium-blue), var(--premium-cyan)) !important;
+  color: #ffffff !important;
+  border: 0 !important;
+  box-shadow: 0 12px 28px rgba(7,84,173,.18) !important;
+}
+
+.home-page .step-intro h3,
+.contact-page .step-intro h3 {
+  font-size: clamp(1.12rem, 1.75vw, 1.32rem) !important;
+}
+
+.home-page .step-intro p,
+.contact-page .step-intro p {
+  margin-top: 3px !important;
+  font-size: .88rem !important;
+  line-height: 1.3 !important;
+}
+
+.home-page .form-grid,
+.contact-page .form-grid,
+.home-page .property-choice-grid,
+.contact-page .property-choice-grid {
+  gap: 10px !important;
+}
+
+.home-page .form-grid.two,
+.contact-page .form-grid.two {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+.home-page .form-label,
+.contact-page .form-label {
+  color: var(--ink) !important;
+  gap: 6px !important;
+  font-size: .84rem !important;
+}
+
+.home-page input,
+.home-page textarea,
+.home-page select,
+.contact-page input,
+.contact-page textarea,
+.contact-page select {
+  background: #ffffff !important;
+  border: 1px solid #cbdcec !important;
+  color: var(--text) !important;
+  padding: 11px 12px !important;
+  border-radius: 14px !important;
+  min-height: 42px !important;
+}
+
+.home-page textarea,
+.contact-page textarea {
+  min-height: 88px !important;
+  max-height: 110px !important;
+}
+
+.home-page input:focus,
+.home-page textarea:focus,
+.home-page select:focus,
+.contact-page input:focus,
+.contact-page textarea:focus,
+.contact-page select:focus {
+  border-color: var(--premium-blue) !important;
+  box-shadow: 0 0 0 4px rgba(7,84,173,.10) !important;
+}
+
+.home-page .service-select-label,
+.contact-page .service-select-label {
+  flex: 0 0 auto !important;
+}
+
+.home-page .addon-prompt,
+.contact-page .addon-prompt {
+  flex: 0 0 auto !important;
+  background: #fbfdff !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 16px !important;
+  padding: 12px !important;
+}
+
+.home-page .addon-prompt h4,
+.contact-page .addon-prompt h4 {
+  color: var(--ink) !important;
+  font-size: 1rem !important;
+  line-height: 1.2 !important;
+  margin: 0 !important;
+}
+
+.home-page .addon-prompt p,
+.contact-page .addon-prompt p {
+  margin-top: 4px !important;
+  color: var(--muted) !important;
+  font-size: .82rem !important;
+  line-height: 1.3 !important;
+}
+
+.home-page .addon-choice-grid,
+.contact-page .addon-choice-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+  margin-top: 9px !important;
+}
+
+.home-page .property-choice-grid,
+.contact-page .property-choice-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  flex: 0 0 auto !important;
+}
+
+.home-page .property-choice-grid label,
+.home-page .service-choice-grid label,
+.home-page .addon-choice-grid label,
+.contact-page .property-choice-grid label,
+.contact-page .service-choice-grid label,
+.contact-page .addon-choice-grid label {
+  background: #ffffff !important;
+  color: var(--text) !important;
+  border: 1px solid #cbdcec !important;
+  border-radius: 13px !important;
+  padding: 9px 10px !important;
+  min-height: 42px !important;
+  line-height: 1.25 !important;
+  font-size: .88rem !important;
+}
+
+.home-page .property-choice-grid label:has(input:checked),
+.home-page .service-choice-grid label:has(input:checked),
+.home-page .addon-choice-grid label:has(input:checked),
+.contact-page .property-choice-grid label:has(input:checked),
+.contact-page .service-choice-grid label:has(input:checked),
+.contact-page .addon-choice-grid label:has(input:checked) {
+  background: var(--soft) !important;
+  border-color: rgba(7,84,173,.48) !important;
+}
+
+.home-page .other-field,
+.contact-page .other-field,
+.home-page .address-lines,
+.contact-page .address-lines {
+  flex: 0 0 auto !important;
+  background: #fbfdff !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 15px !important;
+  padding: 10px !important;
+  gap: 9px !important;
+}
+
+.home-page .date-trigger,
+.contact-page .date-trigger {
+  min-height: 46px !important;
+  border-radius: 14px !important;
+}
+
+.home-page .field-help,
+.contact-page .field-help {
+  font-size: .76rem !important;
+  line-height: 1.25 !important;
+}
+
+.home-page .form-error,
+.contact-page .form-error {
+  min-height: 12px !important;
+  font-size: .76rem !important;
+  margin: 0 !important;
+  flex: 0 0 auto !important;
+}
+
+.home-page .form-actions,
+.contact-page .form-actions,
+.quote-form .form-actions {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 10px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  z-index: 5 !important;
+}
+
+.home-page .form-actions.single,
+.contact-page .form-actions.single,
+.quote-form .form-actions.single {
+  grid-template-columns: 1fr !important;
+}
+
+.quote-form .form-actions button[data-next],
+.quote-form .form-actions button[type="submit"] {
+  min-height: 44px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(135deg, var(--premium-blue), var(--premium-blue-2)) !important;
+  background-color: var(--premium-blue) !important;
+  border: 2px solid var(--premium-blue) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  box-shadow: 0 14px 32px rgba(7,84,173,.22) !important;
+  opacity: 1 !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+}
+
+.quote-form .form-actions button[data-back],
+.quote-form .form-actions .btn.secondary {
+  min-height: 44px !important;
+  border-radius: 999px !important;
+  background: #ffffff !important;
+  background-image: none !important;
+  border: 2px solid rgba(7,84,173,.24) !important;
+  color: var(--premium-blue) !important;
+  -webkit-text-fill-color: var(--premium-blue) !important;
+  box-shadow: none !important;
+}
+
+.quote-form .form-actions button[data-next]::before,
+.quote-form .form-actions button[type="submit"]::before,
+.quote-form .form-actions button[data-back]::before {
+  display: none !important;
+}
+
+.home-page .flow-step-card > *:not(.form-actions),
+.contact-page .flow-step-card > *:not(.form-actions) {
+  max-width: 100% !important;
+}
+
+@media (min-width: 900px) {
+  .home-page .hero-form-card .quote-shell {
+    height: 398px !important;
+    min-height: 398px !important;
+    max-height: 398px !important;
+    padding: 22px 28px 24px !important;
+  }
+
+  .home-page .quote-heading h2 {
+    font-size: 1.72rem !important;
+    margin-top: 7px !important;
+  }
+
+  .home-page .quote-heading p {
+    font-size: .9rem !important;
+    margin-top: 5px !important;
+  }
+
+  .home-page .quote-stage {
+    height: 214px !important;
+    min-height: 214px !important;
+    padding-bottom: 54px !important;
+  }
+
+  .home-page .flow-step-card[data-step-type="service"] {
+    gap: 8px !important;
+  }
+
+  .home-page .flow-step-card[data-step-type="property"] .property-choice-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .home-page .flow-step-card[data-step-type="address"] .address-lines {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .home-page .flow-step-card[data-step-type="address"] .field-help {
+    display: none !important;
+  }
+
+  .home-page .flow-step-card[data-step-type="notes"] textarea {
+    min-height: 74px !important;
+    max-height: 82px !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .home-page .hero-form-card .quote-shell,
+  .contact-page .contact-form-wrap .quote-shell {
+    height: min(560px, calc(100svh - 96px)) !important;
+    min-height: 500px !important;
+    max-height: 560px !important;
+    padding: 12px 12px 16px !important;
+    border-radius: 24px !important;
+  }
+
+  .home-page .quote-heading,
+  .contact-page .quote-heading {
+    padding-bottom: 6px !important;
+  }
+
+  .home-page .quote-heading h2,
+  .contact-page .quote-heading h2 {
+    font-size: 1.32rem !important;
+  }
+
+  .home-page .quote-heading p,
+  .contact-page .quote-heading p {
+    font-size: .84rem !important;
+  }
+
+  .home-page .quote-progress,
+  .contact-page .quote-progress {
+    padding: 8px 9px !important;
+  }
+
+  .home-page .quote-stage,
+  .contact-page .quote-stage {
+    height: auto !important;
+    min-height: 0 !important;
+    flex: 1 1 auto !important;
+    padding-bottom: 58px !important;
+  }
+
+  .home-page .flow-step-card,
+  .contact-page .flow-step-card {
+    gap: 8px !important;
+  }
+
+  .home-page .form-grid.two,
+  .contact-page .form-grid.two {
+    grid-template-columns: 1fr !important;
+  }
+
+  .home-page .addon-choice-grid,
+  .contact-page .addon-choice-grid,
+  .home-page .property-choice-grid,
+  .contact-page .property-choice-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .quote-form .form-actions,
+  .home-page .form-actions,
+  .contact-page .form-actions {
+    position: absolute !important;
+    bottom: 0 !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .quote-form .form-actions button[data-back] {
+    order: 2 !important;
+  }
+
+  .quote-form .form-actions button[data-next],
+  .quote-form .form-actions button[type="submit"],
+  .quote-form .form-actions button[data-back] {
+    min-height: 46px !important;
+  }
+}
