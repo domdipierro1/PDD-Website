@@ -1887,3 +1887,217 @@ body{
     min-height: 46px !important;
   }
 }
+
+
+/* -------------------------------------------------
+   Final quote form size/button correction
+   - Same card height as hero card on desktop
+   - Form actions stay inside the tile bottom
+   - Primary Next/Send buttons are forced blue
+   ------------------------------------------------- */
+:root{
+  --quote-primary:#0754ad;
+  --quote-primary-dark:#063d7f;
+  --quote-cyan:#18bcd0;
+}
+
+.quote-form button.quote-primary-action,
+.quote-form .form-actions button[data-next],
+.quote-form .form-actions button[type="submit"]{
+  background:#0754ad !important;
+  background-image:linear-gradient(135deg,#0754ad,#063d7f) !important;
+  border:2px solid #0754ad !important;
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+  box-shadow:0 14px 32px rgba(7,84,173,.22) !important;
+  opacity:1 !important;
+  text-indent:0 !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  min-height:46px !important;
+  border-radius:999px !important;
+  appearance:none !important;
+  -webkit-appearance:none !important;
+}
+
+.quote-form button.quote-primary-action:hover,
+.quote-form button.quote-primary-action:focus,
+.quote-form .form-actions button[data-next]:hover,
+.quote-form .form-actions button[data-next]:focus,
+.quote-form .form-actions button[type="submit"]:hover,
+.quote-form .form-actions button[type="submit"]:focus{
+  background:#063d7f !important;
+  background-image:linear-gradient(135deg,#063d7f,#0754ad) !important;
+  border-color:#063d7f !important;
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+}
+
+.quote-form button.quote-primary-action:disabled,
+.quote-form .form-actions button[data-next]:disabled,
+.quote-form .form-actions button[type="submit"]:disabled{
+  background:#8fafcf !important;
+  background-image:none !important;
+  border-color:#8fafcf !important;
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+  opacity:1 !important;
+}
+
+.quote-form button.quote-primary-action::before,
+.quote-form .form-actions button[data-next]::before,
+.quote-form .form-actions button[type="submit"]::before,
+.quote-form button.quote-secondary-action::before,
+.quote-form .form-actions button[data-back]::before{
+  display:none !important;
+}
+
+.quote-form button.quote-secondary-action,
+.quote-form .form-actions button[data-back],
+.quote-form .form-actions .btn.secondary{
+  background:#ffffff !important;
+  background-image:none !important;
+  border:2px solid rgba(7,84,173,.24) !important;
+  color:#0754ad !important;
+  -webkit-text-fill-color:#0754ad !important;
+  box-shadow:none !important;
+  opacity:1 !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  min-height:46px !important;
+  border-radius:999px !important;
+}
+
+.home-page .hero-form-card .quote-shell,
+.contact-page .contact-form-wrap .quote-shell{
+  background:#ffffff !important;
+  color:var(--ink) !important;
+  border:1px solid rgba(7,84,173,.14) !important;
+  border-top:4px solid transparent !important;
+  background-image:linear-gradient(#fff,#fff),linear-gradient(90deg,#18bcd0,#0754ad) !important;
+  background-origin:border-box !important;
+  background-clip:padding-box,border-box !important;
+  overflow:hidden !important;
+}
+
+.home-page .hero-form-card .quote-shell::before,
+.contact-page .contact-form-wrap .quote-shell::before{display:none !important;}
+
+.home-page .quote-heading h2,
+.home-page .step-intro h3,
+.contact-page .quote-heading h2,
+.contact-page .step-intro h3{color:var(--ink) !important;}
+
+.home-page .quote-heading p,
+.home-page .step-intro p,
+.home-page .field-help,
+.home-page .privacy-line,
+.contact-page .quote-heading p,
+.contact-page .step-intro p,
+.contact-page .field-help,
+.contact-page .privacy-line{color:var(--muted) !important;}
+
+.home-page .quote-stage,
+.contact-page .quote-stage{
+  position:relative !important;
+  flex:1 1 auto !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+}
+
+.home-page .flow-step-card,
+.contact-page .flow-step-card{
+  position:absolute !important;
+  inset:0 !important;
+  height:100% !important;
+  min-height:0 !important;
+  display:none !important;
+  flex-direction:column !important;
+  gap:10px !important;
+  overflow:hidden !important;
+}
+
+.home-page .flow-step-card.is-active,
+.contact-page .flow-step-card.is-active{display:flex !important;}
+
+.home-page .form-actions,
+.contact-page .form-actions,
+.quote-form .form-actions{
+  position:static !important;
+  margin-top:auto !important;
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:10px !important;
+  padding:0 !important;
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+
+.home-page .form-actions.single,
+.contact-page .form-actions.single,
+.quote-form .form-actions.single{grid-template-columns:1fr !important;}
+
+.home-page .addon-prompt,
+.contact-page .addon-prompt{
+  padding:10px !important;
+  border-radius:14px !important;
+}
+.home-page .addon-prompt h4,
+.contact-page .addon-prompt h4{font-size:.98rem !important;line-height:1.15 !important;}
+.home-page .addon-prompt p,
+.contact-page .addon-prompt p{font-size:.78rem !important;line-height:1.25 !important;margin-top:4px !important;}
+.home-page .addon-choice-grid,
+.contact-page .addon-choice-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:8px !important;margin-top:8px !important;}
+.home-page .addon-choice-grid label,
+.contact-page .addon-choice-grid label{min-height:40px !important;padding:8px 9px !important;font-size:.84rem !important;}
+
+@media (min-width:900px){
+  .home-page .header-inner{min-height:52px !important;padding:4px 0 !important;}
+  .home-page .brand img{width:76px !important;}
+  .home-page .hero{padding-top:20px !important;padding-bottom:20px !important;}
+  .home-page .hero-grid{max-width:1080px !important;grid-template-columns:minmax(380px,1fr) minmax(430px,1fr) !important;gap:28px !important;align-items:stretch !important;}
+  .home-page .hero-copy,
+  .home-page .hero-form-card .quote-shell{height:500px !important;min-height:500px !important;max-height:500px !important;}
+  .home-page .hero-form-card{display:flex !important;align-items:stretch !important;}
+  .home-page .hero-form-card .quote-shell{width:100% !important;padding:22px 28px 24px !important;}
+  .home-page .quote-form{display:flex !important;flex-direction:column !important;flex:1 1 auto !important;min-height:0 !important;gap:12px !important;}
+  .home-page .quote-heading{padding-bottom:8px !important;}
+  .home-page .quote-heading h2{font-size:1.8rem !important;margin-top:7px !important;}
+  .home-page .quote-heading p{font-size:.9rem !important;margin-top:5px !important;}
+  .home-page .quote-progress{padding:9px 11px !important;border-radius:15px !important;gap:7px !important;}
+  .home-page .quote-stage{height:auto !important;min-height:0 !important;}
+  .home-page .step-intro{gap:10px !important;}
+  .home-page .step-intro>span{width:36px !important;height:36px !important;flex-basis:36px !important;border-radius:13px !important;}
+  .home-page .step-intro h3{font-size:1.24rem !important;}
+  .home-page .step-intro p{font-size:.86rem !important;line-height:1.28 !important;margin-top:3px !important;}
+  .home-page .form-grid.two{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+  .home-page .form-label{font-size:.84rem !important;gap:6px !important;}
+  .home-page input,
+  .home-page select,
+  .home-page textarea{min-height:42px !important;padding:10px 12px !important;border-radius:14px !important;}
+  .home-page textarea{min-height:78px !important;max-height:92px !important;}
+  .home-page .property-choice-grid{grid-template-columns:repeat(3,minmax(0,1fr)) !important;gap:8px !important;}
+  .home-page .property-choice-grid label{min-height:38px !important;padding:8px 9px !important;font-size:.82rem !important;}
+  .home-page .flow-step-card[data-step-type="address"] .address-lines{display:grid !important;grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:8px !important;padding:9px !important;}
+  .home-page .flow-step-card[data-step-type="address"] .field-help{display:none !important;}
+}
+
+@media (max-width:760px){
+  .home-page .hero-form-card .quote-shell,
+  .contact-page .contact-form-wrap .quote-shell{height:min(560px,calc(100svh - 96px)) !important;min-height:500px !important;max-height:560px !important;padding:12px 12px 16px !important;}
+  .home-page .quote-form,
+  .contact-page .quote-form{display:flex !important;flex-direction:column !important;flex:1 1 auto !important;min-height:0 !important;}
+  .home-page .form-grid.two,
+  .contact-page .form-grid.two{grid-template-columns:1fr !important;}
+  .home-page .addon-choice-grid,
+  .contact-page .addon-choice-grid,
+  .home-page .property-choice-grid,
+  .contact-page .property-choice-grid{grid-template-columns:1fr !important;}
+  .home-page .form-actions,
+  .contact-page .form-actions,
+  .quote-form .form-actions{position:static !important;margin-top:auto !important;grid-template-columns:1fr !important;gap:8px !important;}
+  .quote-form .form-actions button[data-back]{order:2 !important;}
+}

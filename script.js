@@ -441,3 +441,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.querySelectorAll('[data-progressive-quote-form]').forEach(setupQuoteForm);
 });
+
+
+// Emergency visual enforcement for quote form primary buttons.
+// Keeps Next / Send blue even if older cached styles or button states interfere.
+(function () {
+  function paintQuoteButtons() {
+    document.querySelectorAll('.quote-form button[data-next], .quote-form button[type="submit"]').forEach(function (button) {
+      button.classList.add('quote-primary-action');
+      button.style.setProperty('background', 'linear-gradient(135deg,#0754ad,#063d7f)', 'important');
+      button.style.setProperty('background-color', '#0754ad', 'important');
+      button.style.setProperty('border', '2px solid #0754ad', 'important');
+      button.style.setProperty('color', '#ffffff', 'important');
+      button.style.setProperty('-webkit-text-fill-color', '#ffffff', 'important');
+      button.style.setProperty('box-shadow', '0 14px 32px rgba(7,84,173,.22)', 'important');
+      button.style.setProperty('display', 'inline-flex', 'important');
+      button.style.setProperty('align-items', 'center', 'important');
+      button.style.setProperty('justify-content', 'center', 'important');
+      button.style.setProperty('text-indent', '0', 'important');
+      button.style.setProperty('opacity', '1', 'important');
+    });
+    document.querySelectorAll('.quote-form button[data-back]').forEach(function (button) {
+      button.classList.add('quote-secondary-action');
+      button.style.setProperty('background', '#ffffff', 'important');
+      button.style.setProperty('background-image', 'none', 'important');
+      button.style.setProperty('border', '2px solid rgba(7,84,173,.24)', 'important');
+      button.style.setProperty('color', '#0754ad', 'important');
+      button.style.setProperty('-webkit-text-fill-color', '#0754ad', 'important');
+    });
+  }
+  document.addEventListener('DOMContentLoaded', paintQuoteButtons);
+  document.addEventListener('input', paintQuoteButtons, true);
+  document.addEventListener('change', paintQuoteButtons, true);
+  document.addEventListener('click', paintQuoteButtons, true);
+  window.addEventListener('pageshow', paintQuoteButtons);
+})();
