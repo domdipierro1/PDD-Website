@@ -1313,3 +1313,79 @@ body{
   appearance: none;
   -webkit-appearance: none;
 }
+
+
+/* -------------------------------------------------
+   Hard fix: force quote form primary action buttons blue
+   ------------------------------------------------- */
+
+.quote-form .form-actions button[data-next],
+.quote-form .form-actions button[type="submit"],
+.quote-form .form-actions .btn[data-next],
+.quote-form .form-actions .btn[type="submit"],
+.hero-form-card .quote-form .form-actions button[data-next],
+.hero-form-card .quote-form .form-actions button[type="submit"],
+.contact-form-wrap .quote-form .form-actions button[data-next],
+.contact-form-wrap .quote-form .form-actions button[type="submit"] {
+  background-color: var(--premium-blue) !important;
+  background-image: linear-gradient(135deg, var(--premium-blue), var(--premium-blue-2)) !important;
+  border: 2px solid var(--premium-blue) !important;
+  color: #ffffff !important;
+  box-shadow: 0 14px 32px rgba(7,84,173,.24) !important;
+  opacity: 1 !important;
+  text-indent: 0 !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.quote-form .form-actions button[data-next]::before,
+.quote-form .form-actions button[type="submit"]::before {
+  display: none !important;
+}
+
+.quote-form .form-actions button[data-next]:hover,
+.quote-form .form-actions button[data-next]:focus,
+.quote-form .form-actions button[data-next]:active,
+.quote-form .form-actions button[type="submit"]:hover,
+.quote-form .form-actions button[type="submit"]:focus,
+.quote-form .form-actions button[type="submit"]:active {
+  background-color: var(--premium-blue-2) !important;
+  background-image: linear-gradient(135deg, var(--premium-blue-2), var(--premium-blue)) !important;
+  border-color: var(--premium-blue-2) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.quote-form .form-actions button[data-next]:disabled,
+.quote-form .form-actions button[type="submit"]:disabled {
+  background-color: #8fafcf !important;
+  background-image: none !important;
+  border-color: #8fafcf !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+  cursor: not-allowed !important;
+}
+
+/* Keep back buttons white/outline only */
+.quote-form .form-actions button[data-back],
+.quote-form .form-actions .btn.secondary {
+  background: #ffffff !important;
+  background-image: none !important;
+  border: 2px solid rgba(7,84,173,.22) !important;
+  color: var(--premium-blue) !important;
+  -webkit-text-fill-color: var(--premium-blue) !important;
+  box-shadow: none !important;
+}
+
+/* Desktop and mobile sticky form actions */
+@media (max-width: 760px) {
+  .quote-form .form-actions button[data-next],
+  .quote-form .form-actions button[type="submit"] {
+    min-height: 48px !important;
+    border-radius: 999px !important;
+    background-color: var(--premium-blue) !important;
+    background-image: linear-gradient(135deg, var(--premium-blue), var(--premium-blue-2)) !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+  }
+}
