@@ -1255,3 +1255,15 @@ body{
   margin: 7px 0;
   line-height: 1.45;
 }
+
+
+/* Remove large About/Contact page hero spacing */
+.no-page-hero main > section:first-child {
+  padding-top: clamp(32px, 5vw, 54px);
+}
+
+.no-page-hero .contact-grid,
+.no-page-hero .split-grid,
+.no-page-hero .about-grid {
+  margin-top: 0;
+}
