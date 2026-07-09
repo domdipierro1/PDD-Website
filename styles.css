@@ -168,3 +168,161 @@ h1{font-size:clamp(2.3rem,5.4vw,4.35rem)}
   .hero-copy h1{font-size:1.58rem}.hero-copy .lead{font-size:.84rem}
   .quote-form .form-actions .btn{min-height:44px}
 }
+
+
+/* -------------------------------------------------
+   Premium dark-blue conversion refresh
+   User requested the dark/cyan CTA colour scheme to drive more of the website,
+   and the CTA wording to sit at the top of the homepage.
+   ------------------------------------------------- */
+:root{
+  --premium-navy:#06223a;
+  --premium-navy-2:#03162a;
+  --premium-blue:#0754ad;
+  --premium-cyan:#18bcd0;
+  --premium-cyan-soft:#dff9fc;
+}
+body{
+  background:
+    radial-gradient(circle at 6% 0%, rgba(24,188,208,.12), transparent 340px),
+    radial-gradient(circle at 94% 7%, rgba(7,84,173,.10), transparent 420px),
+    linear-gradient(180deg,#ffffff 0%,#f4fbff 42%,#ffffff 100%);
+}
+.home-page .hero{
+  background:
+    radial-gradient(circle at 8% 0%,rgba(24,188,208,.18),transparent 340px),
+    radial-gradient(circle at 92% 8%,rgba(7,84,173,.14),transparent 440px),
+    linear-gradient(180deg,#ffffff 0%,#eef8ff 100%);
+}
+.home-page .hero-copy{
+  position:relative;
+  padding:clamp(28px,4.5vw,48px);
+  border-radius:clamp(28px,5vw,56px);
+  background:
+    radial-gradient(circle at 82% 18%, rgba(24,188,208,.36), transparent 34%),
+    linear-gradient(145deg,var(--premium-blue) 0%, var(--premium-navy) 58%, var(--premium-navy-2) 100%);
+  box-shadow:0 30px 88px rgba(3,22,42,.22);
+  overflow:hidden;
+}
+.home-page .hero-copy::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.08),transparent 42%);
+  pointer-events:none;
+}
+.home-page .hero-copy > *{position:relative;z-index:1}
+.home-page .hero-copy h1,
+.home-page .hero-copy .lead{color:#fff}
+.home-page .hero-copy .lead{color:rgba(255,255,255,.78);max-width:620px}
+.home-page .hero-copy .eyebrow{
+  background:rgba(255,255,255,.14);
+  color:#fff;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.09);
+}
+.home-page .hero-copy .eyebrow::before{
+  background:var(--premium-cyan);
+  box-shadow:0 0 0 6px rgba(24,188,208,.22);
+}
+.home-page .hero-copy .btn{
+  background:#fff;
+  color:var(--premium-blue);
+  border-color:#fff;
+  box-shadow:0 18px 42px rgba(3,22,42,.22);
+}
+.home-page .hero-copy .btn.secondary{
+  background:transparent;
+  color:#fff;
+  border-color:rgba(255,255,255,.48);
+  box-shadow:none;
+}
+.home-page .hero-copy .trust-chip{
+  background:rgba(255,255,255,.12);
+  border-color:rgba(255,255,255,.18);
+  color:#fff;
+  box-shadow:none;
+}
+.home-page .hero-copy .trust-chip span{
+  background:rgba(24,188,208,.22);
+  color:#fff;
+}
+.quote-shell,
+.contact-form-wrap .quote-shell{
+  border-color:rgba(7,84,173,.16);
+  box-shadow:0 26px 74px rgba(7,84,173,.18);
+}
+.quote-progress{
+  background:linear-gradient(135deg,#eef8ff,#ffffff);
+}
+.step-intro>span,
+.tile-icon,
+.step-card span,
+.service-number,
+.success-mark{
+  background:linear-gradient(135deg,var(--premium-blue),var(--premium-cyan));
+}
+.service-tile,
+.trust-card,
+.step-card,
+.quote-note-card,
+.contact-card,
+.legal-card{
+  border-color:rgba(7,84,173,.12);
+}
+.service-tile:hover,
+.trust-card:hover,
+.step-card:hover{
+  border-color:rgba(24,188,208,.38);
+  box-shadow:0 24px 70px rgba(7,84,173,.13);
+}
+.section-blueprint,
+.cta-section{
+  background:
+    radial-gradient(circle at 12% 0%,rgba(24,188,208,.16),transparent 360px),
+    linear-gradient(180deg,#f6fbff,#ffffff);
+}
+.section-blueprint .split-grid{
+  padding:clamp(26px,4vw,44px);
+  border-radius:var(--radius-xl);
+  background:
+    radial-gradient(circle at 92% 10%,rgba(24,188,208,.16),transparent 30%),
+    linear-gradient(145deg,#ffffff,#f3faff);
+  border:1px solid rgba(7,84,173,.10);
+  box-shadow:0 22px 64px rgba(7,84,173,.09);
+}
+.cta-panel,
+.site-footer{
+  background:
+    radial-gradient(circle at 84% 16%, rgba(24,188,208,.34), transparent 30%),
+    linear-gradient(145deg,var(--premium-blue) 0%, var(--premium-navy) 60%, var(--premium-navy-2) 100%);
+}
+.footer-brand img{
+  box-shadow:0 20px 48px rgba(3,22,42,.25);
+}
+.page-hero{
+  background:
+    radial-gradient(circle at 88% 0%,rgba(24,188,208,.18),transparent 360px),
+    linear-gradient(180deg,#ffffff,#eef8ff);
+}
+
+@media(max-width:760px){
+  .home-page .hero-copy{
+    padding:18px 18px 20px;
+    border-radius:28px;
+    box-shadow:0 18px 48px rgba(3,22,42,.20);
+  }
+  .home-page .hero-copy h1{
+    font-size:clamp(1.76rem,8.4vw,2.38rem);
+    max-width:360px;
+  }
+  .home-page .hero-copy .lead{
+    font-size:.94rem;
+    line-height:1.45;
+  }
+  .home-page .hero-copy .hero-actions,
+  .home-page .hero-copy .trust-row{
+    display:none!important;
+  }
+  .home-page .hero-grid{gap:10px}
+  .home-page .quote-shell{margin-top:0}
+}
