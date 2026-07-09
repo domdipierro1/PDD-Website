@@ -795,3 +795,20 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!mobileQuery.matches) exitQuoteFocus();
   });
 });
+
+
+/* Mobile header gap / hidden-header prevention */
+document.addEventListener('DOMContentLoaded', function () {
+  function keepHeaderVisibleOnMobile() {
+    if (!window.matchMedia('(max-width: 760px)').matches) return;
+    document.querySelectorAll('.site-header').forEach(function (header) {
+      header.classList.remove('is-hidden');
+      header.style.transform = 'none';
+      header.style.opacity = '1';
+    });
+  }
+
+  keepHeaderVisibleOnMobile();
+  window.addEventListener('scroll', keepHeaderVisibleOnMobile, { passive: true });
+  window.addEventListener('resize', keepHeaderVisibleOnMobile);
+});

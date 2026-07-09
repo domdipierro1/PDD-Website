@@ -3565,3 +3565,125 @@ body{
     font-size: 16px !important;
   }
 }
+
+
+/* -------------------------------------------------
+   Header gap fix + stronger location/service badge
+   Desktop layout stays visually locked except badge emphasis.
+   ------------------------------------------------- */
+
+/* Stronger business/location badge on both desktop and mobile */
+.home-page .hero-copy .service-location-badge,
+.home-page .hero-copy .eyebrow {
+  background: linear-gradient(135deg, rgba(232,251,253,.98), rgba(255,255,255,.22)) !important;
+  border: 1px solid rgba(24,188,208,.42) !important;
+  color: #ffffff !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.14),
+    0 12px 30px rgba(3,22,42,.16) !important;
+  font-weight: 950 !important;
+  letter-spacing: .01em !important;
+  text-shadow: 0 1px 2px rgba(3,22,42,.22) !important;
+}
+
+.home-page .hero-copy .service-location-badge::before,
+.home-page .hero-copy .eyebrow::before {
+  width: 10px !important;
+  height: 10px !important;
+  background: #22d3ee !important;
+  box-shadow: 0 0 0 6px rgba(34,211,238,.18) !important;
+}
+
+/* Mobile-only header/top-gap fix */
+@media (max-width: 760px) {
+  html,
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  body.home-page {
+    padding-top: 0 !important;
+  }
+
+  body.home-page::before,
+  body.home-page::after {
+    display: none !important;
+    content: none !important;
+  }
+
+  .site-header {
+    position: sticky !important;
+    top: 0 !important;
+    margin-top: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+    background: #ffffff !important;
+  }
+
+  .site-header.is-hidden {
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .header-inner {
+    min-height: 58px !important;
+    padding: 4px 0 !important;
+  }
+
+  .brand img {
+    width: 74px !important;
+  }
+
+  .menu-toggle {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 13px !important;
+  }
+
+  main#main-content {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .home-page .hero {
+    margin-top: 0 !important;
+    padding-top: 8px !important;
+  }
+
+  /* Make the mobile hero tile cleaner and smaller */
+  .home-page .hero-copy {
+    padding: 14px 14px 16px !important;
+    border-radius: 22px !important;
+  }
+
+  .home-page .hero-copy .service-location-badge,
+  .home-page .hero-copy .eyebrow {
+    margin-bottom: 10px !important;
+    padding: 8px 11px !important;
+    font-size: .76rem !important;
+    line-height: 1.16 !important;
+    max-width: 100% !important;
+    display: inline-flex !important;
+  }
+
+  .home-page .hero-copy h1 {
+    font-size: clamp(1.88rem, 8.6vw, 2.45rem) !important;
+    line-height: 1.02 !important;
+  }
+
+  .home-page .hero-copy .lead {
+    margin-top: 9px !important;
+    font-size: .9rem !important;
+    line-height: 1.32 !important;
+  }
+
+  .home-page .hero-grid {
+    gap: 9px !important;
+  }
+
+  .home-page .hero-form-card .quote-shell {
+    min-height: 320px !important;
+  }
+}
