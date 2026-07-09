@@ -1267,3 +1267,49 @@ body{
 .no-page-hero .about-grid {
   margin-top: 0;
 }
+
+
+/* -------------------------------------------------
+   Quote form button fix
+   Keep enabled Next / Send buttons blue after input is completed
+   ------------------------------------------------- */
+
+.home-page .hero-form-card .form-actions .btn:not(.secondary):not(:disabled),
+.contact-page .contact-form-wrap .form-actions .btn:not(.secondary):not(:disabled),
+.quote-form .form-actions .btn:not(.secondary):not(:disabled) {
+  background: linear-gradient(135deg, var(--premium-blue), var(--premium-blue-2)) !important;
+  border-color: var(--premium-blue) !important;
+  color: #ffffff !important;
+  box-shadow: 0 14px 32px rgba(7,84,173,.22) !important;
+}
+
+.home-page .hero-form-card .form-actions .btn:not(.secondary):not(:disabled):hover,
+.home-page .hero-form-card .form-actions .btn:not(.secondary):not(:disabled):focus,
+.home-page .hero-form-card .form-actions .btn:not(.secondary):not(:disabled):active,
+.contact-page .contact-form-wrap .form-actions .btn:not(.secondary):not(:disabled):hover,
+.contact-page .contact-form-wrap .form-actions .btn:not(.secondary):not(:disabled):focus,
+.contact-page .contact-form-wrap .form-actions .btn:not(.secondary):not(:disabled):active,
+.quote-form .form-actions .btn:not(.secondary):not(:disabled):hover,
+.quote-form .form-actions .btn:not(.secondary):not(:disabled):focus,
+.quote-form .form-actions .btn:not(.secondary):not(:disabled):active {
+  background: linear-gradient(135deg, var(--premium-blue-2), var(--premium-blue)) !important;
+  border-color: var(--premium-blue-2) !important;
+  color: #ffffff !important;
+}
+
+.home-page .hero-form-card .form-actions .btn:not(.secondary):disabled,
+.contact-page .contact-form-wrap .form-actions .btn:not(.secondary):disabled,
+.quote-form .form-actions .btn:not(.secondary):disabled {
+  background: #8fafcf !important;
+  border-color: #8fafcf !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
+  cursor: not-allowed;
+}
+
+/* Prevent browser autofill/focus states making the button look like an empty white field */
+.quote-form .form-actions .btn,
+.quote-form .form-actions button {
+  appearance: none;
+  -webkit-appearance: none;
+}
