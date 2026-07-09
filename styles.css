@@ -1226,3 +1226,20 @@ body{
     color: var(--premium-blue) !important;
   }
 }
+
+
+/* Service page short coverage bullets */
+.service-bullets {
+  margin: 14px 0 18px;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.service-bullets li {
+  margin: 6px 0;
+  line-height: 1.45;
+}
+
+.service-detail-card .link-arrow {
+  margin-top: 4px;
+}
