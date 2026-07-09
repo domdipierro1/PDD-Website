@@ -3198,3 +3198,105 @@ body{
     gap: 8px;
   }
 }
+
+
+/* -------------------------------------------------
+   Calendar stay-open + compact thank-you page
+   ------------------------------------------------- */
+
+/* Keep calendar overlay visible while using month arrows */
+.quote-shell.calendar-open .calendar-popover,
+.calendar-popover:not([hidden]) {
+  display: block !important;
+}
+
+/* Smaller thank-you confirmation page */
+.compact-thank-you-page .site-header {
+  position: sticky;
+}
+
+.compact-thank-you-page .thank-you-compact-v2 {
+  min-height: calc(100svh - 74px);
+  display: flex;
+  align-items: center;
+  padding: 28px 0;
+  background:
+    radial-gradient(circle at 88% 8%, rgba(24,188,208,.16), transparent 360px),
+    linear-gradient(180deg, #ffffff, #eef8ff);
+}
+
+.compact-thank-you-page .thank-you-card-v2 {
+  width: min(100%, 760px);
+  padding: 30px 34px;
+  border-radius: 30px;
+  background: #ffffff;
+  border: 1px solid rgba(7,84,173,.14);
+  border-top: 4px solid transparent;
+  background-image:
+    linear-gradient(#ffffff, #ffffff),
+    linear-gradient(90deg, var(--premium-cyan), var(--premium-blue));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: 0 24px 70px rgba(7,84,173,.12);
+}
+
+.compact-thank-you-page .success-mark-v2 {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  margin-bottom: 14px;
+  background: linear-gradient(135deg, var(--premium-blue), var(--premium-cyan));
+  color: #ffffff;
+  font-size: 1.75rem;
+  font-weight: 900;
+}
+
+.compact-thank-you-page .thank-you-card-v2 h1 {
+  font-size: clamp(2.1rem, 4.1vw, 3.45rem);
+  max-width: 650px;
+  line-height: 1.02;
+}
+
+.compact-thank-you-page .thank-you-card-v2 p {
+  margin-top: 12px;
+  max-width: 590px;
+  color: var(--muted);
+  font-size: clamp(.98rem, 1.35vw, 1.08rem);
+  line-height: 1.45;
+}
+
+.compact-thank-you-page .thank-you-actions-v2 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.compact-thank-you-page .thank-you-actions-v2 .btn {
+  min-height: 44px;
+}
+
+@media (max-width: 760px) {
+  .compact-thank-you-page .thank-you-compact-v2 {
+    align-items: flex-start;
+    min-height: auto;
+    padding: 20px 0 30px;
+  }
+
+  .compact-thank-you-page .thank-you-card-v2 {
+    padding: 22px;
+    border-radius: 24px;
+  }
+
+  .compact-thank-you-page .thank-you-card-v2 h1 {
+    font-size: clamp(1.9rem, 9vw, 2.45rem);
+  }
+
+  .compact-thank-you-page .thank-you-actions-v2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}

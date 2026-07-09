@@ -732,3 +732,28 @@ document.addEventListener('DOMContentLoaded', function () {
     }, false);
   });
 });
+
+
+/* Calendar month navigation stay-open fix */
+document.addEventListener('click', function (event) {
+  var nav = event.target.closest('.calendar-nav, [data-prev], [data-cal-next]');
+  if (!nav) return;
+
+  var calendar = nav.closest('[data-calendar]');
+  if (!calendar) return;
+
+  // Let the calendar's own handler update the month, but prevent outer close/minimise handlers.
+  event.stopPropagation();
+
+  setTimeout(function () {
+    calendar.removeAttribute('hidden');
+    var shell = calendar.closest('.quote-shell');
+    if (shell) shell.classList.add('calendar-open');
+
+    calendar.querySelectorAll('.calendar-nav').forEach(function (button) {
+      button.disabled = false;
+      button.removeAttribute('disabled');
+      button.setAttribute('aria-disabled', 'false');
+    });
+  }, 0);
+}, true);
