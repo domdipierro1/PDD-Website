@@ -344,13 +344,24 @@ document.addEventListener('DOMContentLoaded', function () {
       updateHiddenFields();
       return ok;
     }
-    function showStep(index) {
+    function markQuoteFormInUse() {
+      if (document.body) document.body.classList.add('is-using-quote-form');
+    }
+    function keepStepVisible() {
+      if (!window.matchMedia || !window.matchMedia('(max-width: 560px)').matches) return;
+      var shell = form.closest('.quote-shell') || form;
+      window.requestAnimationFrame(function () {
+        shell.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
+      });
+    }
+    function showStep(index, shouldScroll) {
       current = Math.max(0, Math.min(index, steps.length - 1));
       steps.forEach(function (step, i) { step.classList.toggle('is-active', i === current); });
       if (stepLabel) stepLabel.textContent = 'Step ' + (current + 1) + ' of ' + steps.length;
       if (stepTitle) stepTitle.textContent = steps[current].getAttribute('data-step-title') || '';
       if (progressBar) progressBar.style.width = (((current + 1) / steps.length) * 100) + '%';
       updateButtons();
+      if (shouldScroll) keepStepVisible();
     }
     function updateButtons() {
       syncAddonPrompt();
@@ -359,8 +370,11 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
 
-    form.addEventListener('input', function () { updateHiddenFields(); updateButtons(); });
+    form.addEventListener('click', markQuoteFormInUse);
+    form.addEventListener('focusin', markQuoteFormInUse);
+    form.addEventListener('input', function () { markQuoteFormInUse(); updateHiddenFields(); updateButtons(); });
     form.addEventListener('change', function () {
+      markQuoteFormInUse();
       var otherWrap = form.querySelector('[data-property-other-wrap]');
       var otherInput = form.querySelector('[data-property-other]');
       var otherChecked = !!form.querySelector('[data-property-other-option]:checked');
@@ -369,10 +383,10 @@ document.addEventListener('DOMContentLoaded', function () {
       updateHiddenFields(); updateButtons();
     });
     form.querySelectorAll('[data-next]').forEach(function (button) {
-      button.addEventListener('click', function () { if (validate(current, true)) showStep(current + 1); });
+      button.addEventListener('click', function () { markQuoteFormInUse(); if (validate(current, true)) showStep(current + 1, true); });
     });
     form.querySelectorAll('[data-back]').forEach(function (button) {
-      button.addEventListener('click', function () { showStep(current - 1); });
+      button.addEventListener('click', function () { markQuoteFormInUse(); showStep(current - 1, true); });
     });
     form.addEventListener('submit', function (event) {
       syncCrmAddressField(form);
@@ -380,7 +394,7 @@ document.addEventListener('DOMContentLoaded', function () {
       for (var i = 0; i < steps.length; i += 1) {
         if (!validate(i, true)) {
           event.preventDefault();
-          showStep(i);
+          showStep(i, true);
           return;
         }
       }
