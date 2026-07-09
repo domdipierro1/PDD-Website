@@ -413,5 +413,31 @@ document.addEventListener('DOMContentLoaded', function () {
     syncCrmAddressField(form);
   }, true);
 
+
+  // Mobile header behaviour: keep the top of the enquiry visible.
+  // Header is visible at the top, then hides while the customer moves down the page.
+  (function setupMobileHeaderHide() {
+    var header = document.querySelector('.site-header');
+    if (!header) return;
+    var mq = window.matchMedia ? window.matchMedia('(max-width: 760px)') : null;
+    function mobileMenuOpen() {
+      var shell = document.querySelector('.mobile-menu-shell');
+      return !!(shell && shell.classList.contains('is-open'));
+    }
+    function update() {
+      var isMobile = mq ? mq.matches : window.innerWidth <= 760;
+      if (!isMobile || mobileMenuOpen()) {
+        header.classList.remove('is-hidden');
+        return;
+      }
+      header.classList.toggle('is-hidden', window.scrollY > 24);
+    }
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    var toggleButton = document.querySelector('.menu-toggle');
+    if (toggleButton) toggleButton.addEventListener('click', function () { window.setTimeout(update, 40); });
+  })();
+
   document.querySelectorAll('[data-progressive-quote-form]').forEach(setupQuoteForm);
 });
