@@ -3840,3 +3840,29 @@ body{
     padding-top: 12px !important;
   }
 }
+
+
+/* -------------------------------------------------
+   Service first, contact details after address
+   ------------------------------------------------- */
+.quote-form .flow-step-card[data-step-type="details"] .form-grid.two {
+  margin-top: 2px !important;
+}
+
+@media (max-width: 760px) {
+  body.quote-focus-mode .flow-step-card[data-step-type="details"] .form-grid.two {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+/* Company registration note */
+.compact-company-note {
+  padding-top: 24px;
+}
+
+.compact-company-note .notice-card,
+.compact-company-note .legal-card {
+  max-width: 860px;
+  margin-inline: auto;
+}

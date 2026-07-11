@@ -828,3 +828,51 @@ document.addEventListener('DOMContentLoaded', function () {
   restoreQuoteHeadings();
   window.addEventListener('resize', restoreQuoteHeadings);
 });
+
+
+/* Service first with contact details after address */
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('[data-progressive-quote-form]').forEach(function (form) {
+    var steps = Array.prototype.slice.call(form.querySelectorAll('[data-step]'));
+
+    function addonsAllowed() {
+      return Array.prototype.slice.call(form.querySelectorAll('[data-service-option]')).some(function (input) {
+        return input.checked && (input.value === 'End of tenancy cleaning' || input.value === 'Deep cleaning');
+      });
+    }
+
+    function visibleSteps() {
+      return steps.filter(function (step) {
+        return !(step.getAttribute('data-step-type') === 'addons' && !addonsAllowed());
+      });
+    }
+
+    function syncVisibleNumbers() {
+      visibleSteps().forEach(function (step, i) {
+        var badge = step.querySelector('.step-intro > span');
+        if (badge) badge.textContent = String(i + 1);
+      });
+      var active = steps.find(function (step) { return step.classList.contains('is-active'); }) || visibleSteps()[0];
+      var visible = visibleSteps();
+      var idx = visible.indexOf(active);
+      if (idx < 0) idx = 0;
+      var title = form.querySelector('[data-step-title]');
+      var label = form.querySelector('[data-step-label]');
+      var bar = form.querySelector('[data-progress-bar]');
+      if (title && active) title.textContent = active.getAttribute('data-step-title') || '';
+      if (label) label.textContent = 'Step ' + (idx + 1) + ' of ' + visible.length;
+      if (bar) bar.style.width = Math.max(12, ((idx + 1) / visible.length) * 100) + '%';
+    }
+
+    // Ensure service is the first active step on fresh load if no fields are filled.
+    var serviceStep = form.querySelector('[data-step-type="service"]');
+    if (serviceStep && !form.querySelector('[data-service-option]:checked')) {
+      steps.forEach(function (step) { step.classList.toggle('is-active', step === serviceStep); });
+    }
+
+    form.addEventListener('click', function () { setTimeout(syncVisibleNumbers, 0); }, true);
+    form.addEventListener('change', function () { setTimeout(syncVisibleNumbers, 0); }, true);
+    form.addEventListener('input', function () { setTimeout(syncVisibleNumbers, 0); }, true);
+    syncVisibleNumbers();
+  });
+});
