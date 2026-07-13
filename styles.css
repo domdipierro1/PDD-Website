@@ -4093,3 +4093,110 @@ body{
     padding-top: 48px !important;
   }
 }
+
+
+/* -------------------------------------------------
+   Full-width homepage service coverage strip
+   Moves the North London coverage message into its own thin tile
+   above the two hero cards.
+   ------------------------------------------------- */
+
+.home-page .hero-service-strip {
+  grid-column: 1 / -1;
+  width: 100%;
+  margin: 0 0 6px 0;
+}
+
+.home-page .hero-service-strip-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 58px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ffffff 0%, #ecfcff 45%, #d9f9ff 100%);
+  border: 2px solid rgba(34, 211, 238, .7);
+  box-shadow:
+    0 14px 34px rgba(24, 188, 208, .18),
+    inset 0 0 0 1px rgba(255,255,255,.82);
+  color: #0a4d96;
+  font-weight: 950;
+  letter-spacing: -.01em;
+  font-size: clamp(1rem, 1.55vw, 1.2rem);
+  line-height: 1.05;
+}
+
+.home-page .hero-service-strip-dot {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  border-radius: 50%;
+  background: #f4b63f;
+  box-shadow: 0 0 0 7px rgba(244, 182, 63, .20);
+}
+
+.home-page .hero-copy .service-location-badge,
+.home-page .hero-copy .eyebrow.service-location-badge {
+  display: none !important;
+}
+
+@media (min-width: 761px) {
+  .home-page .hero {
+    padding-top: 16px !important;
+  }
+
+  .home-page .hero-grid {
+    row-gap: 16px !important;
+  }
+
+  .home-page .hero-service-strip {
+    margin-bottom: 0 !important;
+  }
+
+  .home-page .hero-service-strip-inner {
+    min-height: 54px !important;
+    padding: 10px 22px !important;
+    font-size: clamp(1rem, 1.25vw, 1.14rem) !important;
+  }
+
+  .home-page .hero-copy,
+  .home-page .hero-form-card .quote-shell {
+    height: 390px !important;
+    min-height: 390px !important;
+    max-height: 390px !important;
+  }
+
+  .home-page .hero-copy h1 {
+    margin-top: 4px !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .home-page .hero-grid {
+    gap: 16px !important;
+  }
+
+  .home-page .hero-service-strip {
+    margin-bottom: -2px !important;
+  }
+
+  .home-page .hero-service-strip-inner {
+    min-height: 52px !important;
+    padding: 10px 14px !important;
+    border-radius: 18px !important;
+    font-size: clamp(.95rem, 4.6vw, 1.04rem) !important;
+    line-height: 1.08 !important;
+  }
+
+  .home-page .hero-service-strip-dot {
+    width: 12px !important;
+    height: 12px !important;
+    flex-basis: 12px !important;
+    box-shadow: 0 0 0 6px rgba(244, 182, 63, .22) !important;
+  }
+
+  .home-page .hero-copy {
+    margin-top: 0 !important;
+  }
+}
