@@ -3866,3 +3866,179 @@ body{
   max-width: 860px;
   margin-inline: auto;
 }
+
+
+/* -------------------------------------------------
+   Desktop homepage hero fit fix
+   Keeps top section tighter so both hero tiles fit properly.
+   ------------------------------------------------- */
+@media (min-width: 761px) {
+  .home-page .site-header .header-inner {
+    min-height: 72px !important;
+    padding: 10px 0 !important;
+  }
+
+  .home-page .brand img {
+    width: 72px !important;
+  }
+
+  .home-page .hero {
+    min-height: auto !important;
+    padding: 16px 0 18px !important;
+  }
+
+  .home-page .hero-grid {
+    align-items: stretch !important;
+    gap: 24px !important;
+    width: min(100% - 36px, 1260px) !important;
+  }
+
+  .home-page .hero-copy,
+  .home-page .hero-form-card .quote-shell {
+    min-height: 420px !important;
+    height: 420px !important;
+    max-height: 420px !important;
+    overflow: hidden !important;
+    border-radius: 28px !important;
+  }
+
+  .home-page .hero-copy {
+    padding: 28px 30px 24px !important;
+  }
+
+  .home-page .hero-copy .service-location-badge,
+  .home-page .hero-copy .eyebrow.service-location-badge {
+    margin-bottom: 14px !important;
+    padding: 10px 16px !important;
+    font-size: 1rem !important;
+    line-height: 1.05 !important;
+  }
+
+  .home-page .hero-copy h1 {
+    font-size: clamp(3.2rem, 4.6vw, 4.4rem) !important;
+    line-height: 0.96 !important;
+    letter-spacing: -0.03em !important;
+    max-width: 10ch !important;
+    margin-bottom: 14px !important;
+  }
+
+  .home-page .hero-copy .lead {
+    font-size: 0.98rem !important;
+    line-height: 1.42 !important;
+    max-width: 30ch !important;
+    margin-top: 0 !important;
+    margin-bottom: 18px !important;
+  }
+
+  .home-page .hero-copy .hero-actions {
+    gap: 12px !important;
+    margin-top: 0 !important;
+    margin-bottom: 14px !important;
+  }
+
+  .home-page .hero-copy .hero-actions .btn {
+    min-height: 46px !important;
+    padding: 0 18px !important;
+    font-size: 0.95rem !important;
+  }
+
+  .home-page .hero-copy .trust-row {
+    gap: 10px !important;
+    margin-top: 0 !important;
+  }
+
+  .home-page .hero-copy .trust-item,
+  .home-page .hero-copy .trust-pill,
+  .home-page .hero-copy .feature-pill {
+    padding: 10px 14px !important;
+    min-height: 42px !important;
+    font-size: 0.92rem !important;
+    line-height: 1.15 !important;
+  }
+
+  .home-page .hero-form-card .quote-shell {
+    padding: 18px 20px 16px !important;
+  }
+
+  .home-page .quote-heading {
+    padding-bottom: 10px !important;
+  }
+
+  .home-page .quote-heading .mini-kicker {
+    padding: 6px 12px !important;
+    font-size: 0.72rem !important;
+  }
+
+  .home-page .quote-heading h2 {
+    font-size: clamp(2rem, 2.3vw, 2.4rem) !important;
+    line-height: 1.02 !important;
+    margin-top: 8px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .home-page .quote-heading p {
+    font-size: 0.92rem !important;
+    line-height: 1.28 !important;
+  }
+
+  .home-page .quote-progress {
+    padding: 8px 12px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .home-page .quote-form {
+    gap: 8px !important;
+  }
+
+  .home-page .quote-stage {
+    min-height: 220px !important;
+    padding-bottom: 58px !important;
+    overflow: hidden !important;
+  }
+
+  .home-page .flow-step-card {
+    gap: 8px !important;
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .home-page .step-intro h3 {
+    font-size: 1.05rem !important;
+    line-height: 1.05 !important;
+  }
+
+  .home-page .step-intro p {
+    font-size: 0.8rem !important;
+    line-height: 1.15 !important;
+  }
+
+  .home-page .service-multi-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  .home-page .service-multi-grid .choice-card {
+    min-height: 46px !important;
+    padding: 8px 10px !important;
+    font-size: 0.9rem !important;
+  }
+
+  .home-page .form-actions {
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    margin-top: 0 !important;
+    padding-top: 8px !important;
+    background: linear-gradient(180deg, rgba(255,255,255,0), #fff 30%) !important;
+  }
+
+  .home-page .form-actions .btn,
+  .home-page .form-actions button {
+    min-height: 44px !important;
+  }
+
+  .home-page .proof-strip {
+    margin-top: 0 !important;
+  }
+}

@@ -1,0 +1,1 @@
+Desktop-only homepage tightening so hero tiles fit properly on screen. Mobile left unchanged.
