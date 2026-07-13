@@ -4200,3 +4200,79 @@ body{
     margin-top: 0 !important;
   }
 }
+
+
+/* -------------------------------------------------
+   Green service strip dot + desktop hero content fit fix
+   ------------------------------------------------- */
+.home-page .hero-service-strip-dot {
+  background: #22c55e !important;
+  box-shadow: 0 0 0 7px rgba(34, 197, 94, .22) !important;
+}
+
+@media (min-width: 761px) {
+  .home-page .hero-copy,
+  .home-page .hero-form-card .quote-shell {
+    height: 402px !important;
+    min-height: 402px !important;
+    max-height: 402px !important;
+  }
+
+  .home-page .hero-copy {
+    padding: 24px 30px 20px !important;
+  }
+
+  .home-page .hero-copy h1 {
+    font-size: clamp(2.9rem, 4vw, 3.95rem) !important;
+    line-height: 0.94 !important;
+    letter-spacing: -0.04em !important;
+    max-width: 10.2ch !important;
+    margin: 4px 0 10px 0 !important;
+  }
+
+  .home-page .hero-copy .lead {
+    margin: 0 0 14px 0 !important;
+    max-width: 29ch !important;
+    font-size: .95rem !important;
+    line-height: 1.34 !important;
+  }
+
+  .home-page .hero-copy .hero-actions {
+    gap: 10px !important;
+    margin: 0 0 12px 0 !important;
+  }
+
+  .home-page .hero-copy .hero-actions .btn {
+    min-height: 42px !important;
+    padding: 0 16px !important;
+    font-size: .86rem !important;
+  }
+
+  .home-page .hero-copy .trust-row {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    margin-top: auto !important;
+    padding-top: 0 !important;
+  }
+
+  .home-page .hero-copy .trust-chip,
+  .home-page .hero-copy .trust-item,
+  .home-page .hero-copy .feature-pill,
+  .home-page .hero-copy .trust-pill {
+    min-height: 38px !important;
+    padding: 8px 12px !important;
+    font-size: .79rem !important;
+    line-height: 1.1 !important;
+    white-space: normal !important;
+  }
+
+  .home-page .hero-copy .trust-chip span,
+  .home-page .hero-copy .trust-item span,
+  .home-page .hero-copy .feature-pill span,
+  .home-page .hero-copy .trust-pill span {
+    width: 18px !important;
+    height: 18px !important;
+    flex: 0 0 18px !important;
+  }
+}

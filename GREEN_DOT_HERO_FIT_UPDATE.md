@@ -1,0 +1,1 @@
+Changed the full-width service strip icon dot from amber to green and tightened the desktop left hero tile so all bottom trust items fit inside the tile.
