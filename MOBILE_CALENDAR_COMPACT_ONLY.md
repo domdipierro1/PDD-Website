@@ -1,0 +1,1 @@
+Further shrinks the mobile calendar so the full month fits within the enquiry tile. Desktop layout unchanged.
