@@ -1,0 +1,1 @@
+Adjusted the desktop left homepage hero tile so the heading, copy, buttons and bottom trust pills all fit fully within the tile.
