@@ -3303,1059 +3303,219 @@ body{
 
 
 /* -------------------------------------------------
-   MOBILE ONLY: cleaner homepage + quote focus mode
-   Desktop layout intentionally untouched.
+   Mobile quote-flow lock-in + full calendar fit
+   Keeps the enquiry on screen while the customer completes it,
+   and lets the full calendar show inside the step without being cut off.
    ------------------------------------------------- */
-
 @media (max-width: 760px) {
-  html {
-    scroll-padding-top: 0 !important;
+  body.is-using-quote-form {
+    overflow: hidden;
   }
 
-  body.home-page {
-    background:
-      radial-gradient(circle at 12% 4%, rgba(24,188,208,.13), transparent 240px),
-      radial-gradient(circle at 96% 20%, rgba(7,84,173,.10), transparent 260px),
-      #eef8ff !important;
+  body.is-using-quote-form .home-page .hero {
+    padding-top: 8px;
+    padding-bottom: 8px;
   }
 
-  /* Smaller mobile header so first screen shows useful content */
-  .site-header {
-    position: sticky !important;
-    top: 0 !important;
-    transform: none !important;
-  }
-
-  .header-inner {
-    min-height: 66px !important;
-    padding: 6px 0 !important;
-  }
-
-  .brand img {
-    width: 86px !important;
-  }
-
-  .menu-toggle {
-    width: 42px !important;
-    height: 42px !important;
-    border-radius: 14px !important;
-  }
-
-  /* Homepage: make both hero tile and quote tile visible quickly */
-  .home-page .hero {
-    min-height: auto !important;
-    padding: 8px 0 16px !important;
-    overflow: visible !important;
-  }
-
-  .home-page .hero-grid {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 10px !important;
-    width: min(100% - 22px, var(--max)) !important;
-  }
-
-  .home-page .hero-copy {
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    padding: 16px 16px 18px !important;
-    border-radius: 24px !important;
-    overflow: hidden !important;
-    display: block !important;
-  }
-
-  .home-page .hero-copy .eyebrow {
-    margin-bottom: 10px !important;
-    padding: 7px 10px !important;
-    font-size: .72rem !important;
-    line-height: 1.2 !important;
-    max-width: 100% !important;
-  }
-
-  .home-page .hero-copy h1 {
-    font-size: clamp(2rem, 9vw, 2.62rem) !important;
-    line-height: 1.02 !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-  }
-
-  .home-page .hero-copy .lead {
-    margin-top: 10px !important;
-    font-size: .95rem !important;
-    line-height: 1.38 !important;
-    max-width: 95% !important;
-  }
-
-  .home-page .hero-copy .hero-actions,
-  .home-page .hero-copy .trust-row {
+  body.is-using-quote-form .home-page .hero-copy,
+  body.is-using-quote-form .feature-strip,
+  body.is-using-quote-form .section-blueprint,
+  body.is-using-quote-form .services-preview,
+  body.is-using-quote-form .hero-below-strip {
     display: none !important;
   }
 
-  .home-page .hero-form-card {
+  body.is-using-quote-form .home-page .hero-grid {
+    display: block;
+    max-width: none;
+  }
+
+  body.is-using-quote-form .home-page .hero-form-card {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 52px;
+    bottom: 0;
+    z-index: 1200;
+    overflow: auto;
+    padding: 8px 12px calc(env(safe-area-inset-bottom) + 10px);
+    background: linear-gradient(180deg, #eef8ff 0%, #f7fbff 100%);
+  }
+
+  body.is-using-quote-form .home-page .hero-form-card .quote-shell {
+    min-height: calc(100dvh - 70px - env(safe-area-inset-bottom));
+    margin: 0;
+    padding: 12px 12px 92px;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+
+  body.is-using-quote-form .home-page .hero-form-card .quote-heading {
     display: block !important;
-    min-width: 0 !important;
+    padding: 0 2px 10px;
   }
 
-  .home-page .hero-form-card .quote-shell {
-    height: auto !important;
-    min-height: 340px !important;
-    max-height: none !important;
-    padding: 14px 14px 16px !important;
-    border-radius: 24px !important;
-    overflow: hidden !important;
+  body.is-using-quote-form .home-page .hero-form-card .quote-heading h2 {
+    font-size: clamp(1.75rem, 8vw, 2.2rem);
+    line-height: 1.02;
   }
 
-  .home-page .quote-heading {
-    padding-bottom: 6px !important;
+  body.is-using-quote-form .home-page .hero-form-card .quote-heading p {
+    font-size: .9rem;
+    line-height: 1.3;
   }
 
-  .home-page .quote-heading h2 {
-    font-size: clamp(1.45rem, 7vw, 1.9rem) !important;
-    line-height: 1.02 !important;
+  body.is-using-quote-form .home-page .hero-form-card .quote-form {
+    flex: 1 1 auto;
+    min-height: 0;
   }
 
-  .home-page .quote-heading p {
-    font-size: .86rem !important;
-    line-height: 1.25 !important;
+  body.is-using-quote-form .home-page .hero-form-card .quote-stage {
+    flex: 1 1 auto;
+    min-height: 0;
   }
 
-  .home-page .quote-progress {
-    padding: 8px 10px !important;
+  body.is-using-quote-form .home-page .hero-form-card .flow-step-card.is-active {
+    min-height: 100%;
+    gap: 10px;
+    padding-bottom: 0;
   }
 
-  .home-page .quote-stage {
-    min-height: 190px !important;
-    padding-bottom: 48px !important;
+  body.is-using-quote-form .home-page .hero-form-card .quote-progress {
+    padding: 10px 12px;
+    gap: 8px;
   }
 
-  .home-page .flow-step-card {
-    gap: 6px !important;
+  body.is-using-quote-form .home-page .hero-form-card .step-intro {
+    align-items: flex-start;
   }
 
-  .home-page .form-grid.two,
-  .service-multi-grid,
-  .home-page .property-choice-grid,
-  .compact-addons .addon-choice-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  body.is-using-quote-form .home-page .hero-form-card .form-grid,
+  body.is-using-quote-form .home-page .hero-form-card .property-choice-grid,
+  body.is-using-quote-form .home-page .hero-form-card .service-multi-grid,
+  body.is-using-quote-form .home-page .hero-form-card .addon-choice-grid {
+    gap: 8px;
   }
 
-  .home-page .form-actions,
-  .quote-form .form-actions {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 8px !important;
+  body.is-using-quote-form .home-page .hero-form-card .service-multi-grid,
+  body.is-using-quote-form .home-page .hero-form-card .property-choice-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .quote-form .form-actions.single {
-    grid-template-columns: 1fr !important;
+  body.is-using-quote-form .home-page .hero-form-card .service-multi-grid label,
+  body.is-using-quote-form .home-page .hero-form-card .property-choice-grid label,
+  body.is-using-quote-form .home-page .hero-form-card .addon-choice-grid label {
+    min-height: 62px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    font-size: .9rem;
+    line-height: 1.2;
   }
 
-  .quote-form .form-actions button[data-back] {
-    order: 0 !important;
+  body.is-using-quote-form .home-page .hero-form-card .address-lines {
+    gap: 8px;
   }
 
-  /* Once customer starts the enquiry, lock the quote tile as the only mobile screen */
-  body.quote-focus-mode {
-    overflow: hidden !important;
-    height: 100svh !important;
+  body.is-using-quote-form .home-page .hero-form-card .address-lines .form-grid.two {
+    gap: 8px;
   }
 
-  body.quote-focus-mode .site-header,
-  body.quote-focus-mode .hero-copy,
-  body.quote-focus-mode .proof-strip,
-  body.quote-focus-mode main > section:not(.hero),
-  body.quote-focus-mode footer,
-  body.quote-focus-mode .mobile-sticky-cta {
-    display: none !important;
+  body.is-using-quote-form .home-page .hero-form-card .date-picker {
+    display: grid;
+    gap: 8px;
   }
 
-  body.quote-focus-mode .hero {
-    position: fixed !important;
-    inset: 0 !important;
-    z-index: 9999 !important;
-    padding: 10px !important;
-    margin: 0 !important;
-    min-height: 100svh !important;
-    height: 100svh !important;
-    overflow: hidden !important;
-    background:
-      radial-gradient(circle at 12% 4%, rgba(24,188,208,.13), transparent 240px),
-      radial-gradient(circle at 96% 20%, rgba(7,84,173,.12), transparent 260px),
-      #eef8ff !important;
+  body.is-using-quote-form .home-page .hero-form-card .calendar-popover {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    margin-top: 0;
+    max-height: none;
+    overflow: visible;
+    padding: 12px;
+    border-radius: 20px;
+    box-shadow: none;
   }
 
-  body.quote-focus-mode .hero-grid {
-    width: 100% !important;
-    height: 100% !important;
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 0 !important;
-    padding: 0 !important;
+  body.is-using-quote-form .home-page .hero-form-card .calendar-head {
+    grid-template-columns: 34px 1fr 34px;
+    gap: 8px;
+    margin-bottom: 8px;
   }
 
-  body.quote-focus-mode .hero-form-card {
-    height: 100% !important;
-    display: flex !important;
-    align-items: stretch !important;
+  body.is-using-quote-form .home-page .hero-form-card .calendar-head strong {
+    font-size: 1rem;
   }
 
-  body.quote-focus-mode .hero-form-card .quote-shell,
-  body.quote-focus-mode .contact-form-wrap .quote-shell {
-    width: 100% !important;
-    height: 100% !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    border-radius: 22px !important;
-    padding: 14px 14px 16px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    overflow: hidden !important;
+  body.is-using-quote-form .home-page .hero-form-card .calendar-nav {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    font-size: 1.2rem;
   }
 
-  body.quote-focus-mode .quote-heading {
-    flex: 0 0 auto !important;
-    padding-bottom: 6px !important;
+  body.is-using-quote-form .home-page .hero-form-card .calendar-weekdays,
+  body.is-using-quote-form .home-page .hero-form-card .calendar-grid {
+    gap: 4px;
   }
 
-  body.quote-focus-mode .quote-heading h2 {
-    font-size: clamp(1.45rem, 7vw, 1.9rem) !important;
+  body.is-using-quote-form .home-page .hero-form-card .calendar-weekdays span {
+    font-size: .66rem;
   }
 
-  body.quote-focus-mode .quote-form {
-    flex: 1 1 auto !important;
-    min-height: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
+  body.is-using-quote-form .home-page .hero-form-card .calendar-day {
+    height: 34px;
+    border-radius: 10px;
+    font-size: .9rem;
   }
 
-  body.quote-focus-mode .quote-stage {
-    flex: 1 1 auto !important;
-    min-height: 0 !important;
-    height: auto !important;
-    padding-bottom: 54px !important;
-    overflow: hidden !important;
+  body.is-using-quote-form .home-page .hero-form-card .quote-form .form-actions {
+    left: 16px;
+    right: 16px;
+    bottom: calc(env(safe-area-inset-bottom) + 10px);
   }
 
-  body.quote-focus-mode .flow-step-card {
-    height: 100% !important;
-    min-height: 0 !important;
-    overflow: hidden !important;
-  }
-
-  body.quote-focus-mode .form-actions {
-    position: absolute !important;
-    bottom: 0 !important;
-  }
-
-  body.quote-focus-mode .calendar-popover {
-    top: 10px !important;
-    bottom: 10px !important;
-    left: 10px !important;
-    right: 10px !important;
-  }
-
-  body.quote-focus-mode .calendar-day {
-    height: min(8.3vw, 34px) !important;
-  }
-
-  /* Make inputs easier on small phones in focus mode */
-  body.quote-focus-mode input,
-  body.quote-focus-mode select,
-  body.quote-focus-mode textarea {
-    font-size: 16px !important;
+  body.is-using-quote-form .home-page .hero-form-card .quote-form .form-actions .btn {
+    min-height: 48px;
   }
 }
 
-
-/* -------------------------------------------------
-   Header gap fix + stronger location/service badge
-   Desktop layout stays visually locked except badge emphasis.
-   ------------------------------------------------- */
-
-/* Stronger business/location badge on both desktop and mobile */
-.home-page .hero-copy .service-location-badge,
-.home-page .hero-copy .eyebrow {
-  background: linear-gradient(135deg, rgba(232,251,253,.98), rgba(255,255,255,.22)) !important;
-  border: 1px solid rgba(24,188,208,.42) !important;
-  color: #ffffff !important;
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.14),
-    0 12px 30px rgba(3,22,42,.16) !important;
-  font-weight: 950 !important;
-  letter-spacing: .01em !important;
-  text-shadow: 0 1px 2px rgba(3,22,42,.22) !important;
-}
-
-.home-page .hero-copy .service-location-badge::before,
-.home-page .hero-copy .eyebrow::before {
-  width: 10px !important;
-  height: 10px !important;
-  background: #22d3ee !important;
-  box-shadow: 0 0 0 6px rgba(34,211,238,.18) !important;
-}
-
-/* Mobile-only header/top-gap fix */
-@media (max-width: 760px) {
-  html,
-  body {
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  body.home-page {
-    padding-top: 0 !important;
-  }
-
-  body.home-page::before,
-  body.home-page::after {
-    display: none !important;
-    content: none !important;
-  }
-
-  .site-header {
-    position: sticky !important;
-    top: 0 !important;
-    margin-top: 0 !important;
-    transform: none !important;
-    opacity: 1 !important;
-    background: #ffffff !important;
-  }
-
-  .site-header.is-hidden {
-    transform: none !important;
-    opacity: 1 !important;
-    pointer-events: auto !important;
-  }
-
-  .header-inner {
-    min-height: 58px !important;
-    padding: 4px 0 !important;
-  }
-
-  .brand img {
-    width: 74px !important;
-  }
-
-  .menu-toggle {
-    width: 38px !important;
-    height: 38px !important;
-    border-radius: 13px !important;
-  }
-
-  main#main-content {
-    margin-top: 0 !important;
-    padding-top: 0 !important;
-  }
-
-  .home-page .hero {
-    margin-top: 0 !important;
-    padding-top: 8px !important;
-  }
-
-  /* Make the mobile hero tile cleaner and smaller */
-  .home-page .hero-copy {
-    padding: 14px 14px 16px !important;
-    border-radius: 22px !important;
-  }
-
-  .home-page .hero-copy .service-location-badge,
-  .home-page .hero-copy .eyebrow {
-    margin-bottom: 10px !important;
-    padding: 8px 11px !important;
-    font-size: .76rem !important;
-    line-height: 1.16 !important;
-    max-width: 100% !important;
-    display: inline-flex !important;
-  }
-
-  .home-page .hero-copy h1 {
-    font-size: clamp(1.88rem, 8.6vw, 2.45rem) !important;
-    line-height: 1.02 !important;
-  }
-
-  .home-page .hero-copy .lead {
-    margin-top: 9px !important;
-    font-size: .9rem !important;
-    line-height: 1.32 !important;
-  }
-
-  .home-page .hero-grid {
-    gap: 9px !important;
-  }
-
-  .home-page .hero-form-card .quote-shell {
-    min-height: 320px !important;
-  }
-}
-
-
-/* -------------------------------------------------
-   Stronger location badge + mobile quote heading restore
-   ------------------------------------------------- */
-
-/* Bigger, more obvious location/service statement without increasing tile height */
-.home-page .hero-copy .service-location-badge,
-.home-page .hero-copy .eyebrow.service-location-badge {
-  display: inline-flex !important;
-  width: auto !important;
-  max-width: 100% !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  gap: 10px !important;
-  padding: 10px 15px !important;
-  margin-bottom: 14px !important;
-  border-radius: 999px !important;
-  background: linear-gradient(135deg, #ffffff 0%, #e8fbfd 48%, #d8f8ff 100%) !important;
-  border: 2px solid rgba(34,211,238,.72) !important;
-  color: #063d7f !important;
-  font-size: clamp(.92rem, 1.25vw, 1.08rem) !important;
-  line-height: 1.12 !important;
-  font-weight: 1000 !important;
-  letter-spacing: -.01em !important;
-  text-shadow: none !important;
-  box-shadow:
-    0 14px 34px rgba(24,188,208,.22),
-    inset 0 0 0 1px rgba(255,255,255,.75) !important;
-}
-
-.home-page .hero-copy .service-location-badge::before,
-.home-page .hero-copy .eyebrow.service-location-badge::before {
-  width: 12px !important;
-  height: 12px !important;
-  flex: 0 0 12px !important;
-  background: #ffb703 !important;
-  box-shadow: 0 0 0 6px rgba(255,183,3,.22) !important;
-}
-
-/* Slightly tighten surrounding hero copy so the bigger badge does not increase the tile size */
-.home-page .hero-copy h1 {
-  margin-top: 0 !important;
-}
-
-/* Restore quote heading on mobile and keep it visible before form steps */
-@media (max-width: 760px) {
-  .home-page .hero-copy .service-location-badge,
-  .home-page .hero-copy .eyebrow.service-location-badge {
-    padding: 9px 12px !important;
-    margin-bottom: 9px !important;
-    font-size: clamp(.9rem, 4.2vw, 1.02rem) !important;
-    line-height: 1.12 !important;
-  }
-
-  .home-page .hero-copy .service-location-badge::before,
-  .home-page .hero-copy .eyebrow.service-location-badge::before {
-    width: 11px !important;
-    height: 11px !important;
-    flex-basis: 11px !important;
-  }
-
-  .home-page .hero-copy h1 {
-    font-size: clamp(1.78rem, 8.1vw, 2.34rem) !important;
-    line-height: 1.01 !important;
-  }
-
-  .home-page .hero-copy .lead {
-    font-size: .86rem !important;
-    line-height: 1.28 !important;
-    margin-top: 8px !important;
-  }
-
-  /* Force the quote intro to show on mobile */
-  .home-page .hero-form-card .quote-shell .quote-heading,
-  .contact-page .contact-form-wrap .quote-shell .quote-heading,
-  body.quote-focus-mode .quote-heading {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    position: relative !important;
-    z-index: 5 !important;
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    overflow: visible !important;
-    padding-bottom: 7px !important;
-    flex: 0 0 auto !important;
-  }
-
-  .home-page .hero-form-card .quote-heading .mini-kicker,
-  .contact-page .contact-form-wrap .quote-heading .mini-kicker,
-  body.quote-focus-mode .quote-heading .mini-kicker {
-    display: inline-flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    padding: 6px 10px !important;
-    font-size: .7rem !important;
-  }
-
-  .home-page .hero-form-card .quote-heading h2,
-  .contact-page .contact-form-wrap .quote-heading h2,
-  body.quote-focus-mode .quote-heading h2 {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    color: var(--ink) !important;
-    font-size: clamp(1.32rem, 6.3vw, 1.72rem) !important;
-    line-height: 1.04 !important;
-    margin-top: 6px !important;
-    margin-bottom: 0 !important;
-  }
-
-  .home-page .hero-form-card .quote-heading p,
-  .contact-page .contact-form-wrap .quote-heading p,
-  body.quote-focus-mode .quote-heading p {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    color: var(--muted) !important;
-    font-size: .78rem !important;
-    line-height: 1.2 !important;
-    margin-top: 3px !important;
-  }
-
-  /* Adjust quote card internals so showing the heading does not push controls off-screen */
-  .home-page .hero-form-card .quote-shell {
-    min-height: 360px !important;
-  }
-
-  .home-page .quote-form,
-  .contact-page .quote-form,
-  body.quote-focus-mode .quote-form {
-    gap: 6px !important;
-  }
-
-  .home-page .quote-progress,
-  .contact-page .quote-progress,
-  body.quote-focus-mode .quote-progress {
-    padding: 7px 9px !important;
-  }
-
-  .home-page .quote-stage,
-  .contact-page .quote-stage,
-  body.quote-focus-mode .quote-stage {
-    padding-bottom: 48px !important;
-  }
-
-  body.quote-focus-mode .hero-form-card .quote-shell,
-  body.quote-focus-mode .contact-form-wrap .quote-shell {
-    padding-top: 12px !important;
-  }
-}
-
-
-/* -------------------------------------------------
-   Service first, contact details after address
-   ------------------------------------------------- */
-.quote-form .flow-step-card[data-step-type="details"] .form-grid.two {
-  margin-top: 2px !important;
-}
-
-@media (max-width: 760px) {
-  body.quote-focus-mode .flow-step-card[data-step-type="details"] .form-grid.two {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-
-/* Company registration note */
-.compact-company-note {
-  padding-top: 24px;
-}
-
-.compact-company-note .notice-card,
-.compact-company-note .legal-card {
-  max-width: 860px;
-  margin-inline: auto;
-}
-
-
-
-
-/* -------------------------------------------------
-   Desktop homepage hero clean repair
-   Fixes clipped badge, oversized top section and large empty gap.
-   Mobile styles are untouched.
-   ------------------------------------------------- */
-@media (min-width: 761px) {
-  .home-page .site-header {
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 50 !important;
-  }
-
-  .home-page .header-inner {
-    min-height: 72px !important;
-    padding-top: 8px !important;
-    padding-bottom: 8px !important;
-  }
-
-  .home-page .brand img {
-    width: 72px !important;
-    height: auto !important;
-  }
-
-  .home-page .hero {
-    min-height: auto !important;
-    height: auto !important;
-    padding: 18px 0 18px !important;
-    overflow: visible !important;
-  }
-
-  .home-page .hero-grid {
-    width: min(100% - 44px, 1180px) !important;
-    display: grid !important;
-    grid-template-columns: minmax(420px, 520px) minmax(420px, 520px) !important;
-    gap: 22px !important;
-    align-items: stretch !important;
-    justify-content: center !important;
-  }
-
-  .home-page .hero-copy,
-  .home-page .hero-form-card .quote-shell {
-    height: 405px !important;
-    min-height: 405px !important;
-    max-height: 405px !important;
-    border-radius: 28px !important;
-    overflow: hidden !important;
-  }
-
-  .home-page .hero-copy {
-    padding: 24px 28px 22px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-  }
-
-  .home-page .hero-copy .service-location-badge,
-  .home-page .hero-copy .eyebrow.service-location-badge {
-    position: static !important;
-    transform: none !important;
-    margin: 0 0 14px 0 !important;
-    padding: 9px 14px !important;
-    max-width: 100% !important;
-    width: fit-content !important;
-    font-size: 0.96rem !important;
-    line-height: 1.08 !important;
-    white-space: normal !important;
-    flex: 0 0 auto !important;
-  }
-
-  .home-page .hero-copy h1 {
-    font-size: clamp(3rem, 4.3vw, 4.05rem) !important;
-    line-height: 0.96 !important;
-    letter-spacing: -0.035em !important;
-    max-width: 10.5ch !important;
-    margin: 0 0 14px 0 !important;
-  }
-
-  .home-page .hero-copy .lead {
-    margin: 0 0 16px 0 !important;
-    max-width: 31ch !important;
-    font-size: 0.98rem !important;
-    line-height: 1.38 !important;
-  }
-
-  .home-page .hero-copy .hero-actions {
-    margin: 0 0 12px 0 !important;
-    gap: 10px !important;
-    flex: 0 0 auto !important;
-  }
-
-  .home-page .hero-copy .hero-actions .btn {
-    min-height: 42px !important;
-    padding: 0 17px !important;
-    font-size: 0.88rem !important;
-  }
-
-  .home-page .hero-copy .trust-row {
-    margin-top: auto !important;
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 8px !important;
-  }
-
-  .home-page .hero-copy .trust-item,
-  .home-page .hero-copy .trust-pill,
-  .home-page .hero-copy .feature-pill {
-    min-height: 36px !important;
-    padding: 7px 11px !important;
-    font-size: 0.78rem !important;
-    line-height: 1.08 !important;
-    overflow: hidden !important;
-  }
-
-  .home-page .hero-form-card .quote-shell {
-    padding: 18px 20px 16px !important;
-    display: flex !important;
-    flex-direction: column !important;
-  }
-
-  .home-page .quote-heading {
-    padding-bottom: 8px !important;
-    flex: 0 0 auto !important;
-  }
-
-  .home-page .quote-heading .mini-kicker {
-    padding: 5px 10px !important;
-    font-size: 0.7rem !important;
-  }
-
-  .home-page .quote-heading h2 {
-    font-size: clamp(1.9rem, 2.1vw, 2.25rem) !important;
-    line-height: 1.02 !important;
-    margin: 7px 0 2px 0 !important;
-  }
-
-  .home-page .quote-heading p {
-    font-size: 0.86rem !important;
-    line-height: 1.18 !important;
-    margin: 0 !important;
-  }
-
-  .home-page .quote-form {
-    flex: 1 1 auto !important;
-    min-height: 0 !important;
-    gap: 7px !important;
-    display: flex !important;
-    flex-direction: column !important;
-  }
-
-  .home-page .quote-progress {
-    padding: 7px 10px !important;
-    margin: 0 !important;
-    flex: 0 0 auto !important;
-  }
-
-  .home-page .quote-stage {
-    flex: 1 1 auto !important;
-    min-height: 0 !important;
-    height: auto !important;
-    padding-bottom: 54px !important;
-    overflow: hidden !important;
-  }
-
-  .home-page .flow-step-card {
-    height: 100% !important;
-    overflow: hidden !important;
-    gap: 7px !important;
-  }
-
-  .home-page .step-intro h3 {
-    font-size: 1.02rem !important;
-    line-height: 1.05 !important;
-  }
-
-  .home-page .step-intro p {
-    font-size: 0.78rem !important;
-    line-height: 1.12 !important;
-  }
-
-  .home-page .service-multi-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 7px !important;
-  }
-
-  .home-page .service-multi-grid .choice-card {
-    min-height: 42px !important;
-    padding: 7px 9px !important;
-    font-size: 0.82rem !important;
-  }
-
-  .home-page .form-actions {
-    position: absolute !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    margin: 0 !important;
-    padding-top: 8px !important;
-    background: linear-gradient(180deg, rgba(255,255,255,0), #ffffff 36%) !important;
-  }
-
-  .home-page .form-actions .btn,
-  .home-page .form-actions button {
-    min-height: 42px !important;
-    font-size: 0.9rem !important;
-  }
-
-  .home-page .proof-strip {
-    margin-top: 0 !important;
-    padding: 18px 0 !important;
-  }
-
-  .home-page .proof-grid {
-    width: min(100% - 44px, 1180px) !important;
-  }
-
-  .home-page .section-pad {
-    padding-top: 54px !important;
-  }
-
-  .home-page .section-pad:first-of-type {
-    padding-top: 48px !important;
-  }
-}
-
-
-/* -------------------------------------------------
-   Full-width homepage service coverage strip
-   Moves the North London coverage message into its own thin tile
-   above the two hero cards.
-   ------------------------------------------------- */
-
-.home-page .hero-service-strip {
-  grid-column: 1 / -1;
-  width: 100%;
-  margin: 0 0 6px 0;
-}
-
-.home-page .hero-service-strip-inner {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  min-height: 58px;
-  padding: 12px 22px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #ffffff 0%, #ecfcff 45%, #d9f9ff 100%);
-  border: 2px solid rgba(34, 211, 238, .7);
-  box-shadow:
-    0 14px 34px rgba(24, 188, 208, .18),
-    inset 0 0 0 1px rgba(255,255,255,.82);
-  color: #0a4d96;
-  font-weight: 950;
-  letter-spacing: -.01em;
-  font-size: clamp(1rem, 1.55vw, 1.2rem);
-  line-height: 1.05;
-}
-
-.home-page .hero-service-strip-dot {
-  width: 14px;
-  height: 14px;
-  flex: 0 0 14px;
-  border-radius: 50%;
-  background: #f4b63f;
-  box-shadow: 0 0 0 7px rgba(244, 182, 63, .20);
-}
-
-.home-page .hero-copy .service-location-badge,
-.home-page .hero-copy .eyebrow.service-location-badge {
-  display: none !important;
-}
-
-@media (min-width: 761px) {
-  .home-page .hero {
-    padding-top: 16px !important;
-  }
-
-  .home-page .hero-grid {
-    row-gap: 16px !important;
-  }
-
-  .home-page .hero-service-strip {
-    margin-bottom: 0 !important;
-  }
-
-  .home-page .hero-service-strip-inner {
-    min-height: 54px !important;
-    padding: 10px 22px !important;
-    font-size: clamp(1rem, 1.25vw, 1.14rem) !important;
-  }
-
-  .home-page .hero-copy,
-  .home-page .hero-form-card .quote-shell {
-    height: 390px !important;
-    min-height: 390px !important;
-    max-height: 390px !important;
-  }
-
-  .home-page .hero-copy h1 {
-    margin-top: 4px !important;
-  }
-}
-
-@media (max-width: 760px) {
-  .home-page .hero-grid {
-    gap: 16px !important;
-  }
-
-  .home-page .hero-service-strip {
-    margin-bottom: -2px !important;
-  }
-
-  .home-page .hero-service-strip-inner {
-    min-height: 52px !important;
-    padding: 10px 14px !important;
-    border-radius: 18px !important;
-    font-size: clamp(.95rem, 4.6vw, 1.04rem) !important;
-    line-height: 1.08 !important;
-  }
-
-  .home-page .hero-service-strip-dot {
-    width: 12px !important;
-    height: 12px !important;
-    flex-basis: 12px !important;
-    box-shadow: 0 0 0 6px rgba(244, 182, 63, .22) !important;
-  }
-
-  .home-page .hero-copy {
-    margin-top: 0 !important;
-  }
-}
-
-
-/* -------------------------------------------------
-   Green service strip dot + desktop hero content fit fix
-   ------------------------------------------------- */
-.home-page .hero-service-strip-dot {
-  background: #22c55e !important;
-  box-shadow: 0 0 0 7px rgba(34, 197, 94, .22) !important;
-}
-
-@media (min-width: 761px) {
-  .home-page .hero-copy,
-  .home-page .hero-form-card .quote-shell {
-    height: 402px !important;
-    min-height: 402px !important;
-    max-height: 402px !important;
-  }
-
-  .home-page .hero-copy {
-    padding: 24px 30px 20px !important;
-  }
-
-  .home-page .hero-copy h1 {
-    font-size: clamp(2.9rem, 4vw, 3.95rem) !important;
-    line-height: 0.94 !important;
-    letter-spacing: -0.04em !important;
-    max-width: 10.2ch !important;
-    margin: 4px 0 10px 0 !important;
-  }
-
-  .home-page .hero-copy .lead {
-    margin: 0 0 14px 0 !important;
-    max-width: 29ch !important;
-    font-size: .95rem !important;
-    line-height: 1.34 !important;
-  }
-
-  .home-page .hero-copy .hero-actions {
-    gap: 10px !important;
-    margin: 0 0 12px 0 !important;
-  }
-
-  .home-page .hero-copy .hero-actions .btn {
-    min-height: 42px !important;
-    padding: 0 16px !important;
-    font-size: .86rem !important;
-  }
-
-  .home-page .hero-copy .trust-row {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 8px !important;
-    margin-top: auto !important;
-    padding-top: 0 !important;
-  }
-
-  .home-page .hero-copy .trust-chip,
-  .home-page .hero-copy .trust-item,
-  .home-page .hero-copy .feature-pill,
-  .home-page .hero-copy .trust-pill {
-    min-height: 38px !important;
-    padding: 8px 12px !important;
-    font-size: .79rem !important;
-    line-height: 1.1 !important;
-    white-space: normal !important;
-  }
-
-  .home-page .hero-copy .trust-chip span,
-  .home-page .hero-copy .trust-item span,
-  .home-page .hero-copy .feature-pill span,
-  .home-page .hero-copy .trust-pill span {
-    width: 18px !important;
-    height: 18px !important;
-    flex: 0 0 18px !important;
-  }
-}
-
-
-/* -------------------------------------------------
-   Final desktop left hero content fit fix
-   Ensures all left hero content fits fully inside the tile.
-   ------------------------------------------------- */
-@media (min-width: 761px) {
-  .home-page .hero-copy,
-  .home-page .hero-form-card .quote-shell {
-    height: 418px !important;
-    min-height: 418px !important;
-    max-height: 418px !important;
-  }
-
-  .home-page .hero-copy {
-    padding: 22px 28px 18px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-  }
-
-  .home-page .hero-copy h1 {
-    font-size: clamp(2.7rem, 3.7vw, 3.65rem) !important;
-    line-height: 0.92 !important;
-    letter-spacing: -0.045em !important;
-    max-width: 10.5ch !important;
-    margin: 0 0 10px 0 !important;
-  }
-
-  .home-page .hero-copy .lead {
-    margin: 0 0 12px 0 !important;
-    max-width: 29ch !important;
-    font-size: 0.92rem !important;
-    line-height: 1.3 !important;
+@media (max-width: 390px) {
+  body.is-using-quote-form .home-page .hero-form-card {
+    padding: 6px 10px calc(env(safe-area-inset-bottom) + 8px);
   }
 
-  .home-page .hero-copy .hero-actions {
-    gap: 10px !important;
-    margin: 0 0 12px 0 !important;
-    flex-wrap: wrap !important;
+  body.is-using-quote-form .home-page .hero-form-card .quote-shell {
+    padding: 10px 10px 90px;
   }
 
-  .home-page .hero-copy .hero-actions .btn {
-    min-height: 40px !important;
-    padding: 0 15px !important;
-    font-size: 0.84rem !important;
-    border-radius: 999px !important;
+  body.is-using-quote-form .home-page .hero-form-card .quote-heading h2 {
+    font-size: clamp(1.55rem, 7.8vw, 1.95rem);
   }
 
-  .home-page .hero-copy .trust-row {
-    margin-top: auto !important;
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 7px !important;
-    align-content: end !important;
+  body.is-using-quote-form .home-page .hero-form-card .service-multi-grid label,
+  body.is-using-quote-form .home-page .hero-form-card .property-choice-grid label,
+  body.is-using-quote-form .home-page .hero-form-card .addon-choice-grid label {
+    min-height: 58px;
+    padding: 9px 10px;
+    font-size: .84rem;
   }
 
-  .home-page .hero-copy .trust-chip,
-  .home-page .hero-copy .trust-item,
-  .home-page .hero-copy .feature-pill,
-  .home-page .hero-copy .trust-pill {
-    min-height: 34px !important;
-    padding: 7px 11px !important;
-    font-size: 0.74rem !important;
-    line-height: 1.08 !important;
-    white-space: normal !important;
-    overflow: hidden !important;
-    border-radius: 999px !important;
+  body.is-using-quote-form .home-page .hero-form-card .calendar-popover {
+    padding: 10px;
   }
 
-  .home-page .hero-copy .trust-chip span,
-  .home-page .hero-copy .trust-item span,
-  .home-page .hero-copy .feature-pill span,
-  .home-page .hero-copy .trust-pill span {
-    width: 16px !important;
-    height: 16px !important;
-    flex: 0 0 16px !important;
+  body.is-using-quote-form .home-page .hero-form-card .calendar-day {
+    height: 31px;
+    border-radius: 9px;
+    font-size: .85rem;
   }
 
-  .home-page .proof-strip {
-    margin-top: 0 !important;
+  body.is-using-quote-form .home-page .hero-form-card .calendar-weekdays span {
+    font-size: .62rem;
   }
 }

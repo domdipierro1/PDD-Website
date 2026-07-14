@@ -11,14 +11,13 @@
 <meta property="og:url" content="https://pddcleaningservices.co.uk" />
 <meta property="og:image" content="https://pddcleaningservices.co.uk/logo.jpg" />
 <link rel="icon" href="favicon.ico" />
-<link rel="stylesheet" href="styles.css?v=20260710-left-hero-final-fit" />
+<link rel="stylesheet" href="styles.css?v=20260709-calendar-real-nav" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "CleaningService",
   "name": "PDD Cleaning Services",
   "legalName": "PDD Services Limited",
-  "identifier": "17329999",
   "url": "https://pddcleaningservices.co.uk",
   "logo": "https://pddcleaningservices.co.uk/logo.jpg",
   "telephone": "+447568273696",
@@ -144,15 +143,23 @@
     <input type="hidden" name="address" id="selected-address" value="" data-selected-address />
 
     <div class="quote-progress" aria-hidden="true">
-      <div class="quote-progress-top"><span data-step-label>Step 1 of 6</span><strong data-step-title>Service</strong></div>
+      <div class="quote-progress-top"><span data-step-label>Step 1 of 7</span><strong data-step-title>Name & number</strong></div>
       <div class="quote-progress-track"><span data-progress-bar></span></div>
     </div>
 
     <div class="quote-stage">
-      
+      <section class="flow-step-card is-active" data-step data-step-title="Name & number" data-step-type="details">
+        <div class="step-intro"><span>1</span><div><h3>Name & number</h3><p>So we know who to contact about the quote.</p></div></div>
+        <div class="form-grid two">
+          <label class="form-label">Name<input type="text" name="name" autocomplete="name" data-required /></label>
+          <label class="form-label">Phone number<input type="tel" name="phone" autocomplete="tel" inputmode="tel" data-required /></label>
+        </div>
+        <p class="form-error" data-step-error></p>
+        <div class="form-actions single"><button class="btn quote-primary-action" style="background:#0754ad !important; background-image:linear-gradient(135deg,#0754ad,#063d7f) !important; border:2px solid #0754ad !important; color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; box-shadow:0 14px 32px rgba(7,84,173,.22) !important; opacity:1 !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; text-indent:0 !important;" type="button" data-next>Next</button></div>
+      </section>
 
-      <section class="flow-step-card is-active" data-step data-step-title="Service" data-step-type="service">
-        <div class="step-intro"><span>1</span><div><h3>Service</h3><p>Select one or more services.</p></div></div>
+      <section class="flow-step-card" data-step data-step-title="Service" data-step-type="service">
+        <div class="step-intro"><span>2</span><div><h3>Service</h3><p>Select one or more services.</p></div></div>
         <fieldset class="service-multi-grid">
           <legend class="sr-only">Services required</legend>
           <label><input type="checkbox" name="service_options[]" value="End of tenancy cleaning" data-service-option data-addon-service />End tenancy</label>
@@ -165,10 +172,8 @@
         <div class="form-actions"><button class="btn secondary" type="button" data-back>Back</button><button class="btn" type="button" data-next>Next</button></div>
       </section>
 
-      
-
       <section class="flow-step-card" data-step data-step-title="Add-ons" data-step-type="addons">
-        <div class="step-intro"><span>2</span><div><h3>Optional add-ons</h3><p>Only for end of tenancy or deep cleans. Skip if not needed.</p></div></div>
+        <div class="step-intro"><span>3</span><div><h3>Optional add-ons</h3><p>Only for end of tenancy or deep cleans. Skip if not needed.</p></div></div>
         <div class="addon-prompt compact-addons">
           <div class="addon-choice-grid">
             <label><input type="checkbox" name="quote_addons[]" value="Oven cleaning" data-addon-option /><span>Oven cleaning</span></label>
@@ -179,10 +184,8 @@
         <div class="form-actions"><button class="btn secondary" type="button" data-back>Back</button><button class="btn" type="button" data-next>Next</button></div>
       </section>
 
-      
-
       <section class="flow-step-card" data-step data-step-title="Property size" data-step-type="property">
-        <div class="step-intro"><span>3</span><div><h3>Property size</h3><p>This helps us quote the right time and team.</p></div></div>
+        <div class="step-intro"><span>4</span><div><h3>Property size</h3><p>This helps us quote the right time and team.</p></div></div>
         <fieldset class="property-choice-grid">
           <legend class="sr-only">Property size</legend>
           <label><input type="radio" name="property_size_choice" value="Studio" data-property-option />Studio</label>
@@ -200,10 +203,8 @@
         <div class="form-actions"><button class="btn secondary quote-secondary-action" style="background:#ffffff !important; background-image:none !important; border:2px solid rgba(7,84,173,.24) !important; color:#0754ad !important; -webkit-text-fill-color:#0754ad !important; box-shadow:none !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; text-indent:0 !important;" type="button" data-back>Back</button><button class="btn quote-primary-action" style="background:#0754ad !important; background-image:linear-gradient(135deg,#0754ad,#063d7f) !important; border:2px solid #0754ad !important; color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; box-shadow:0 14px 32px rgba(7,84,173,.22) !important; opacity:1 !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; text-indent:0 !important;" type="button" data-next>Next</button></div>
       </section>
 
-      
-
       <section class="flow-step-card" data-step data-step-title="Preferred date" data-step-type="date">
-        <div class="step-intro"><span>4</span><div><h3>Preferred date</h3><p>Pick your ideal cleaning date.</p></div></div>
+        <div class="step-intro"><span>5</span><div><h3>Preferred date</h3><p>Pick your ideal cleaning date.</p></div></div>
         <div class="date-picker" data-date-picker>
           <button class="date-trigger" type="button" data-date-trigger aria-expanded="false"><span data-date-label>Choose a date</span><strong>Calendar</strong></button>
           <div class="calendar-popover" data-calendar hidden></div>
@@ -212,10 +213,8 @@
         <div class="form-actions"><button class="btn secondary quote-secondary-action" style="background:#ffffff !important; background-image:none !important; border:2px solid rgba(7,84,173,.24) !important; color:#0754ad !important; -webkit-text-fill-color:#0754ad !important; box-shadow:none !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; text-indent:0 !important;" type="button" data-back>Back</button><button class="btn quote-primary-action" style="background:#0754ad !important; background-image:linear-gradient(135deg,#0754ad,#063d7f) !important; border:2px solid #0754ad !important; color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; box-shadow:0 14px 32px rgba(7,84,173,.22) !important; opacity:1 !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; text-indent:0 !important;" type="button" data-next>Next</button></div>
       </section>
 
-      
-
       <section class="flow-step-card" data-step data-step-title="Address" data-step-type="address">
-        <div class="step-intro"><span>5</span><div><h3>Postcode & address</h3><p>Enter postcode and address line 1.</p></div></div>
+        <div class="step-intro"><span>6</span><div><h3>Postcode & address</h3><p>Enter postcode and address line 1.</p></div></div>
         <div class="address-lookup" data-address-lookup>
           <label class="form-label">Postcode<input type="text" name="postcode_area" autocomplete="postal-code" placeholder="Start typing your postcode" data-postcode-input data-required /></label>
           <div class="address-results" data-address-results hidden></div>
@@ -229,27 +228,13 @@
         <div class="form-actions"><button class="btn secondary quote-secondary-action" style="background:#ffffff !important; background-image:none !important; border:2px solid rgba(7,84,173,.24) !important; color:#0754ad !important; -webkit-text-fill-color:#0754ad !important; box-shadow:none !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; text-indent:0 !important;" type="button" data-back>Back</button><button class="btn quote-primary-action" style="background:#0754ad !important; background-image:linear-gradient(135deg,#0754ad,#063d7f) !important; border:2px solid #0754ad !important; color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; box-shadow:0 14px 32px rgba(7,84,173,.22) !important; opacity:1 !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; text-indent:0 !important;" type="button" data-next>Next</button></div>
       </section>
 
-      
-      <section class="flow-step-card" data-step data-step-title="Name & number" data-step-type="details">
-        <div class="step-intro"><span>6</span><div><h3>Name & number</h3><p>So we know who to contact about the quote.</p></div></div>
-        <div class="form-grid two">
-          <label class="form-label">Name<input type="text" name="name" autocomplete="name" data-required /></label>
-          <label class="form-label">Phone number<input type="tel" name="phone" autocomplete="tel" inputmode="tel" data-required /></label>
-        </div>
-        <p class="form-error" data-step-error></p>
-        <div class="form-actions single"><button class="btn quote-primary-action" style="background:#0754ad !important; background-image:linear-gradient(135deg,#0754ad,#063d7f) !important; border:2px solid #0754ad !important; color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; box-shadow:0 14px 32px rgba(7,84,173,.22) !important; opacity:1 !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; text-indent:0 !important;" type="button" data-next>Next</button></div>
-      </section>
-
-      
-
       <section class="flow-step-card" data-step data-step-title="Anything else" data-step-type="notes">
-        <div class="step-intro"><span>7</span><div><h3>Anything else we should know?</h3><p>Access, parking, keys or condition notes.</p></div></div>
+        <div class="step-intro"><span>7</span><div><h3>Anything else we should know?</h3><p class="subtle">Access, parking, keys or condition notes.</p></div></div>
         <label class="form-label">Notes<textarea name="message" placeholder="Access details, parking notes or anything else useful."></textarea></label>
         <p class="privacy-line">By sending, you agree we can contact you about this quote.</p>
         <p class="form-error" data-step-error></p>
         <div class="form-actions"><button class="btn secondary quote-secondary-action" style="background:#ffffff !important; background-image:none !important; border:2px solid rgba(7,84,173,.24) !important; color:#0754ad !important; -webkit-text-fill-color:#0754ad !important; box-shadow:none !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; text-indent:0 !important;" type="button" data-back>Back</button><button class="btn quote-primary-action" style="background:#0754ad !important; background-image:linear-gradient(135deg,#0754ad,#063d7f) !important; border:2px solid #0754ad !important; color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; box-shadow:0 14px 32px rgba(7,84,173,.22) !important; opacity:1 !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; text-indent:0 !important;" type="submit">Send Quote Request</button></div>
       </section>
-
     </div>
   </form>
 </div>
@@ -283,7 +268,7 @@
     </div>
   </div>
   <div class="container footer-bottom">
-    <span>PDD Cleaning Services is a trading name of PDD Services Limited, registered in England & Wales. Company number: 17329999.</span>
+    <span>PDD Cleaning Services is a trading name of PDD Services Limited.</span>
     <span>Serving North London and surrounding areas.</span>
   </div>
 </footer>
@@ -291,6 +276,6 @@
   <a href="tel:07568273696">Call</a>
   <a href="contact.html#quote-form">Get Quote</a>
 </div>
-<script src="script.js?v=20260710-left-hero-final-fit"></script>
+<script src="script.js?v=20260709-calendar-real-nav"></script>
 </body>
 </html>

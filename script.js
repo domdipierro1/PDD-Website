@@ -348,9 +348,16 @@ document.addEventListener('DOMContentLoaded', function () {
       if (document.body) document.body.classList.add('is-using-quote-form');
     }
     function keepStepVisible() {
-      if (!window.matchMedia || !window.matchMedia('(max-width: 560px)').matches) return;
+      if (!window.matchMedia || !window.matchMedia('(max-width: 760px)').matches) return;
       var shell = form.closest('.quote-shell') || form;
+      var frame = form.closest('.hero-form-card') || form.closest('.contact-form-wrap') || shell;
       window.requestAnimationFrame(function () {
+        if (frame && typeof frame.scrollTo === 'function') {
+          frame.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+        }
+        if (shell && typeof shell.scrollTo === 'function') {
+          shell.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+        }
         shell.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
       });
     }
@@ -751,128 +758,5 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 0);
       }
     });
-  });
-});
-
-
-/* Mobile quote focus mode
-   On phones, once the customer starts the quote form, the quote card becomes the full screen. */
-document.addEventListener('DOMContentLoaded', function () {
-  var mobileQuery = window.matchMedia('(max-width: 760px)');
-  var forms = Array.prototype.slice.call(document.querySelectorAll('[data-progressive-quote-form]'));
-
-  function enterQuoteFocus(form) {
-    if (!mobileQuery.matches || !form) return;
-    document.body.classList.add('quote-focus-mode');
-    var shell = form.closest('.quote-shell');
-    if (shell) shell.scrollIntoView({ block: 'start' });
-  }
-
-  function exitQuoteFocus() {
-    document.body.classList.remove('quote-focus-mode');
-  }
-
-  forms.forEach(function (form) {
-    form.addEventListener('focusin', function () {
-      enterQuoteFocus(form);
-    });
-
-    form.addEventListener('click', function (event) {
-      if (
-        event.target.closest('input, textarea, select, button, label, .date-trigger, .calendar-day, .calendar-nav') ||
-        event.target.closest('[data-next], [data-back]')
-      ) {
-        enterQuoteFocus(form);
-      }
-    }, true);
-  });
-
-  document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape') exitQuoteFocus();
-  });
-
-  window.addEventListener('resize', function () {
-    if (!mobileQuery.matches) exitQuoteFocus();
-  });
-});
-
-
-/* Mobile header gap / hidden-header prevention */
-document.addEventListener('DOMContentLoaded', function () {
-  function keepHeaderVisibleOnMobile() {
-    if (!window.matchMedia('(max-width: 760px)').matches) return;
-    document.querySelectorAll('.site-header').forEach(function (header) {
-      header.classList.remove('is-hidden');
-      header.style.transform = 'none';
-      header.style.opacity = '1';
-    });
-  }
-
-  keepHeaderVisibleOnMobile();
-  window.addEventListener('scroll', keepHeaderVisibleOnMobile, { passive: true });
-  window.addEventListener('resize', keepHeaderVisibleOnMobile);
-});
-
-
-/* Mobile quote heading visibility safety */
-document.addEventListener('DOMContentLoaded', function () {
-  function restoreQuoteHeadings() {
-    if (!window.matchMedia('(max-width: 760px)').matches) return;
-    document.querySelectorAll('.quote-heading').forEach(function (heading) {
-      heading.style.display = 'block';
-      heading.style.visibility = 'visible';
-      heading.style.opacity = '1';
-    });
-  }
-
-  restoreQuoteHeadings();
-  window.addEventListener('resize', restoreQuoteHeadings);
-});
-
-
-/* Service first with contact details after address */
-document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('[data-progressive-quote-form]').forEach(function (form) {
-    var steps = Array.prototype.slice.call(form.querySelectorAll('[data-step]'));
-
-    function addonsAllowed() {
-      return Array.prototype.slice.call(form.querySelectorAll('[data-service-option]')).some(function (input) {
-        return input.checked && (input.value === 'End of tenancy cleaning' || input.value === 'Deep cleaning');
-      });
-    }
-
-    function visibleSteps() {
-      return steps.filter(function (step) {
-        return !(step.getAttribute('data-step-type') === 'addons' && !addonsAllowed());
-      });
-    }
-
-    function syncVisibleNumbers() {
-      visibleSteps().forEach(function (step, i) {
-        var badge = step.querySelector('.step-intro > span');
-        if (badge) badge.textContent = String(i + 1);
-      });
-      var active = steps.find(function (step) { return step.classList.contains('is-active'); }) || visibleSteps()[0];
-      var visible = visibleSteps();
-      var idx = visible.indexOf(active);
-      if (idx < 0) idx = 0;
-      var title = form.querySelector('[data-step-title]');
-      var label = form.querySelector('[data-step-label]');
-      var bar = form.querySelector('[data-progress-bar]');
-      if (title && active) title.textContent = active.getAttribute('data-step-title') || '';
-      if (label) label.textContent = 'Step ' + (idx + 1) + ' of ' + visible.length;
-      if (bar) bar.style.width = Math.max(12, ((idx + 1) / visible.length) * 100) + '%';
-    }
-
-    // Ensure service is the first active step on fresh load if no fields are filled.
-    var serviceStep = form.querySelector('[data-step-type="service"]');
-    if (serviceStep && !form.querySelector('[data-service-option]:checked')) {
-      steps.forEach(function (step) { step.classList.toggle('is-active', step === serviceStep); });
-    }
-
-    form.addEventListener('click', function () { setTimeout(syncVisibleNumbers, 0); }, true);
-    form.addEventListener('change', function () { setTimeout(syncVisibleNumbers, 0); }, true);
-    form.addEventListener('input', function () { setTimeout(syncVisibleNumbers, 0); }, true);
-    syncVisibleNumbers();
   });
 });
