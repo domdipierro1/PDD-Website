@@ -1,0 +1,1 @@
+Restores the desktop homepage layout with the separate full-width service strip, while keeping the mobile quote-flow fullscreen/calendar improvements.
