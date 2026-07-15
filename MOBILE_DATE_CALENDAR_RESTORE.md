@@ -1,0 +1,1 @@
+Mobile only: restores and auto-opens the calendar on the full-screen Preferred date step. Desktop unchanged.

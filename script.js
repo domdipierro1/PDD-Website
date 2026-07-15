@@ -901,3 +901,42 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }, true);
 })();
+
+
+// mobileDateStepCalendarRestore
+(function () {
+  function isMobile() {
+    return window.matchMedia && window.matchMedia('(max-width: 760px)').matches;
+  }
+  function openActiveDateCalendar() {
+    if (!isMobile()) return;
+    var activeDateStep = document.querySelector('[data-step-type="date"].is-active');
+    if (!activeDateStep) return;
+    if (document.body) document.body.classList.add('is-using-quote-form');
+    var trigger = activeDateStep.querySelector('[data-date-trigger]');
+    var calendar = activeDateStep.querySelector('[data-calendar]');
+    if (trigger && calendar && calendar.hidden) {
+      trigger.click();
+    }
+  }
+
+  document.addEventListener('click', function (event) {
+    if (event.target.closest('[data-next], [data-back], [data-date-trigger], [data-prev], [data-cal-next], [data-day]')) {
+      setTimeout(openActiveDateCalendar, 40);
+    }
+  }, true);
+
+  document.addEventListener('change', function () {
+    setTimeout(openActiveDateCalendar, 40);
+  }, true);
+
+  document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(openActiveDateCalendar, 80);
+    var form = document.querySelector('[data-progressive-quote-form]');
+    if (!form || !window.MutationObserver) return;
+    var observer = new MutationObserver(function () {
+      setTimeout(openActiveDateCalendar, 20);
+    });
+    observer.observe(form, { subtree: true, attributes: true, attributeFilter: ['class'] });
+  });
+})();

@@ -4936,3 +4936,110 @@ body{
     display: none !important;
   }
 }
+
+
+/* -------------------------------------------------
+   Mobile date-step calendar restore
+   Mobile only. Desktop unchanged.
+   Shows the full calendar inside the full-screen enquiry tile.
+   ------------------------------------------------- */
+@media (max-width: 760px) {
+  body.is-using-quote-form .hero-form-card .flow-step-card[data-step-type="date"].is-active {
+    overflow: visible !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .flow-step-card[data-step-type="date"].is-active .date-picker {
+    display: block !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    width: 100% !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .flow-step-card[data-step-type="date"].is-active .date-trigger {
+    display: none !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .flow-step-card[data-step-type="date"].is-active .calendar-popover {
+    display: block !important;
+    position: static !important;
+    inset: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin-top: 8px !important;
+    padding: 10px !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(203,220,236,.95) !important;
+    box-shadow: 0 12px 28px rgba(16,24,40,.10) !important;
+    box-sizing: border-box !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .flow-step-card[data-step-type="date"].is-active .calendar-popover[hidden] {
+    display: none !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .flow-step-card[data-step-type="date"].is-active .calendar-head {
+    grid-template-columns: 38px 1fr 38px !important;
+    gap: 8px !important;
+    margin-bottom: 8px !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .flow-step-card[data-step-type="date"].is-active .calendar-head strong {
+    font-size: 1.05rem !important;
+    line-height: 1.1 !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .flow-step-card[data-step-type="date"].is-active .calendar-nav {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    border-radius: 12px !important;
+    font-size: 1.15rem !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .flow-step-card[data-step-type="date"].is-active .calendar-weekdays,
+  body.is-using-quote-form .hero-form-card .flow-step-card[data-step-type="date"].is-active .calendar-grid {
+    gap: 4px !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .flow-step-card[data-step-type="date"].is-active .calendar-weekdays {
+    margin-bottom: 5px !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .flow-step-card[data-step-type="date"].is-active .calendar-weekdays span {
+    font-size: .64rem !important;
+    line-height: 1 !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .flow-step-card[data-step-type="date"].is-active .calendar-day {
+    height: 32px !important;
+    min-height: 32px !important;
+    border-radius: 9px !important;
+    font-size: .84rem !important;
+    padding: 0 !important;
+  }
+}
+
+@media (max-width: 390px) {
+  body.is-using-quote-form .hero-form-card .flow-step-card[data-step-type="date"].is-active .calendar-popover {
+    padding: 8px !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .flow-step-card[data-step-type="date"].is-active .calendar-head {
+    grid-template-columns: 34px 1fr 34px !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .flow-step-card[data-step-type="date"].is-active .calendar-nav {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .flow-step-card[data-step-type="date"].is-active .calendar-day {
+    height: 29px !important;
+    min-height: 29px !important;
+    font-size: .78rem !important;
+  }
+}
