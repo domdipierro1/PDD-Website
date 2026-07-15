@@ -1,0 +1,1 @@
+Desktop-only restore: stops desktop from using mobile quote/calendar layout. Mobile fixes are left untouched.

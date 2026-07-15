@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var selected = hidden && hidden.value ? fromISODate(hidden.value) : null;
       var html = '';
       var helperText = selected ? 'Date selected. Press Next to continue.' : 'Select a date first.';
-      html += '<p class="calendar-hint">' + helperText + '</p>';
+      html += '<p class="calendar-hint" aria-hidden="true">' + helperText + '</p>';
       html += '<div class="calendar-head"><button type="button" class="calendar-nav" data-prev aria-label="Previous month">‹</button><strong>' + monthName + '</strong><button type="button" class="calendar-nav" data-cal-next aria-label="Next month">›</button></div>';
       html += '<div class="calendar-weekdays"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div><div class="calendar-grid">';
       for (var i = 0; i < 42; i += 1) {
@@ -935,6 +935,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
   form.addEventListener('click', function (event) {
+    if (!window.matchMedia || !window.matchMedia('(max-width: 760px)').matches) return;
     if (event.target.closest('[data-date-trigger], [data-prev], [data-cal-next], [data-day], [data-next], [data-back], input, select, textarea, label')) {
       activateFullscreenForm();
     }
