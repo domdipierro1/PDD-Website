@@ -4777,3 +4777,162 @@ body{
     margin-bottom: 8px !important;
   }
 }
+
+
+/* -------------------------------------------------
+   Mobile quote form true fullscreen fix
+   Corrected selectors for current markup.
+   Desktop untouched.
+   ------------------------------------------------- */
+@media (max-width: 760px) {
+  body.is-using-quote-form {
+    overflow: hidden !important;
+  }
+
+  body.is-using-quote-form .site-header,
+  body.is-using-quote-form .hero-service-strip,
+  body.is-using-quote-form .hero-copy,
+  body.is-using-quote-form .feature-strip,
+  body.is-using-quote-form section:not(.hero-conversion),
+  body.is-using-quote-form footer {
+    display: none !important;
+  }
+
+  body.is-using-quote-form #main-content,
+  body.is-using-quote-form .hero.hero-conversion,
+  body.is-using-quote-form .hero.hero-conversion .container.hero-grid {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 100dvh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    display: block !important;
+  }
+
+  body.is-using-quote-form .hero.hero-conversion {
+    background: linear-gradient(180deg, #edf7ff 0%, #f7fbff 100%) !important;
+  }
+
+  body.is-using-quote-form .hero-form-card {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 9999 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+    background: linear-gradient(180deg, #edf7ff 0%, #f7fbff 100%) !important;
+    overflow: hidden !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .quote-shell {
+    width: 100% !important;
+    min-height: 100dvh !important;
+    max-height: 100dvh !important;
+    margin: 0 !important;
+    padding: max(12px, env(safe-area-inset-top)) 12px calc(14px + env(safe-area-inset-bottom)) !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-sizing: border-box !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .quote-heading {
+    flex: 0 0 auto !important;
+    margin-bottom: 8px !important;
+    padding: 0 4px 6px !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .quote-form {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .quote-progress {
+    flex: 0 0 auto !important;
+    margin-bottom: 0 !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .quote-stage {
+    position: relative !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .flow-step-card {
+    position: absolute !important;
+    inset: 0 !important;
+    padding: 2px 0 0 !important;
+    gap: 10px !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .flow-step-card.is-active {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .step-actions {
+    margin-top: auto !important;
+    padding-top: 8px !important;
+    flex: 0 0 auto !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .calendar-popover {
+    position: static !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    margin-top: 8px !important;
+    padding: 10px !important;
+    border-radius: 22px !important;
+    box-shadow: 0 14px 30px rgba(16,24,40,.10) !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .calendar-head {
+    grid-template-columns: 42px 1fr 42px !important;
+    gap: 8px !important;
+    margin-bottom: 8px !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .calendar-head strong {
+    font-size: 1.1rem !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .calendar-nav {
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .calendar-weekdays,
+  body.is-using-quote-form .hero-form-card .calendar-grid {
+    gap: 5px !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .calendar-weekdays span {
+    font-size: .72rem !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .calendar-day {
+    height: 40px !important;
+    min-height: 40px !important;
+    border-radius: 11px !important;
+    font-size: .95rem !important;
+  }
+
+  body.is-using-quote-form .hero-form-card .flow-step-card[data-step-type="date"] .date-trigger {
+    display: none !important;
+  }
+}

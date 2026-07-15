@@ -883,3 +883,21 @@ document.addEventListener('DOMContentLoaded', function () {
     syncVisibleNumbers();
   });
 });
+
+
+// mobileCalendarFullscreenFix
+(function () {
+  var form = document.querySelector('[data-progressive-quote-form]');
+  if (!form) return;
+  function activateFullscreenForm() {
+    if (window.matchMedia && window.matchMedia('(max-width: 760px)').matches && document.body) {
+      document.body.classList.add('is-using-quote-form');
+      window.scrollTo(0, 0);
+    }
+  }
+  form.addEventListener('click', function (event) {
+    if (event.target.closest('[data-date-trigger], [data-prev], [data-cal-next], [data-day], [data-next], [data-back], input, select, textarea, label')) {
+      activateFullscreenForm();
+    }
+  }, true);
+})();
