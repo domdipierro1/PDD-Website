@@ -1,0 +1,1 @@
+Mobile only: when the quote form is in use, it now expands to full-screen and hides the left hero/service strip. Desktop unchanged.

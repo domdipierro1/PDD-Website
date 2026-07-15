@@ -4686,3 +4686,94 @@ body{
     font-size: .72rem !important;
   }
 }
+
+
+/* -------------------------------------------------
+   Mobile quote form fullscreen fix
+   Mobile only. Desktop unchanged.
+   Expands active enquiry steps to full screen and hides
+   the left hero/service strip while completing the form.
+   ------------------------------------------------- */
+@media (max-width: 760px) {
+  body.is-using-quote-form header,
+  body.is-using-quote-form .site-header,
+  body.is-using-quote-form .home-page .hero-copy,
+  body.is-using-quote-form .home-page .hero-service-strip,
+  body.is-using-quote-form .feature-strip,
+  body.is-using-quote-form .section-blueprint,
+  body.is-using-quote-form .services-preview,
+  body.is-using-quote-form .hero-below-strip {
+    display: none !important;
+  }
+
+  body.is-using-quote-form,
+  body.is-using-quote-form main,
+  body.is-using-quote-form .home-page,
+  body.is-using-quote-form .home-page .hero {
+    overflow: hidden !important;
+  }
+
+  body.is-using-quote-form .home-page .hero {
+    padding: 0 !important;
+    min-height: 100dvh !important;
+  }
+
+  body.is-using-quote-form .home-page .hero-grid {
+    display: block !important;
+    max-width: none !important;
+    gap: 0 !important;
+  }
+
+  body.is-using-quote-form .home-page .hero-form-card {
+    position: fixed !important;
+    inset: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    z-index: 3000 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin: 0 !important;
+    padding: max(10px, env(safe-area-inset-top)) 10px calc(env(safe-area-inset-bottom) + 10px) !important;
+    background: linear-gradient(180deg, #eef8ff 0%, #f7fbff 100%) !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  body.is-using-quote-form .home-page .hero-form-card .quote-shell {
+    width: 100% !important;
+    min-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 20px) !important;
+    max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 20px) !important;
+    margin: 0 !important;
+    padding: 14px 12px 88px !important;
+    border-radius: 24px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-sizing: border-box !important;
+  }
+
+  body.is-using-quote-form .home-page .hero-form-card .quote-heading {
+    display: block !important;
+    margin-bottom: 8px !important;
+    padding: 0 2px !important;
+  }
+
+  body.is-using-quote-form .home-page .hero-form-card .quote-form,
+  body.is-using-quote-form .home-page .hero-form-card .quote-stage,
+  body.is-using-quote-form .home-page .hero-form-card .flow-step-card.is-active {
+    min-height: 0 !important;
+    flex: 1 1 auto !important;
+  }
+
+  body.is-using-quote-form .home-page .hero-form-card .flow-step-card.is-active {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  body.is-using-quote-form .home-page .hero-form-card .quote-progress {
+    margin-bottom: 8px !important;
+  }
+}
