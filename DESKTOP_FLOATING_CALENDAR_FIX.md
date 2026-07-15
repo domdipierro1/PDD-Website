@@ -1,0 +1,1 @@
+Desktop-only fix: calendar opens as a floating desktop popover so it is not clipped by the quote tile. Mobile unchanged.

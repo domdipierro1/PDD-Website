@@ -5375,3 +5375,93 @@ body{
     visibility: visible !important;
   }
 }
+
+
+/* -------------------------------------------------
+   Desktop floating calendar fix
+   Desktop only. Mobile unchanged.
+   Prevents desktop calendar being clipped inside the quote tile.
+   ------------------------------------------------- */
+@media (min-width: 761px) {
+  .home-page .hero,
+  .home-page .hero-grid,
+  .home-page .hero-form-card,
+  .home-page .hero-form-card .quote-shell,
+  .contact-page .contact-form-wrap,
+  .contact-page .contact-form-wrap .quote-shell {
+    overflow: visible !important;
+  }
+
+  .home-page .hero-form-card .date-picker,
+  .contact-page .contact-form-wrap .date-picker {
+    position: relative !important;
+    z-index: 1000 !important;
+  }
+
+  .home-page .hero-form-card .calendar-popover:not([hidden]),
+  .contact-page .contact-form-wrap .calendar-popover:not([hidden]) {
+    position: fixed !important;
+    z-index: 99999 !important;
+    top: 168px !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: translateX(-50%) !important;
+    width: min(520px, calc(100vw - 48px)) !important;
+    max-height: calc(100vh - 210px) !important;
+    overflow: auto !important;
+    padding: 16px !important;
+    border-radius: 24px !important;
+    background: #ffffff !important;
+    border: 1px solid var(--line) !important;
+    box-shadow: 0 28px 80px rgba(16,24,40,.24) !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .home-page .hero-form-card .calendar-popover[hidden],
+  .contact-page .contact-form-wrap .calendar-popover[hidden] {
+    display: none !important;
+  }
+
+  .home-page .hero-form-card .calendar-head,
+  .contact-page .contact-form-wrap .calendar-head {
+    grid-template-columns: 44px 1fr 44px !important;
+    gap: 12px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .home-page .hero-form-card .calendar-head strong,
+  .contact-page .contact-form-wrap .calendar-head strong {
+    font-size: 1.15rem !important;
+  }
+
+  .home-page .hero-form-card .calendar-nav,
+  .contact-page .contact-form-wrap .calendar-nav {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 14px !important;
+    font-size: 1.6rem !important;
+  }
+
+  .home-page .hero-form-card .calendar-weekdays,
+  .home-page .hero-form-card .calendar-grid,
+  .contact-page .contact-form-wrap .calendar-weekdays,
+  .contact-page .contact-form-wrap .calendar-grid {
+    gap: 6px !important;
+  }
+
+  .home-page .hero-form-card .calendar-day,
+  .contact-page .contact-form-wrap .calendar-day {
+    height: 38px !important;
+    min-height: 38px !important;
+    border-radius: 12px !important;
+    font-size: .92rem !important;
+  }
+
+  .home-page .hero-form-card .calendar-hint,
+  .contact-page .contact-form-wrap .calendar-hint {
+    display: none !important;
+  }
+}
