@@ -785,10 +785,24 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!mobileQuery.matches || !form) return;
     var dateStep = form.querySelector('.flow-step-card[data-step-type="date"]');
     if (!dateStep || !dateStep.classList.contains('is-active')) return;
-    var trigger = dateStep.querySelector('[data-date-trigger]');
+
     var calendar = dateStep.querySelector('[data-calendar]');
-    if (trigger && calendar && calendar.hidden) {
-      window.setTimeout(function () { trigger.click(); }, 30);
+    var trigger = dateStep.querySelector('[data-date-trigger]');
+    var shell = form.closest('.quote-shell');
+    var dateField = form.querySelector('[data-date-field]');
+
+    if (shell) shell.classList.add('calendar-open');
+
+    // Open the calendar once when arriving on the date step.
+    // Do not repeatedly click the trigger, because that causes mobile flicker.
+    if (calendar && calendar.hidden && trigger && !dateStep.dataset.calendarAutoOpened) {
+      dateStep.dataset.calendarAutoOpened = 'true';
+      trigger.click();
+    }
+
+    // Once a date has been selected, keep the calendar visible but stop auto-opening loops.
+    if (dateField && dateField.value) {
+      dateStep.dataset.calendarAutoOpened = 'true';
     }
   }
 
@@ -967,23 +981,50 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 
 
-document.addEventListener('click', function (event) {
-  var nextBtn = event.target.closest('[data-next], [data-back], [data-day], [data-prev], [data-cal-next]');
-  if (!nextBtn) return;
-  var form = event.target.closest('[data-progressive-quote-form]');
-  if (!form) return;
-  window.setTimeout(function () {
-    if (window.matchMedia('(max-width: 760px)').matches && document.body.classList.contains('quote-focus-mode')) {
-      var activeDateStep = form.querySelector('.flow-step-card.is-active[data-step-type="date"]');
-      var activeCalendar = activeDateStep ? activeDateStep.querySelector('[data-calendar]') : null;
-      var shell = form.closest('.quote-shell');
-      if (activeDateStep && activeCalendar && activeCalendar.hidden) {
-        var activeTrigger = activeDateStep.querySelector('[data-date-trigger]');
-        if (activeTrigger && !form.querySelector('[data-date-field]').value) activeTrigger.click();
-      }
-      if (shell && form.querySelector('[data-date-field]') && form.querySelector('[data-date-field]').value && (!activeDateStep || (activeCalendar && activeCalendar.hidden))) {
-        shell.classList.remove('calendar-open');
-      }
+
+/* Mobile calendar flicker fix */
+document.addEventListener('DOMContentLoaded', function () {
+  var mq = window.matchMedia('(max-width: 760px)');
+
+  function stabilizeDateCalendar(form) {
+    if (!mq.matches || !form) return;
+    if (!document.body.classList.contains('quote-focus-mode')) return;
+
+    var dateStep = form.querySelector('.flow-step-card.is-active[data-step-type="date"]');
+    if (!dateStep) return;
+
+    var calendar = dateStep.querySelector('[data-calendar]');
+    var trigger = dateStep.querySelector('[data-date-trigger]');
+    var shell = form.closest('.quote-shell');
+
+    if (shell) shell.classList.add('calendar-open');
+
+    if (calendar && calendar.hidden && trigger && !dateStep.dataset.calendarAutoOpened) {
+      dateStep.dataset.calendarAutoOpened = 'true';
+      trigger.click();
     }
-  }, 40);
-}, true);
+  }
+
+  document.querySelectorAll('[data-progressive-quote-form]').forEach(function (form) {
+    var observer = new MutationObserver(function () {
+      window.requestAnimationFrame(function () {
+        stabilizeDateCalendar(form);
+      });
+    });
+
+    form.querySelectorAll('[data-step]').forEach(function (step) {
+      observer.observe(step, { attributes: true, attributeFilter: ['class'] });
+    });
+
+    form.addEventListener('click', function (event) {
+      if (event.target.closest('[data-prev], [data-cal-next]')) {
+        var dateStep = form.querySelector('.flow-step-card.is-active[data-step-type="date"]');
+        if (dateStep) dateStep.dataset.calendarAutoOpened = 'true';
+      }
+      if (event.target.closest('[data-day]')) {
+        var activeDateStep = form.querySelector('.flow-step-card.is-active[data-step-type="date"]');
+        if (activeDateStep) activeDateStep.dataset.calendarAutoOpened = 'true';
+      }
+    }, true);
+  });
+});

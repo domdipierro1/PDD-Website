@@ -1,0 +1,1 @@
+Removed repeated mobile auto-open trigger that caused the date calendar to flicker. Desktop unchanged.

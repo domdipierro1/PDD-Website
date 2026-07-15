@@ -5144,3 +5144,25 @@ body{
     visibility:visible !important;
   }
 }
+
+
+/* -------------------------------------------------
+   Mobile calendar flicker fix
+   Stop mobile calendar reflow/flicker while keeping buttons visible.
+   ------------------------------------------------- */
+@media (max-width: 760px) {
+  body.quote-focus-mode .flow-step-card[data-step-type="date"] .calendar-popover {
+    transform: translateZ(0) !important;
+    backface-visibility: hidden !important;
+    will-change: auto !important;
+  }
+
+  body.quote-focus-mode .flow-step-card[data-step-type="date"] .calendar-grid,
+  body.quote-focus-mode .flow-step-card[data-step-type="date"] .calendar-weekdays {
+    contain: layout paint !important;
+  }
+
+  body.quote-focus-mode .flow-step-card[data-step-type="date"] .calendar-day {
+    transition: none !important;
+  }
+}
