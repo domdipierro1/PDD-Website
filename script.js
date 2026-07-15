@@ -104,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var label = picker.querySelector('[data-date-label]');
     var popover = picker.querySelector('[data-calendar]');
     var hidden = form.querySelector('[data-date-field]');
+    var shell = form.closest('.quote-shell');
     var today = startOfDay(new Date());
     var state = { view: new Date(today.getFullYear(), today.getMonth(), 1) };
 
@@ -116,6 +117,8 @@ document.addEventListener('DOMContentLoaded', function () {
       var start = new Date(year, month, 1 - offset);
       var selected = hidden && hidden.value ? fromISODate(hidden.value) : null;
       var html = '';
+      var helperText = selected ? 'Date selected. Press Next to continue.' : 'Select a date first.';
+      html += '<p class="calendar-hint">' + helperText + '</p>';
       html += '<div class="calendar-head"><button type="button" class="calendar-nav" data-prev aria-label="Previous month">‹</button><strong>' + monthName + '</strong><button type="button" class="calendar-nav" data-cal-next aria-label="Next month">›</button></div>';
       html += '<div class="calendar-weekdays"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div><div class="calendar-grid">';
       for (var i = 0; i < 42; i += 1) {
@@ -131,8 +134,18 @@ document.addEventListener('DOMContentLoaded', function () {
       html += '</div>';
       popover.innerHTML = html;
     }
-    function close() { if (popover) popover.hidden = true; if (trigger) trigger.setAttribute('aria-expanded', 'false'); }
-    function open() { document.querySelectorAll('[data-calendar]').forEach(function (el) { if (el !== popover) el.hidden = true; }); render(); popover.hidden = false; trigger.setAttribute('aria-expanded', 'true'); }
+    function close() {
+      if (popover) popover.hidden = true;
+      if (trigger) trigger.setAttribute('aria-expanded', 'false');
+      if (shell) shell.classList.remove('calendar-open');
+    }
+    function open() {
+      document.querySelectorAll('[data-calendar]').forEach(function (el) { if (el !== popover) el.hidden = true; });
+      render();
+      popover.hidden = false;
+      if (trigger) trigger.setAttribute('aria-expanded', 'true');
+      if (shell) shell.classList.add('calendar-open');
+    }
     function setDate(date) {
       if (!hidden) return;
       hidden.value = toISODate(date);
@@ -768,11 +781,23 @@ document.addEventListener('DOMContentLoaded', function () {
   var mobileQuery = window.matchMedia('(max-width: 760px)');
   var forms = Array.prototype.slice.call(document.querySelectorAll('[data-progressive-quote-form]'));
 
+  function syncMobileDateStep(form) {
+    if (!mobileQuery.matches || !form) return;
+    var dateStep = form.querySelector('.flow-step-card[data-step-type="date"]');
+    if (!dateStep || !dateStep.classList.contains('is-active')) return;
+    var trigger = dateStep.querySelector('[data-date-trigger]');
+    var calendar = dateStep.querySelector('[data-calendar]');
+    if (trigger && calendar && calendar.hidden) {
+      window.setTimeout(function () { trigger.click(); }, 30);
+    }
+  }
+
   function enterQuoteFocus(form) {
     if (!mobileQuery.matches || !form) return;
     document.body.classList.add('quote-focus-mode');
     var shell = form.closest('.quote-shell');
     if (shell) shell.scrollIntoView({ block: 'start' });
+    syncMobileDateStep(form);
   }
 
   function exitQuoteFocus() {
@@ -940,3 +965,25 @@ document.addEventListener('DOMContentLoaded', function () {
     observer.observe(form, { subtree: true, attributes: true, attributeFilter: ['class'] });
   });
 })();
+
+
+document.addEventListener('click', function (event) {
+  var nextBtn = event.target.closest('[data-next], [data-back], [data-day], [data-prev], [data-cal-next]');
+  if (!nextBtn) return;
+  var form = event.target.closest('[data-progressive-quote-form]');
+  if (!form) return;
+  window.setTimeout(function () {
+    if (window.matchMedia('(max-width: 760px)').matches && document.body.classList.contains('quote-focus-mode')) {
+      var activeDateStep = form.querySelector('.flow-step-card.is-active[data-step-type="date"]');
+      var activeCalendar = activeDateStep ? activeDateStep.querySelector('[data-calendar]') : null;
+      var shell = form.closest('.quote-shell');
+      if (activeDateStep && activeCalendar && activeCalendar.hidden) {
+        var activeTrigger = activeDateStep.querySelector('[data-date-trigger]');
+        if (activeTrigger && !form.querySelector('[data-date-field]').value) activeTrigger.click();
+      }
+      if (shell && form.querySelector('[data-date-field]') && form.querySelector('[data-date-field]').value && (!activeDateStep || (activeCalendar && activeCalendar.hidden))) {
+        shell.classList.remove('calendar-open');
+      }
+    }
+  }, 40);
+}, true);

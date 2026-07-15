@@ -5043,3 +5043,104 @@ body{
     font-size: .78rem !important;
   }
 }
+
+
+/* -------------------------------------------------
+   Mobile date-step fix
+   - show calendar guidance
+   - keep date step full-screen
+   - restore next/back visibility after selection
+   - desktop unchanged
+   ------------------------------------------------- */
+.calendar-hint{
+  margin:0 0 10px;
+  font-size:.86rem;
+  line-height:1.35;
+  font-weight:800;
+  color:var(--blue-2);
+}
+
+@media (max-width: 760px) {
+  body.quote-focus-mode .flow-step-card[data-step-type="date"] {
+    padding-bottom: 96px !important;
+  }
+
+  body.quote-focus-mode .flow-step-card[data-step-type="date"] .date-picker {
+    display:flex !important;
+    flex-direction:column !important;
+    flex:1 1 auto !important;
+    min-height:0 !important;
+  }
+
+  body.quote-focus-mode .flow-step-card[data-step-type="date"] .calendar-popover {
+    position:relative !important;
+    inset:auto !important;
+    top:auto !important;
+    right:auto !important;
+    bottom:auto !important;
+    left:auto !important;
+    display:block !important;
+    flex:1 1 auto !important;
+    overflow:auto !important;
+    max-height:none !important;
+    min-height:0 !important;
+    margin-top:10px !important;
+    padding:12px !important;
+    border-radius:22px !important;
+    box-shadow:0 16px 40px rgba(16,24,40,.14) !important;
+    z-index:1 !important;
+  }
+
+  body.quote-focus-mode .flow-step-card[data-step-type="date"] .calendar-head {
+    grid-template-columns:48px 1fr 48px !important;
+    gap:10px !important;
+  }
+
+  body.quote-focus-mode .flow-step-card[data-step-type="date"] .calendar-head strong {
+    font-size:1rem !important;
+  }
+
+  body.quote-focus-mode .flow-step-card[data-step-type="date"] .calendar-nav {
+    width:44px !important;
+    height:44px !important;
+    border-radius:14px !important;
+    font-size:1.9rem !important;
+  }
+
+  body.quote-focus-mode .flow-step-card[data-step-type="date"] .calendar-weekdays,
+  body.quote-focus-mode .flow-step-card[data-step-type="date"] .calendar-grid {
+    gap:6px !important;
+  }
+
+  body.quote-focus-mode .flow-step-card[data-step-type="date"] .calendar-weekdays span {
+    font-size:.72rem !important;
+  }
+
+  body.quote-focus-mode .flow-step-card[data-step-type="date"] .calendar-day {
+    height:44px !important;
+    border-radius:14px !important;
+    font-size:1rem !important;
+  }
+
+  body.quote-focus-mode .flow-step-card[data-step-type="date"] .date-trigger {
+    display:none !important;
+  }
+
+  body.quote-focus-mode .flow-step-card[data-step-type="date"] .form-actions,
+  body.quote-focus-mode .quote-form .flow-step-card[data-step-type="date"] .form-actions {
+    position:fixed !important;
+    left:12px !important;
+    right:12px !important;
+    bottom:calc(env(safe-area-inset-bottom) + 8px) !important;
+    z-index:200 !important;
+    visibility:visible !important;
+    opacity:1 !important;
+  }
+
+  body.quote-focus-mode .quote-shell.calendar-open .flow-step-card[data-step-type="date"] .form-actions,
+  body.quote-focus-mode .quote-shell.calendar-open .flow-step-card[data-step-type="date"] .step-intro,
+  body.quote-focus-mode .quote-shell.calendar-open .flow-step-card[data-step-type="date"] .quote-progress,
+  body.quote-focus-mode .quote-shell.calendar-open .flow-step-card[data-step-type="date"] .quote-heading {
+    visibility:visible !important;
+  }
+}
