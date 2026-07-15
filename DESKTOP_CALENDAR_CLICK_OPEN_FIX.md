@@ -1,0 +1,1 @@
+Desktop-only fix so clicking the calendar trigger opens the popover again. Mobile unchanged.

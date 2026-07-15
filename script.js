@@ -1029,3 +1029,37 @@ document.addEventListener('DOMContentLoaded', function () {
     }, true);
   });
 });
+
+
+/* Desktop calendar click/open fix */
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.matchMedia && !window.matchMedia('(min-width: 761px)').matches) return;
+
+  document.querySelectorAll('[data-progressive-quote-form]').forEach(function (form) {
+    var trigger = form.querySelector('[data-date-trigger]');
+    var calendar = form.querySelector('[data-calendar]');
+    var shell = form.closest('.quote-shell');
+    if (!trigger || !calendar) return;
+
+    trigger.addEventListener('click', function () {
+      window.setTimeout(function () {
+        if (!calendar.hidden) {
+          calendar.removeAttribute('hidden');
+          if (shell) shell.classList.add('calendar-open');
+        }
+      }, 0);
+    }, false);
+
+    calendar.addEventListener('click', function () {
+      window.setTimeout(function () {
+        if (!calendar.hidden && shell) shell.classList.add('calendar-open');
+      }, 0);
+    }, false);
+
+    document.addEventListener('click', function (event) {
+      if (!form.contains(event.target)) {
+        if (shell) shell.classList.remove('calendar-open');
+      }
+    }, false);
+  });
+});

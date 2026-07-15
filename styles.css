@@ -5311,3 +5311,67 @@ body{
     visibility: visible !important;
   }
 }
+
+
+/* -------------------------------------------------
+   Desktop calendar click/open fix
+   Desktop only. Mobile untouched.
+   ------------------------------------------------- */
+@media (min-width: 761px) {
+  .home-page .hero-form-card .date-picker,
+  .contact-page .contact-form-wrap .date-picker {
+    position: relative !important;
+    z-index: 30 !important;
+  }
+
+  .home-page .hero-form-card .date-trigger,
+  .contact-page .contact-form-wrap .date-trigger {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+
+  .home-page .hero-form-card .calendar-popover,
+  .contact-page .contact-form-wrap .calendar-popover {
+    display: block !important;
+    position: absolute !important;
+    z-index: 999 !important;
+    top: calc(100% + 10px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: auto !important;
+    max-height: 360px !important;
+    overflow: auto !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .home-page .hero-form-card .calendar-popover[hidden],
+  .contact-page .contact-form-wrap .calendar-popover[hidden] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .home-page .hero-form-card .quote-shell.calendar-open .calendar-popover,
+  .contact-page .contact-form-wrap .quote-shell.calendar-open .calendar-popover {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .home-page .hero-form-card .quote-shell.calendar-open .quote-heading,
+  .home-page .hero-form-card .quote-shell.calendar-open .quote-progress,
+  .home-page .hero-form-card .quote-shell.calendar-open .step-intro,
+  .home-page .hero-form-card .quote-shell.calendar-open .date-trigger,
+  .home-page .hero-form-card .quote-shell.calendar-open .form-actions,
+  .contact-page .contact-form-wrap .quote-shell.calendar-open .quote-heading,
+  .contact-page .contact-form-wrap .quote-shell.calendar-open .quote-progress,
+  .contact-page .contact-form-wrap .quote-shell.calendar-open .step-intro,
+  .contact-page .contact-form-wrap .quote-shell.calendar-open .date-trigger,
+  .contact-page .contact-form-wrap .quote-shell.calendar-open .form-actions {
+    visibility: visible !important;
+  }
+}
